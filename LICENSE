@@ -1,0 +1,54 @@
+Copyright © 2026 Rafael Reis Garcia. All rights reserved.
+
+No license is granted to use, copy, modify, merge, publish, distribute,
+sublicense, sell, or otherwise exploit this software or any portion of it
+without explicit written permission from the copyright holder.
+
+────────────────────────────────────────────────────────────────────────────
+GAME INTELLECTUAL PROPERTY
+────────────────────────────────────────────────────────────────────────────
+
+"Paradoxo" is an original game designed by Rafael Reis Garcia.
+
+The following are proprietary to Rafael Reis Garcia and are NOT licensed
+for any use, commercial or otherwise, without his explicit written
+permission:
+
+  • The game name "Paradoxo" and the brand "Corporação C.R.O.N.O.S."
+  • All game rules, mechanics, and their written expression
+  • All card names, card text, and card abilities
+  • The game board, era/period structure, and all related thematic material
+  • Any artwork, illustrations, or graphic design elements associated
+    with the game
+  • Any digital or physical implementation of the game sold or distributed
+    as a product
+
+The fact that this repository is publicly visible does not imply any
+grant of rights to any of the above.
+
+────────────────────────────────────────────────────────────────────────────
+SIMULATION FRAMEWORK
+────────────────────────────────────────────────────────────────────────────
+
+This repository also contains an original simulation and balance-analysis
+framework authored by Rafael Reis Garcia, including:
+
+  • The rules engine and all supporting modules under engine/
+  • The simulation layer, strategy agents, and analytics tools under
+    simulation/
+  • Any generalised or adapted versions of the above framework intended
+    to support other rulesets or game systems
+
+The simulation framework is likewise proprietary. No license is granted to:
+  • Use the framework commercially or include it in a product or service
+  • Redistribute, resell, repackage, or sublicense the framework in whole
+    or in part
+  • Create derivative works based on the framework without written
+    permission from the copyright holder
+
+Viewing the source code for personal, educational, or research purposes
+does not constitute a grant of any broader rights.
+
+────────────────────────────────────────────────────────────────────────────
+
+For licensing inquiries: rafaelreissaura@gmail.com

@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paradoxo"
+version = "0.1.0"
+description = "Strategy simulation and balance-analysis platform for Paradoxo"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "matplotlib>=3.8",
+    "networkx>=3.2",
+    "pytest>=8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest-cov",
+    "ipykernel",
+    "jupyterlab",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["engine*", "simulation*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]

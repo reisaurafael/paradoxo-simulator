@@ -1,0 +1,6089 @@
+{
+  "python": "3.14.4",
+  "seed": 7,
+  "lineup_order": [
+    "Aggressive",
+    "Conservative",
+    "Smart",
+    "Collector"
+  ],
+  "max_hours": 200,
+  "summary": {
+    "n_games": 1000,
+    "win_rates": {
+      "Aggressive": 0.441,
+      "Conservative": 0.164,
+      "Smart": 0.238,
+      "Collector": 0.151
+    },
+    "win_counts": {
+      "Collector": 151,
+      "Aggressive": 441,
+      "Smart": 238,
+      "Conservative": 164
+    },
+    "draws": 6,
+    "game_length": {
+      "mean": 23.486,
+      "median": 19.0,
+      "stdev": 17.979852031623594,
+      "min": 7,
+      "max": 200
+    },
+    "end_reasons": {
+      "year_zero": 642,
+      "full_receptor": 99,
+      "last_traveler": 154,
+      "merchant_empty": 99,
+      "max_hours_reached": 6
+    },
+    "per_traveler": {
+      "Aggressive": {
+        "name": "Aggressive",
+        "strategy": "Aggressive",
+        "win_rate": 0.441,
+        "mean_final_energy": 13.604,
+        "mean_final_century": 5.496,
+        "mean_final_contract_points": 2.699,
+        "mean_hours_survived": 23.486,
+        "explosion_rate": 0.10150728093332198,
+        "termination_rate": 0.222
+      },
+      "Conservative": {
+        "name": "Conservative",
+        "strategy": "Conservative",
+        "win_rate": 0.164,
+        "mean_final_energy": 12.43,
+        "mean_final_century": 13.92,
+        "mean_final_contract_points": 2.3,
+        "mean_hours_survived": 23.486,
+        "explosion_rate": 0.09162905560759602,
+        "termination_rate": 0.278
+      },
+      "Smart": {
+        "name": "Smart",
+        "strategy": "Smart",
+        "win_rate": 0.238,
+        "mean_final_energy": 13.007,
+        "mean_final_century": 18.713,
+        "mean_final_contract_points": 2.377,
+        "mean_hours_survived": 23.486,
+        "explosion_rate": 0.04896534105424508,
+        "termination_rate": 0.509
+      },
+      "Collector": {
+        "name": "Collector",
+        "strategy": "Collector",
+        "win_rate": 0.151,
+        "mean_final_energy": 8.013,
+        "mean_final_century": 23.335,
+        "mean_final_contract_points": 2.137,
+        "mean_hours_survived": 23.486,
+        "explosion_rate": 0.03725623775866474,
+        "termination_rate": 0.679
+      }
+    }
+  },
+  "games": [
+    {
+      "index": 0,
+      "winner": "Collector",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 1,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 2,
+      "winner": "Collector",
+      "hours": 19,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 3,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 4,
+      "winner": "Aggressive",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 5,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 6,
+      "winner": "Conservative",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 7,
+      "winner": "Collector",
+      "hours": 18,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 8,
+      "winner": "Collector",
+      "hours": 45,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 9,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 10,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 11,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 12,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 13,
+      "winner": "Smart",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 14,
+      "winner": "Smart",
+      "hours": 14,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 15,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 16,
+      "winner": "Collector",
+      "hours": 11,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 17,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 18,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 19,
+      "winner": "Smart",
+      "hours": 24,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 20,
+      "winner": "Conservative",
+      "hours": 45,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 21,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 22,
+      "winner": "Smart",
+      "hours": 35,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 23,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 24,
+      "winner": "Conservative",
+      "hours": 47,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 25,
+      "winner": "Collector",
+      "hours": 17,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 26,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 27,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 28,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 29,
+      "winner": "Smart",
+      "hours": 8,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 30,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 31,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 32,
+      "winner": "Smart",
+      "hours": 21,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 33,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 34,
+      "winner": "Collector",
+      "hours": 18,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 35,
+      "winner": "Collector",
+      "hours": 46,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 36,
+      "winner": "Smart",
+      "hours": 82,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 37,
+      "winner": "Collector",
+      "hours": 61,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 38,
+      "winner": "Collector",
+      "hours": 42,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 39,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 40,
+      "winner": "Smart",
+      "hours": 21,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 41,
+      "winner": "Conservative",
+      "hours": 58,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 42,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 43,
+      "winner": "Collector",
+      "hours": 59,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 44,
+      "winner": "Smart",
+      "hours": 14,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 45,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 46,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 47,
+      "winner": "Smart",
+      "hours": 47,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 48,
+      "winner": "Smart",
+      "hours": 23,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 49,
+      "winner": "Smart",
+      "hours": 38,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 50,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 51,
+      "winner": "Conservative",
+      "hours": 11,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 52,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 53,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 54,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 55,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 56,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 57,
+      "winner": "Conservative",
+      "hours": 80,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 58,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 59,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 60,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 61,
+      "winner": "Collector",
+      "hours": 28,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 62,
+      "winner": "Conservative",
+      "hours": 19,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 63,
+      "winner": "Smart",
+      "hours": 28,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 64,
+      "winner": "Collector",
+      "hours": 28,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 65,
+      "winner": "Collector",
+      "hours": 196,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 66,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 67,
+      "winner": "Collector",
+      "hours": 54,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 68,
+      "winner": "Conservative",
+      "hours": 29,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 69,
+      "winner": "Conservative",
+      "hours": 30,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 70,
+      "winner": "Collector",
+      "hours": 30,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 71,
+      "winner": "Conservative",
+      "hours": 24,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 72,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 73,
+      "winner": "Conservative",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 74,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 75,
+      "winner": "Aggressive",
+      "hours": 33,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 76,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 77,
+      "winner": "Collector",
+      "hours": 38,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 78,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 79,
+      "winner": "Aggressive",
+      "hours": 11,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 80,
+      "winner": "Smart",
+      "hours": 20,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 81,
+      "winner": "Collector",
+      "hours": 19,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 82,
+      "winner": "Collector",
+      "hours": 24,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 83,
+      "winner": "Conservative",
+      "hours": 21,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 84,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 85,
+      "winner": "Conservative",
+      "hours": 18,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 86,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 87,
+      "winner": "Collector",
+      "hours": 15,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 88,
+      "winner": "Conservative",
+      "hours": 32,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 89,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 90,
+      "winner": "Collector",
+      "hours": 27,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 91,
+      "winner": "Aggressive",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 92,
+      "winner": "Collector",
+      "hours": 45,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 93,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 94,
+      "winner": "Smart",
+      "hours": 21,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 95,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 96,
+      "winner": "Aggressive",
+      "hours": 34,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 97,
+      "winner": "Aggressive",
+      "hours": 29,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 98,
+      "winner": "Collector",
+      "hours": 22,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 99,
+      "winner": "Smart",
+      "hours": 32,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 100,
+      "winner": "Aggressive",
+      "hours": 11,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 101,
+      "winner": "Conservative",
+      "hours": 31,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 102,
+      "winner": "Aggressive",
+      "hours": 31,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 103,
+      "winner": "Smart",
+      "hours": 26,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 104,
+      "winner": "Smart",
+      "hours": 10,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 105,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 106,
+      "winner": "Collector",
+      "hours": 32,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 107,
+      "winner": "Collector",
+      "hours": 44,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 108,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 109,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 110,
+      "winner": "Smart",
+      "hours": 26,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 111,
+      "winner": "Collector",
+      "hours": 39,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 112,
+      "winner": "Collector",
+      "hours": 14,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 113,
+      "winner": "Conservative",
+      "hours": 33,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 114,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 115,
+      "winner": "Collector",
+      "hours": 19,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 116,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 117,
+      "winner": "Conservative",
+      "hours": 37,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 118,
+      "winner": "Smart",
+      "hours": 76,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 119,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 120,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 121,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 122,
+      "winner": "Conservative",
+      "hours": 31,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 123,
+      "winner": "Conservative",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 124,
+      "winner": "Aggressive",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 125,
+      "winner": "Conservative",
+      "hours": 15,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 126,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 127,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 128,
+      "winner": "Conservative",
+      "hours": 18,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 129,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 130,
+      "winner": "Smart",
+      "hours": 45,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 131,
+      "winner": "Smart",
+      "hours": 49,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 132,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 133,
+      "winner": "Collector",
+      "hours": 19,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 134,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 135,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 136,
+      "winner": "Conservative",
+      "hours": 20,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 137,
+      "winner": "Aggressive",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 138,
+      "winner": "Collector",
+      "hours": 37,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 139,
+      "winner": "Smart",
+      "hours": 26,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 140,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 141,
+      "winner": "Collector",
+      "hours": 24,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 142,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 143,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 144,
+      "winner": "Smart",
+      "hours": 40,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 145,
+      "winner": "Collector",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 146,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 147,
+      "winner": "Smart",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 148,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 149,
+      "winner": "Conservative",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 150,
+      "winner": "Collector",
+      "hours": 23,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 151,
+      "winner": "Aggressive",
+      "hours": 11,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 152,
+      "winner": "Conservative",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 153,
+      "winner": "Collector",
+      "hours": 63,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 154,
+      "winner": "Conservative",
+      "hours": 24,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 155,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 156,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 157,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 158,
+      "winner": "Conservative",
+      "hours": 33,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 159,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 160,
+      "winner": "Smart",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 161,
+      "winner": "Smart",
+      "hours": 23,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 162,
+      "winner": "Collector",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 163,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 164,
+      "winner": "Conservative",
+      "hours": 23,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 165,
+      "winner": "Conservative",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 166,
+      "winner": "Conservative",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 167,
+      "winner": "Smart",
+      "hours": 40,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 168,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 169,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 170,
+      "winner": "Smart",
+      "hours": 40,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 171,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 172,
+      "winner": "Smart",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 173,
+      "winner": "Conservative",
+      "hours": 27,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 174,
+      "winner": "Collector",
+      "hours": 24,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 175,
+      "winner": "Smart",
+      "hours": 19,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 176,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 177,
+      "winner": "Smart",
+      "hours": 55,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 178,
+      "winner": "Collector",
+      "hours": 21,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 179,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 180,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 181,
+      "winner": "Smart",
+      "hours": 26,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 182,
+      "winner": "Collector",
+      "hours": 15,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 183,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 184,
+      "winner": "Smart",
+      "hours": 34,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 185,
+      "winner": "Conservative",
+      "hours": 34,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 186,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 187,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 188,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 189,
+      "winner": "Smart",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 190,
+      "winner": "Collector",
+      "hours": 17,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 191,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 192,
+      "winner": "Collector",
+      "hours": 23,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 193,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 194,
+      "winner": "Conservative",
+      "hours": 11,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 195,
+      "winner": "Collector",
+      "hours": 43,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 196,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 197,
+      "winner": "Collector",
+      "hours": 21,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 198,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 199,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 200,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 201,
+      "winner": "Collector",
+      "hours": 23,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 202,
+      "winner": "Collector",
+      "hours": 15,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 203,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 204,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 205,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 206,
+      "winner": "Conservative",
+      "hours": 31,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 207,
+      "winner": "Aggressive",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 208,
+      "winner": "Conservative",
+      "hours": 28,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 209,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 210,
+      "winner": "Conservative",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 211,
+      "winner": "Conservative",
+      "hours": 29,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 212,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 213,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 214,
+      "winner": "Collector",
+      "hours": 43,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 215,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 216,
+      "winner": "Aggressive",
+      "hours": 29,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 217,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 218,
+      "winner": "Conservative",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 219,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 220,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 221,
+      "winner": "Collector",
+      "hours": 32,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 222,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 223,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 224,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 225,
+      "winner": "Conservative",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 226,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 227,
+      "winner": "Collector",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 228,
+      "winner": "Conservative",
+      "hours": 12,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 229,
+      "winner": "Smart",
+      "hours": 11,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 230,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 231,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 232,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 233,
+      "winner": "Smart",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 234,
+      "winner": "Smart",
+      "hours": 42,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 235,
+      "winner": "Smart",
+      "hours": 20,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 236,
+      "winner": "Conservative",
+      "hours": 43,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 237,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 238,
+      "winner": "Smart",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 239,
+      "winner": "Smart",
+      "hours": 23,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 240,
+      "winner": "Aggressive",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 241,
+      "winner": "Conservative",
+      "hours": 28,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 242,
+      "winner": "Smart",
+      "hours": 21,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 243,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 244,
+      "winner": "Smart",
+      "hours": 21,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 245,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 246,
+      "winner": "Conservative",
+      "hours": 43,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 247,
+      "winner": "Conservative",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 248,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 249,
+      "winner": "Smart",
+      "hours": 56,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 250,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 251,
+      "winner": "Smart",
+      "hours": 41,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 252,
+      "winner": "Collector",
+      "hours": 14,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 253,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 254,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 255,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 256,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 257,
+      "winner": "Conservative",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 258,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 259,
+      "winner": "Aggressive",
+      "hours": 9,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 260,
+      "winner": "Conservative",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 261,
+      "winner": "Aggressive",
+      "hours": 9,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 262,
+      "winner": "Aggressive",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 263,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 264,
+      "winner": "Conservative",
+      "hours": 23,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 265,
+      "winner": "Smart",
+      "hours": 55,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 266,
+      "winner": "Smart",
+      "hours": 53,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 267,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 268,
+      "winner": "Smart",
+      "hours": 9,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 269,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 270,
+      "winner": "Aggressive",
+      "hours": 30,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 271,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 272,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 273,
+      "winner": "Conservative",
+      "hours": 35,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 274,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 275,
+      "winner": "Conservative",
+      "hours": 17,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 276,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 277,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 278,
+      "winner": "Collector",
+      "hours": 33,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 279,
+      "winner": "Conservative",
+      "hours": 38,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 280,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 281,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 282,
+      "winner": "Aggressive",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 283,
+      "winner": "Smart",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 284,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 285,
+      "winner": "Aggressive",
+      "hours": 27,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 286,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 287,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 288,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 289,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 290,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 291,
+      "winner": "Collector",
+      "hours": 31,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 292,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 293,
+      "winner": "Conservative",
+      "hours": 28,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 294,
+      "winner": "Smart",
+      "hours": 33,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 295,
+      "winner": "Smart",
+      "hours": 39,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 296,
+      "winner": "Conservative",
+      "hours": 12,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 297,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 298,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 299,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 300,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 301,
+      "winner": "Smart",
+      "hours": 11,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 302,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 303,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 304,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 305,
+      "winner": "Aggressive",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 306,
+      "winner": "Smart",
+      "hours": 30,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 307,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 308,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 309,
+      "winner": "Conservative",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 310,
+      "winner": "Aggressive",
+      "hours": 11,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 311,
+      "winner": "Collector",
+      "hours": 24,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 312,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 313,
+      "winner": "Aggressive",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 314,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 315,
+      "winner": "Conservative",
+      "hours": 31,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 316,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 317,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 318,
+      "winner": "Collector",
+      "hours": 27,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 319,
+      "winner": "Smart",
+      "hours": 34,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 320,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 321,
+      "winner": "Conservative",
+      "hours": 33,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 322,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 323,
+      "winner": "Collector",
+      "hours": 28,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 324,
+      "winner": "Collector",
+      "hours": 47,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 325,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 326,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 327,
+      "winner": "Smart",
+      "hours": 9,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 328,
+      "winner": "Collector",
+      "hours": 26,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 329,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 330,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 331,
+      "winner": "Collector",
+      "hours": 41,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 332,
+      "winner": "Collector",
+      "hours": 16,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 333,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 334,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 335,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 336,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 337,
+      "winner": "Conservative",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 338,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 339,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 340,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 341,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 342,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 343,
+      "winner": "Conservative",
+      "hours": 29,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 344,
+      "winner": "Smart",
+      "hours": 54,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 345,
+      "winner": "Conservative",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 346,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 347,
+      "winner": "Conservative",
+      "hours": 39,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 348,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 349,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 350,
+      "winner": "Collector",
+      "hours": 22,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 351,
+      "winner": "Collector",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 352,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 353,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 354,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 355,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 356,
+      "winner": "Smart",
+      "hours": 36,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 357,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 358,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 359,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 360,
+      "winner": "Conservative",
+      "hours": 45,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 361,
+      "winner": "Aggressive",
+      "hours": 36,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 362,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 363,
+      "winner": "Conservative",
+      "hours": 31,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 364,
+      "winner": "Collector",
+      "hours": 32,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 365,
+      "winner": "Aggressive",
+      "hours": 10,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 366,
+      "winner": "Conservative",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 367,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 368,
+      "winner": "Aggressive",
+      "hours": 10,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 369,
+      "winner": "Conservative",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 370,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 371,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 372,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 373,
+      "winner": "Aggressive",
+      "hours": 9,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 374,
+      "winner": "Conservative",
+      "hours": 33,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 375,
+      "winner": "Collector",
+      "hours": 19,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 376,
+      "winner": "Aggressive",
+      "hours": 28,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 377,
+      "winner": "Smart",
+      "hours": 29,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 378,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 379,
+      "winner": "Aggressive",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 380,
+      "winner": "Smart",
+      "hours": 38,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 381,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 382,
+      "winner": "Collector",
+      "hours": 13,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 383,
+      "winner": "Smart",
+      "hours": 9,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 384,
+      "winner": "Conservative",
+      "hours": 34,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 385,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 386,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 387,
+      "winner": "Smart",
+      "hours": 39,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 388,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 389,
+      "winner": "Collector",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 390,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 391,
+      "winner": "Collector",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 392,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 393,
+      "winner": "Conservative",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 394,
+      "winner": "Conservative",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 395,
+      "winner": "Smart",
+      "hours": 33,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 396,
+      "winner": "Collector",
+      "hours": 50,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 397,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 398,
+      "winner": "Smart",
+      "hours": 23,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 399,
+      "winner": "Collector",
+      "hours": 31,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 400,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 401,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 402,
+      "winner": "Collector",
+      "hours": 39,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 403,
+      "winner": "Conservative",
+      "hours": 32,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 404,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 405,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 406,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 407,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 408,
+      "winner": "Smart",
+      "hours": 30,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 409,
+      "winner": "Smart",
+      "hours": 22,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 410,
+      "winner": "Collector",
+      "hours": 37,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 411,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 412,
+      "winner": "Smart",
+      "hours": 55,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 413,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 414,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 415,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 416,
+      "winner": "Smart",
+      "hours": 22,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 417,
+      "winner": "Conservative",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 418,
+      "winner": "Collector",
+      "hours": 27,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 419,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 420,
+      "winner": null,
+      "hours": 200,
+      "end_reason": "max_hours_reached"
+    },
+    {
+      "index": 421,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 422,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 423,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 424,
+      "winner": "Smart",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 425,
+      "winner": "Smart",
+      "hours": 36,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 426,
+      "winner": "Smart",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 427,
+      "winner": "Conservative",
+      "hours": 46,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 428,
+      "winner": "Conservative",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 429,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 430,
+      "winner": "Collector",
+      "hours": 11,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 431,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 432,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 433,
+      "winner": "Conservative",
+      "hours": 45,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 434,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 435,
+      "winner": "Smart",
+      "hours": 24,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 436,
+      "winner": "Collector",
+      "hours": 54,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 437,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 438,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 439,
+      "winner": "Smart",
+      "hours": 27,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 440,
+      "winner": "Conservative",
+      "hours": 40,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 441,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 442,
+      "winner": "Smart",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 443,
+      "winner": "Collector",
+      "hours": 14,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 444,
+      "winner": "Conservative",
+      "hours": 27,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 445,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 446,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 447,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 448,
+      "winner": "Aggressive",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 449,
+      "winner": "Conservative",
+      "hours": 44,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 450,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 451,
+      "winner": "Conservative",
+      "hours": 46,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 452,
+      "winner": "Smart",
+      "hours": 47,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 453,
+      "winner": "Smart",
+      "hours": 11,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 454,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 455,
+      "winner": "Collector",
+      "hours": 16,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 456,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 457,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 458,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 459,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 460,
+      "winner": "Smart",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 461,
+      "winner": "Smart",
+      "hours": 25,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 462,
+      "winner": "Collector",
+      "hours": 35,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 463,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 464,
+      "winner": "Smart",
+      "hours": 20,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 465,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 466,
+      "winner": "Conservative",
+      "hours": 13,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 467,
+      "winner": "Collector",
+      "hours": 35,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 468,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 469,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 470,
+      "winner": "Conservative",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 471,
+      "winner": "Collector",
+      "hours": 23,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 472,
+      "winner": "Conservative",
+      "hours": 27,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 473,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 474,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 475,
+      "winner": "Collector",
+      "hours": 27,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 476,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 477,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 478,
+      "winner": "Collector",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 479,
+      "winner": "Aggressive",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 480,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 481,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 482,
+      "winner": "Collector",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 483,
+      "winner": "Collector",
+      "hours": 37,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 484,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 485,
+      "winner": "Smart",
+      "hours": 24,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 486,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 487,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 488,
+      "winner": "Smart",
+      "hours": 22,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 489,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 490,
+      "winner": "Smart",
+      "hours": 21,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 491,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 492,
+      "winner": "Smart",
+      "hours": 22,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 493,
+      "winner": "Collector",
+      "hours": 36,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 494,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 495,
+      "winner": "Smart",
+      "hours": 10,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 496,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 497,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 498,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 499,
+      "winner": "Conservative",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 500,
+      "winner": "Conservative",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 501,
+      "winner": "Conservative",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 502,
+      "winner": "Smart",
+      "hours": 29,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 503,
+      "winner": "Collector",
+      "hours": 15,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 504,
+      "winner": "Conservative",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 505,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 506,
+      "winner": "Conservative",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 507,
+      "winner": "Smart",
+      "hours": 34,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 508,
+      "winner": "Smart",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 509,
+      "winner": null,
+      "hours": 200,
+      "end_reason": "max_hours_reached"
+    },
+    {
+      "index": 510,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 511,
+      "winner": "Aggressive",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 512,
+      "winner": "Collector",
+      "hours": 31,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 513,
+      "winner": "Smart",
+      "hours": 30,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 514,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 515,
+      "winner": "Conservative",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 516,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 517,
+      "winner": "Collector",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 518,
+      "winner": "Collector",
+      "hours": 19,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 519,
+      "winner": "Conservative",
+      "hours": 38,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 520,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 521,
+      "winner": "Smart",
+      "hours": 9,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 522,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 523,
+      "winner": "Conservative",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 524,
+      "winner": "Conservative",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 525,
+      "winner": null,
+      "hours": 200,
+      "end_reason": "max_hours_reached"
+    },
+    {
+      "index": 526,
+      "winner": "Smart",
+      "hours": 11,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 527,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 528,
+      "winner": "Conservative",
+      "hours": 33,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 529,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 530,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 531,
+      "winner": "Collector",
+      "hours": 21,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 532,
+      "winner": "Conservative",
+      "hours": 27,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 533,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 534,
+      "winner": "Conservative",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 535,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 536,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 537,
+      "winner": "Collector",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 538,
+      "winner": "Conservative",
+      "hours": 19,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 539,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 540,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 541,
+      "winner": "Smart",
+      "hours": 74,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 542,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 543,
+      "winner": "Collector",
+      "hours": 13,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 544,
+      "winner": null,
+      "hours": 200,
+      "end_reason": "max_hours_reached"
+    },
+    {
+      "index": 545,
+      "winner": "Smart",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 546,
+      "winner": "Conservative",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 547,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 548,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 549,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 550,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 551,
+      "winner": "Conservative",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 552,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 553,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 554,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 555,
+      "winner": "Smart",
+      "hours": 23,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 556,
+      "winner": "Conservative",
+      "hours": 38,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 557,
+      "winner": "Smart",
+      "hours": 27,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 558,
+      "winner": "Conservative",
+      "hours": 36,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 559,
+      "winner": "Conservative",
+      "hours": 28,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 560,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 561,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 562,
+      "winner": "Aggressive",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 563,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 564,
+      "winner": "Conservative",
+      "hours": 28,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 565,
+      "winner": "Smart",
+      "hours": 43,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 566,
+      "winner": "Conservative",
+      "hours": 11,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 567,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 568,
+      "winner": "Conservative",
+      "hours": 20,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 569,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 570,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 571,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 572,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 573,
+      "winner": "Collector",
+      "hours": 34,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 574,
+      "winner": "Conservative",
+      "hours": 42,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 575,
+      "winner": "Smart",
+      "hours": 9,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 576,
+      "winner": "Aggressive",
+      "hours": 27,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 577,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 578,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 579,
+      "winner": "Collector",
+      "hours": 23,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 580,
+      "winner": "Smart",
+      "hours": 11,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 581,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 582,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 583,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 584,
+      "winner": "Smart",
+      "hours": 21,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 585,
+      "winner": "Collector",
+      "hours": 40,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 586,
+      "winner": "Conservative",
+      "hours": 28,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 587,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 588,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 589,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 590,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 591,
+      "winner": "Conservative",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 592,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 593,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 594,
+      "winner": "Collector",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 595,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 596,
+      "winner": "Collector",
+      "hours": 15,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 597,
+      "winner": "Aggressive",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 598,
+      "winner": "Conservative",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 599,
+      "winner": "Smart",
+      "hours": 10,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 600,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 601,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 602,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 603,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 604,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 605,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 606,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 607,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 608,
+      "winner": "Collector",
+      "hours": 31,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 609,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 610,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 611,
+      "winner": "Aggressive",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 612,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 613,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 614,
+      "winner": "Smart",
+      "hours": 25,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 615,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 616,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 617,
+      "winner": "Collector",
+      "hours": 16,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 618,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 619,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 620,
+      "winner": "Smart",
+      "hours": 19,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 621,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 622,
+      "winner": "Smart",
+      "hours": 31,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 623,
+      "winner": "Collector",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 624,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 625,
+      "winner": "Aggressive",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 626,
+      "winner": "Collector",
+      "hours": 20,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 627,
+      "winner": "Smart",
+      "hours": 25,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 628,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 629,
+      "winner": "Collector",
+      "hours": 13,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 630,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 631,
+      "winner": "Smart",
+      "hours": 10,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 632,
+      "winner": "Smart",
+      "hours": 7,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 633,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 634,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 635,
+      "winner": "Smart",
+      "hours": 29,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 636,
+      "winner": "Conservative",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 637,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 638,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 639,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 640,
+      "winner": "Collector",
+      "hours": 19,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 641,
+      "winner": "Conservative",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 642,
+      "winner": "Aggressive",
+      "hours": 34,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 643,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 644,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 645,
+      "winner": "Smart",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 646,
+      "winner": "Aggressive",
+      "hours": 27,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 647,
+      "winner": "Aggressive",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 648,
+      "winner": "Smart",
+      "hours": 32,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 649,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 650,
+      "winner": "Smart",
+      "hours": 50,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 651,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 652,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 653,
+      "winner": "Conservative",
+      "hours": 12,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 654,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 655,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 656,
+      "winner": "Collector",
+      "hours": 32,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 657,
+      "winner": "Conservative",
+      "hours": 30,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 658,
+      "winner": "Collector",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 659,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 660,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 661,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 662,
+      "winner": "Smart",
+      "hours": 57,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 663,
+      "winner": "Smart",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 664,
+      "winner": "Conservative",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 665,
+      "winner": "Conservative",
+      "hours": 23,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 666,
+      "winner": "Conservative",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 667,
+      "winner": "Conservative",
+      "hours": 24,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 668,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 669,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 670,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 671,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 672,
+      "winner": "Collector",
+      "hours": 18,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 673,
+      "winner": "Smart",
+      "hours": 21,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 674,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 675,
+      "winner": "Smart",
+      "hours": 23,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 676,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 677,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 678,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 679,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 680,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 681,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 682,
+      "winner": "Collector",
+      "hours": 34,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 683,
+      "winner": "Conservative",
+      "hours": 38,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 684,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 685,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 686,
+      "winner": "Conservative",
+      "hours": 33,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 687,
+      "winner": "Conservative",
+      "hours": 28,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 688,
+      "winner": "Collector",
+      "hours": 37,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 689,
+      "winner": "Conservative",
+      "hours": 45,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 690,
+      "winner": null,
+      "hours": 200,
+      "end_reason": "max_hours_reached"
+    },
+    {
+      "index": 691,
+      "winner": "Collector",
+      "hours": 20,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 692,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 693,
+      "winner": "Conservative",
+      "hours": 16,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 694,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 695,
+      "winner": "Collector",
+      "hours": 53,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 696,
+      "winner": "Collector",
+      "hours": 20,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 697,
+      "winner": "Collector",
+      "hours": 53,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 698,
+      "winner": "Smart",
+      "hours": 44,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 699,
+      "winner": "Smart",
+      "hours": 43,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 700,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 701,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 702,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 703,
+      "winner": "Aggressive",
+      "hours": 11,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 704,
+      "winner": "Smart",
+      "hours": 25,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 705,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 706,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 707,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 708,
+      "winner": "Smart",
+      "hours": 13,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 709,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 710,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 711,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 712,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 713,
+      "winner": "Conservative",
+      "hours": 53,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 714,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 715,
+      "winner": "Conservative",
+      "hours": 19,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 716,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 717,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 718,
+      "winner": "Conservative",
+      "hours": 37,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 719,
+      "winner": "Conservative",
+      "hours": 35,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 720,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 721,
+      "winner": "Smart",
+      "hours": 23,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 722,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 723,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 724,
+      "winner": "Conservative",
+      "hours": 27,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 725,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 726,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 727,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 728,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 729,
+      "winner": "Collector",
+      "hours": 11,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 730,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 731,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 732,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 733,
+      "winner": "Conservative",
+      "hours": 40,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 734,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 735,
+      "winner": "Collector",
+      "hours": 14,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 736,
+      "winner": "Collector",
+      "hours": 32,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 737,
+      "winner": "Collector",
+      "hours": 17,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 738,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 739,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 740,
+      "winner": "Smart",
+      "hours": 19,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 741,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 742,
+      "winner": "Aggressive",
+      "hours": 29,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 743,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 744,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 745,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 746,
+      "winner": "Collector",
+      "hours": 20,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 747,
+      "winner": "Collector",
+      "hours": 63,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 748,
+      "winner": "Collector",
+      "hours": 38,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 749,
+      "winner": "Collector",
+      "hours": 15,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 750,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 751,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 752,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 753,
+      "winner": "Smart",
+      "hours": 24,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 754,
+      "winner": "Aggressive",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 755,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 756,
+      "winner": "Collector",
+      "hours": 14,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 757,
+      "winner": "Aggressive",
+      "hours": 29,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 758,
+      "winner": "Smart",
+      "hours": 32,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 759,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 760,
+      "winner": "Conservative",
+      "hours": 39,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 761,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 762,
+      "winner": "Smart",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 763,
+      "winner": "Collector",
+      "hours": 49,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 764,
+      "winner": "Smart",
+      "hours": 37,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 765,
+      "winner": "Collector",
+      "hours": 11,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 766,
+      "winner": "Conservative",
+      "hours": 29,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 767,
+      "winner": "Conservative",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 768,
+      "winner": "Conservative",
+      "hours": 28,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 769,
+      "winner": "Smart",
+      "hours": 11,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 770,
+      "winner": "Conservative",
+      "hours": 30,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 771,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 772,
+      "winner": "Conservative",
+      "hours": 32,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 773,
+      "winner": "Conservative",
+      "hours": 40,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 774,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 775,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 776,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 777,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 778,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 779,
+      "winner": "Collector",
+      "hours": 32,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 780,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 781,
+      "winner": "Collector",
+      "hours": 28,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 782,
+      "winner": "Smart",
+      "hours": 25,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 783,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 784,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 785,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 786,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 787,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 788,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 789,
+      "winner": "Collector",
+      "hours": 24,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 790,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 791,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 792,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 793,
+      "winner": "Collector",
+      "hours": 16,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 794,
+      "winner": "Conservative",
+      "hours": 11,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 795,
+      "winner": "Smart",
+      "hours": 8,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 796,
+      "winner": "Collector",
+      "hours": 22,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 797,
+      "winner": "Conservative",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 798,
+      "winner": "Smart",
+      "hours": 46,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 799,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 800,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 801,
+      "winner": "Conservative",
+      "hours": 29,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 802,
+      "winner": "Smart",
+      "hours": 11,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 803,
+      "winner": "Conservative",
+      "hours": 22,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 804,
+      "winner": "Conservative",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 805,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 806,
+      "winner": "Smart",
+      "hours": 38,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 807,
+      "winner": "Conservative",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 808,
+      "winner": "Collector",
+      "hours": 40,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 809,
+      "winner": "Collector",
+      "hours": 62,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 810,
+      "winner": "Aggressive",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 811,
+      "winner": null,
+      "hours": 200,
+      "end_reason": "max_hours_reached"
+    },
+    {
+      "index": 812,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 813,
+      "winner": "Conservative",
+      "hours": 14,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 814,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 815,
+      "winner": "Smart",
+      "hours": 29,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 816,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 817,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 818,
+      "winner": "Conservative",
+      "hours": 13,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 819,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 820,
+      "winner": "Smart",
+      "hours": 20,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 821,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 822,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 823,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 824,
+      "winner": "Collector",
+      "hours": 17,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 825,
+      "winner": "Collector",
+      "hours": 20,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 826,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 827,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 828,
+      "winner": "Collector",
+      "hours": 20,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 829,
+      "winner": "Collector",
+      "hours": 21,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 830,
+      "winner": "Collector",
+      "hours": 37,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 831,
+      "winner": "Aggressive",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 832,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 833,
+      "winner": "Aggressive",
+      "hours": 31,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 834,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 835,
+      "winner": "Conservative",
+      "hours": 34,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 836,
+      "winner": "Conservative",
+      "hours": 27,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 837,
+      "winner": "Collector",
+      "hours": 23,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 838,
+      "winner": "Smart",
+      "hours": 30,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 839,
+      "winner": "Conservative",
+      "hours": 34,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 840,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 841,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 842,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 843,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 844,
+      "winner": "Aggressive",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 845,
+      "winner": "Smart",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 846,
+      "winner": "Smart",
+      "hours": 14,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 847,
+      "winner": "Smart",
+      "hours": 27,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 848,
+      "winner": "Conservative",
+      "hours": 45,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 849,
+      "winner": "Collector",
+      "hours": 18,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 850,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 851,
+      "winner": "Conservative",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 852,
+      "winner": "Aggressive",
+      "hours": 33,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 853,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 854,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 855,
+      "winner": "Smart",
+      "hours": 25,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 856,
+      "winner": "Smart",
+      "hours": 14,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 857,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 858,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 859,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 860,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 861,
+      "winner": "Collector",
+      "hours": 25,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 862,
+      "winner": "Conservative",
+      "hours": 35,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 863,
+      "winner": "Smart",
+      "hours": 27,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 864,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 865,
+      "winner": "Smart",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 866,
+      "winner": "Conservative",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 867,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 868,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 869,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 870,
+      "winner": "Smart",
+      "hours": 41,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 871,
+      "winner": "Smart",
+      "hours": 19,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 872,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 873,
+      "winner": "Smart",
+      "hours": 35,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 874,
+      "winner": "Conservative",
+      "hours": 26,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 875,
+      "winner": "Smart",
+      "hours": 28,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 876,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 877,
+      "winner": "Conservative",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 878,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 879,
+      "winner": "Smart",
+      "hours": 14,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 880,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 881,
+      "winner": "Aggressive",
+      "hours": 42,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 882,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 883,
+      "winner": "Collector",
+      "hours": 27,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 884,
+      "winner": "Collector",
+      "hours": 11,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 885,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 886,
+      "winner": "Conservative",
+      "hours": 37,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 887,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 888,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 889,
+      "winner": "Smart",
+      "hours": 23,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 890,
+      "winner": "Conservative",
+      "hours": 18,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 891,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 892,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 893,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 894,
+      "winner": "Smart",
+      "hours": 28,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 895,
+      "winner": "Smart",
+      "hours": 28,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 896,
+      "winner": "Smart",
+      "hours": 23,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 897,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 898,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 899,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 900,
+      "winner": "Smart",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 901,
+      "winner": "Smart",
+      "hours": 50,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 902,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 903,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 904,
+      "winner": "Smart",
+      "hours": 49,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 905,
+      "winner": "Smart",
+      "hours": 12,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 906,
+      "winner": "Smart",
+      "hours": 31,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 907,
+      "winner": "Smart",
+      "hours": 33,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 908,
+      "winner": "Collector",
+      "hours": 15,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 909,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 910,
+      "winner": "Aggressive",
+      "hours": 20,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 911,
+      "winner": "Conservative",
+      "hours": 30,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 912,
+      "winner": "Aggressive",
+      "hours": 8,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 913,
+      "winner": "Conservative",
+      "hours": 43,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 914,
+      "winner": "Smart",
+      "hours": 45,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 915,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 916,
+      "winner": "Collector",
+      "hours": 48,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 917,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 918,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 919,
+      "winner": "Aggressive",
+      "hours": 13,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 920,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 921,
+      "winner": "Collector",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 922,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 923,
+      "winner": "Collector",
+      "hours": 26,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 924,
+      "winner": "Conservative",
+      "hours": 20,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 925,
+      "winner": "Smart",
+      "hours": 18,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 926,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 927,
+      "winner": "Collector",
+      "hours": 14,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 928,
+      "winner": "Conservative",
+      "hours": 20,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 929,
+      "winner": "Conservative",
+      "hours": 20,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 930,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 931,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 932,
+      "winner": "Smart",
+      "hours": 11,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 933,
+      "winner": "Collector",
+      "hours": 44,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 934,
+      "winner": "Conservative",
+      "hours": 35,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 935,
+      "winner": "Collector",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 936,
+      "winner": "Collector",
+      "hours": 39,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 937,
+      "winner": "Collector",
+      "hours": 19,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 938,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 939,
+      "winner": "Smart",
+      "hours": 8,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 940,
+      "winner": "Conservative",
+      "hours": 28,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 941,
+      "winner": "Collector",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 942,
+      "winner": "Smart",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 943,
+      "winner": "Smart",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 944,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 945,
+      "winner": "Conservative",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 946,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 947,
+      "winner": "Collector",
+      "hours": 17,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 948,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 949,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 950,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 951,
+      "winner": "Aggressive",
+      "hours": 28,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 952,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 953,
+      "winner": "Conservative",
+      "hours": 19,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 954,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 955,
+      "winner": "Conservative",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 956,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 957,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 958,
+      "winner": "Conservative",
+      "hours": 12,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 959,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 960,
+      "winner": "Conservative",
+      "hours": 20,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 961,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 962,
+      "winner": "Aggressive",
+      "hours": 21,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 963,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 964,
+      "winner": "Smart",
+      "hours": 21,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 965,
+      "winner": "Smart",
+      "hours": 17,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 966,
+      "winner": "Conservative",
+      "hours": 39,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 967,
+      "winner": "Smart",
+      "hours": 34,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 968,
+      "winner": "Aggressive",
+      "hours": 19,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 969,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 970,
+      "winner": "Smart",
+      "hours": 19,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 971,
+      "winner": "Conservative",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 972,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 973,
+      "winner": "Collector",
+      "hours": 35,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 974,
+      "winner": "Smart",
+      "hours": 16,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 975,
+      "winner": "Conservative",
+      "hours": 28,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 976,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 977,
+      "winner": "Smart",
+      "hours": 44,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 978,
+      "winner": "Aggressive",
+      "hours": 24,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 979,
+      "winner": "Conservative",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 980,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 981,
+      "winner": "Collector",
+      "hours": 15,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 982,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 983,
+      "winner": "Smart",
+      "hours": 15,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 984,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 985,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 986,
+      "winner": "Smart",
+      "hours": 21,
+      "end_reason": "full_receptor"
+    },
+    {
+      "index": 987,
+      "winner": "Aggressive",
+      "hours": 17,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 988,
+      "winner": "Collector",
+      "hours": 30,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 989,
+      "winner": "Collector",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 990,
+      "winner": "Aggressive",
+      "hours": 16,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 991,
+      "winner": "Smart",
+      "hours": 43,
+      "end_reason": "last_traveler"
+    },
+    {
+      "index": 992,
+      "winner": "Aggressive",
+      "hours": 18,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 993,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 994,
+      "winner": "Aggressive",
+      "hours": 22,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 995,
+      "winner": "Smart",
+      "hours": 61,
+      "end_reason": "merchant_empty"
+    },
+    {
+      "index": 996,
+      "winner": "Aggressive",
+      "hours": 14,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 997,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 998,
+      "winner": "Aggressive",
+      "hours": 15,
+      "end_reason": "year_zero"
+    },
+    {
+      "index": 999,
+      "winner": "Aggressive",
+      "hours": 25,
+      "end_reason": "year_zero"
+    }
+  ]
+}
