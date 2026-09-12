@@ -15,7 +15,7 @@ This repository is not the game. It is the rules engine and the analysis platfor
 wrote around it, so that balance questions get answered with thousands of games instead
 of one afternoon at the table.
 
-**[See the game: screenshots, rules and the interface](https://reisaurafael.github.io/paradoxo-simulator/portfolio/)**
+**[See the game: screenshots, rules and the interface](https://reisaurafael.github.io/paradoxo-simulator/)**
 
 ---
 
