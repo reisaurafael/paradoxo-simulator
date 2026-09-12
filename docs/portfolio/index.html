@@ -101,6 +101,10 @@
   @media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
   .par figure{margin:0}
 
+  .trio{display:grid;gap:1.25rem;margin-top:1.5rem}
+  @media(min-width:820px){.trio{grid-template-columns:repeat(3,1fr)}}
+  .trio figure{margin:0}
+
   /* ── números e acesso ──────────────────────────────────────────────── */
   .numeros{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
   @media(min-width:700px){.numeros{grid-template-columns:repeat(3,1fr)}}
@@ -121,7 +125,7 @@
 <body>
 
 <header class="hero">
-  <img src="img/mesa.jpg" alt="A mesa do Paradoxo: maleta de contratos, arquivos dos viajantes, a máquina de pulso e o mapa da linha do tempo.">
+  <img src="img/mesa-hora17.jpg" alt="A mesa do Paradoxo na Hora 17: maleta de contratos, arquivos dos viajantes, a máquina de pulso e o mapa da linha do tempo.">
   <div class="hero-copy">
     <div class="wrap">
       <p class="selo">C.R.O.N.O.S. · Divisão de Operações Temporais</p>
@@ -137,9 +141,25 @@
   <div class="rotulo">A premissa<b>por que o jogo existe</b></div>
   <div>
     <h2>A história não está perdida. Está fora de lugar.</h2>
-    <p class="destaque">Cada objeto do baralho foi arrancado do século em que nasceu. Devolver é o trabalho, e o trabalho paga pontos.</p>
-    <p>O aperto vem da geografia do tempo. Tudo o que vale está atrás: os objetos antigos, o mito, o Ano Zero. O futuro é seguro, barato e pobre. E o caminho até o que importa é exatamente o caminho que sangra, porque só a viagem ao passado tira energia de você.</p>
-    <p>Dois a seis viajantes disputam a mesma trilha com esse aperto. Toda decisão do jogo acaba sendo a mesma decisão: <em>quanto de vida você paga para chegar perto do que importa</em>.</p>
+    <p class="destaque">Cada carta é um objeto que existiu e foi arrancado do século em que nasceu. Devolver ao século exato é o que paga ponto.</p>
+    <p>A trilha é uma só: do século XXX, onde os dois a seis viajantes começam, até o Ano Zero, logo abaixo do século I. Subir é de graça. Descer tira energia, e energia é vida.</p>
+    <p>E o valor não está todo atrás. As peças mais caras estão nas duas pontas da linha, da Lança do Destino no século I à Primeira Máquina do Tempo no XXX. Então a decisão nunca é onde está o valor: é <em>quanto de vida você paga pelo caminho até ele</em>, sabendo que quem pisar no Ano Zero encerra a partida para todo mundo.</p>
+  </div>
+</div></section>
+
+<section><div class="wrap bloco">
+  <div class="rotulo">O tabuleiro<b>três mapas</b></div>
+  <div>
+    <h2>O mapa é desenhado na língua do tempo em que você está.</h2>
+    <p>A trilha é sempre a mesma, trinta séculos e o Ano Zero. O desenho muda com o período onde o seu viajante está: quem anda pelos séculos I a X lê um mapa de reinos murados; quem está no XI a XIX navega a Paradox Sea, com ilhas, correntes e águas de tubarão onde o século custa o dobro; quem está no XX a XXX lê uma carta de estrelas, com as constelações e o sol morto do Ano Zero. As três imagens são a mesma partida, na mesma Hora 17, vistas de três assentos diferentes.</p>
+    <div class="trio">
+      <figure><img src="img/mapa-reinos.jpg" alt="Mapa dos seis reinos murados, a pele do período Origens.">
+        <figcaption>Origens, séculos I a X. Os seis reinos murados, e a serpente em volta do Ano Zero.</figcaption></figure>
+      <figure><img src="img/mapa-mar.jpg" alt="A Paradox Sea, a pele do período Ascensão, com ilhas e legenda de carta náutica.">
+        <figcaption>Ascensão, séculos XI a XIX. Cada século é uma ilha, cada viagem deixa rastro, e a legenda é escrita à mão pelo viajante.</figcaption></figure>
+      <figure><img src="img/mapa-estrelas.jpg" alt="Carta estelar do período Singularidade, com constelações e o Ano Zero como sol morto.">
+        <figcaption>Singularidade, séculos XX a XXX. As constelações do Titã, da Bússola e da Serpente, e o cinturão de destroços que cobra dois de energia por século.</figcaption></figure>
+    </div>
   </div>
 </div></section>
 
