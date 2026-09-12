@@ -33,9 +33,9 @@ outputs/
 !docs/sample_report.html
 
 # Playable client and illustrated portfolio
-!v1/**/*.html
 !v1/**/*.png
-!docs/portfolio/index.html
+!docs/**/*.html
+!docs/index.html
 
 # IDE
 .vscode/settings.json
