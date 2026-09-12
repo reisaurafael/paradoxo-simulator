@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Paradoxo</title>
-<meta name="description" content="Seis viajantes, trinta séculos, e um passado que cobra energia de quem entra nele. Jogo de tabuleiro competitivo sobre devolver a história ao século de onde ela foi arrancada.">
+<meta name="description" content="Trinta séculos numa trilha só. O futuro é de graça, o passado cobra energia. Paradoxo, jogo de tabuleiro competitivo de Rafael Reis Garcia.">
 <style>
   :root{
     --ground:#13100C; --panel:#1C1711; --panel-2:#241D16; --line:#34291F;
@@ -12,229 +12,292 @@
     --brass:#C9A227; --hud:#4FD6C0; --hud-dim:#2E8577; --sangue:#8C3242;
     --mono:ui-monospace,"Cascadia Mono","SF Mono",Menlo,Consolas,monospace;
     --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    --measure:64ch; --pad:clamp(1.25rem,4vw,3.5rem);
+    --pad:clamp(1.25rem,4vw,4rem);
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--serif);
-       font-size:clamp(1.02rem,.98rem + .2vw,1.12rem);line-height:1.66;-webkit-font-smoothing:antialiased}
-  img,video{max-width:100%;display:block}
-  .wrap{max-width:1080px;margin-inline:auto;padding-inline:var(--pad)}
-  .eyebrow{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
-           color:var(--hud-dim);display:flex;align-items:center;gap:.75rem;margin:0 0 1rem}
-  .eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
-  h1,h2,h3{color:var(--paper);text-wrap:balance;font-weight:600;margin:0}
-  p{margin:0}
-  p + p{margin-top:1rem}
+       font-size:clamp(1rem,.96rem + .2vw,1.1rem);line-height:1.6;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+  a{color:var(--hud)}
+  .wrap{max-width:1240px;margin-inline:auto;padding-inline:var(--pad)}
+
+  /* ── cabeçalho ─────────────────────────────────────────────────────── */
   .hero{position:relative;isolation:isolate;border-bottom:1px solid var(--line)}
-  .hero-img{width:100%;height:clamp(320px,66vh,680px);object-fit:cover;object-position:50% 45%}
+  .hero img{width:100%;height:clamp(340px,72vh,760px);object-fit:cover;object-position:50% 42%}
   .hero::after{content:"";position:absolute;inset:0;z-index:1;
-    background:linear-gradient(180deg,rgba(19,16,12,.55) 0%,rgba(19,16,12,.2) 34%,rgba(19,16,12,.95) 100%)}
-  .hero-copy{position:absolute;z-index:2;left:0;right:0;bottom:0;padding:0 var(--pad) clamp(1.75rem,4vw,3rem)}
-  .hero-inner{max-width:1080px;margin-inline:auto}
-  .hero h1{font-family:var(--mono);font-size:clamp(2.6rem,9vw,5.6rem);letter-spacing:.02em;
-           line-height:.98;text-shadow:0 2px 30px rgba(0,0,0,.75)}
+    background:linear-gradient(180deg,rgba(19,16,12,.62) 0%,rgba(19,16,12,.15) 38%,rgba(19,16,12,.96) 100%)}
+  .hero-copy{position:absolute;z-index:2;inset:auto 0 0 0;padding-bottom:clamp(1.5rem,4vw,3rem)}
+  .hero h1{font-family:var(--mono);font-size:clamp(3rem,11vw,7rem);letter-spacing:.04em;line-height:.9;
+           color:var(--paper);margin:0;text-shadow:0 2px 34px rgba(0,0,0,.8)}
   .hero h1 span{color:var(--hud)}
-  .hero .tag{max-width:46ch;margin-top:1.1rem;color:var(--paper);
-             font-size:clamp(1.06rem,.98rem + .45vw,1.34rem);text-shadow:0 1px 16px rgba(0,0,0,.9)}
-  section{padding-block:clamp(3rem,7vw,5.5rem)}
-  section + section{border-top:1px solid var(--line)}
-  .lede{max-width:var(--measure)}
-  h2{font-family:var(--mono);font-size:clamp(1.4rem,1.1rem + 1.1vw,2rem);margin-bottom:1.2rem}
-  h3{font-family:var(--mono);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--hud)}
-  .screen{margin-top:2rem;border:1px solid var(--line);border-radius:3px;background:#0C0A07;padding:10px;
-          box-shadow:0 24px 60px -28px rgba(0,0,0,.95),inset 0 0 0 1px rgba(201,162,39,.07)}
-  .screen video{width:100%}
-  .cap{font-family:var(--mono);font-size:.75rem;line-height:1.55;color:var(--ink-dim);margin-top:.85rem}
-  figure{margin:0}
-  figure img{width:100%;border:1px solid var(--line);border-radius:2px}
-  .duo{display:grid;gap:1.5rem;margin-top:2rem}
-  @media(min-width:780px){.duo{grid-template-columns:1fr 1fr}}
-  .solo{margin-top:2rem}
-  .matriz{width:100%;border-collapse:collapse;margin-top:1.75rem;font-family:var(--mono);
-          font-size:.82rem;border:1px solid var(--line)}
-  .matriz th,.matriz td{border:1px solid var(--line);padding:.75rem .8rem;text-align:left}
-  .matriz thead th{background:var(--panel-2);color:var(--ink-dim);font-weight:400;
-                   font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
-  .matriz tbody th{background:var(--panel);color:var(--hud);font-weight:600;
-                   font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
-  .matriz td{background:var(--panel);color:var(--paper)}
-  .matriz td b{color:var(--brass);font-variant-numeric:tabular-nums;margin-right:.5rem}
-  .rolagem{overflow-x:auto}
-  .leis{list-style:none;padding:0;margin:1.75rem 0 0;display:grid;gap:1px;
+  .hero p.tag{max-width:38ch;margin:1.1rem 0 0;color:var(--paper);
+          font-size:clamp(1.1rem,1rem + .5vw,1.4rem);text-shadow:0 1px 18px rgba(0,0,0,.9)}
+  .selo{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+        color:var(--hud-dim);margin:0 0 1rem}
+
+  /* ── grade editorial: rótulo à esquerda, conteúdo à direita ────────── */
+  section{border-top:1px solid var(--line);padding-block:clamp(2.5rem,6vw,4.5rem)}
+  .bloco{display:grid;gap:clamp(1.25rem,3vw,3rem);grid-template-columns:1fr}
+  @media(min-width:900px){.bloco{grid-template-columns:minmax(140px,.7fr) minmax(0,4fr)}}
+  .rotulo{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+          color:var(--hud);align-self:start;position:sticky;top:1.5rem}
+  .rotulo b{display:block;color:var(--ink-dim);font-weight:400;letter-spacing:.08em;
+            text-transform:none;font-family:var(--serif);font-size:.92rem;margin-top:.5rem;line-height:1.4}
+  h2{font-family:var(--mono);color:var(--paper);font-weight:600;
+     font-size:clamp(1.3rem,1.05rem + .9vw,1.85rem);margin:0 0 1rem;line-height:1.2}
+  p{margin:0} p + p{margin-top:.9rem}
+  .bloco > div > p{max-width:72ch}
+  .destaque{color:var(--paper)}
+  em{color:var(--brass);font-style:normal}
+
+  /* ── colunas, cartões, tabelas ─────────────────────────────────────── */
+  .tres{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
+  @media(min-width:760px){.tres{grid-template-columns:repeat(3,1fr)}}
+  .tres > div{background:var(--panel);padding:1.3rem}
+  .tres h3{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
+           color:var(--hud);margin:0 0 .7rem}
+
+  .matriz{display:grid;grid-template-columns:auto repeat(3,1fr);gap:1px;background:var(--line);
+          border:1px solid var(--line);font-family:var(--mono);font-size:.78rem;margin-top:.5rem}
+  .matriz > *{background:var(--panel);padding:.7rem .8rem}
+  .matriz .fn{color:var(--hud);letter-spacing:.1em;text-transform:uppercase;font-size:.68rem;
+              display:flex;align-items:center}
+  .matriz .mod{color:var(--paper)}
+  .matriz .mod b{color:var(--brass);margin-right:.5rem;font-variant-numeric:tabular-nums}
+
+  .leis{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;gap:1px;
         background:var(--line);border:1px solid var(--line)}
-  @media(min-width:720px){.leis{grid-template-columns:1fr 1fr}}
-  .leis li{background:var(--panel);padding:1.2rem 1.3rem}
-  .leis code{font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;color:var(--brass);
-             display:block;margin-bottom:.5rem}
-  .leis p{font-size:.96rem}
-  .objetos{columns:2;column-gap:2.5rem;margin-top:1.75rem;font-size:.98rem}
-  @media(max-width:640px){.objetos{columns:1}}
-  .objetos p{break-inside:avoid;margin-top:0;margin-bottom:.9rem}
-  .objetos b{color:var(--paper);font-weight:600}
-  blockquote{margin:2rem 0 0;padding-left:1.2rem;border-left:2px solid var(--sangue);
-             max-width:var(--measure);color:var(--paper);font-style:italic}
-  .call{border:1px solid var(--line);border-left:3px solid var(--brass);background:var(--panel-2);
-        padding:clamp(1.4rem,4vw,2.2rem);margin-top:2rem}
-  .links{display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;margin:1.4rem 0 0;padding:0;list-style:none;
-         font-family:var(--mono);font-size:.8rem}
-  a{color:var(--hud);text-decoration-color:var(--hud-dim);text-underline-offset:3px}
-  a:hover{color:var(--paper)}
-  a:focus-visible{outline:2px solid var(--hud);outline-offset:3px}
-  footer{border-top:1px solid var(--line);padding-block:2.25rem;font-family:var(--mono);
-         font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim)}
+  @media(min-width:760px){.leis{grid-template-columns:repeat(2,1fr)}}
+  .leis li{background:var(--panel);padding:1.1rem 1.2rem}
+  .leis code{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--brass);
+             display:block;margin-bottom:.45rem}
+
+  .cartas{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
+  @media(min-width:620px){.cartas{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1000px){.cartas{grid-template-columns:repeat(3,1fr)}}
+  .carta{background:var(--panel);padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:.55rem}
+  .carta .nome{font-family:var(--mono);color:var(--paper);font-size:.86rem;letter-spacing:.02em}
+  .carta .efeito{font-size:.95rem;line-height:1.45}
+  .carta .meta{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--ink-dim);
+               display:flex;gap:.9rem;flex-wrap:wrap;margin-top:auto;padding-top:.5rem;
+               border-top:1px solid var(--line)}
+  .carta .meta b{color:var(--brass);font-weight:400}
+  .carta .tag-sec{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+                  color:var(--sangue);border:1px solid var(--sangue);padding:.1rem .35rem;margin-left:.4rem;
+                  white-space:nowrap;vertical-align:2px}
+
+  .fim{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;gap:1px;background:var(--line);
+       border:1px solid var(--line)}
+  @media(min-width:900px){.fim{grid-template-columns:repeat(4,1fr)}}
+  .fim li{background:var(--panel);padding:1.1rem 1.2rem}
+  .fim code{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--brass);
+            display:block;margin-bottom:.45rem}
+
+  /* ── imagens ───────────────────────────────────────────────────────── */
+  figure{margin:1.5rem 0 0}
+  figure img{width:100%;border:1px solid var(--line)}
+  figcaption{font-family:var(--mono);font-size:.72rem;line-height:1.5;color:var(--ink-dim);margin-top:.7rem}
+  .par{display:grid;gap:1.25rem;margin-top:1.5rem}
+  @media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
+  .par figure{margin:0}
+
+  /* ── números e acesso ──────────────────────────────────────────────── */
+  .numeros{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
+  @media(min-width:700px){.numeros{grid-template-columns:repeat(3,1fr)}}
+  .numeros div{background:var(--panel);padding:1.1rem 1.2rem}
+  .numeros .n{font-family:var(--mono);color:var(--brass);font-size:1.5rem;display:block;margin-bottom:.3rem}
+  .numeros span.leg{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--ink-dim)}
+
+  .links{list-style:none;padding:0;margin:1.5rem 0 0;display:flex;flex-wrap:wrap;gap:.6rem}
+  .links a{display:inline-block;font-family:var(--mono);font-size:.76rem;letter-spacing:.06em;
+           text-decoration:none;color:var(--paper);border:1px solid var(--line);
+           background:var(--panel-2);padding:.7rem 1rem}
+  .links a:hover{border-color:var(--hud-dim);color:var(--hud)}
+
+  footer{border-top:1px solid var(--line);padding-block:2rem;font-family:var(--mono);
+         font-size:.7rem;letter-spacing:.1em;color:var(--ink-dim)}
 </style>
 </head>
 <body>
 
 <header class="hero">
-  <img class="hero-img" src="img/mesa.jpg" alt="A mesa de operações: a maleta C.R.O.N.O.S. aberta, os dossiês dos rivais e o mapa dos trinta séculos.">
-  <div class="hero-copy"><div class="hero-inner">
-    <p class="eyebrow">C.R.O.N.O.S. · Divisão de Operações Temporais</p>
-    <h1>PARA<span>DOXO</span></h1>
-    <p class="tag">Seis viajantes, trinta séculos, e um passado que cobra energia de quem entra nele.</p>
-  </div></div>
+  <img src="img/mesa.jpg" alt="A mesa do Paradoxo: maleta de contratos, arquivos dos viajantes, a máquina de pulso e o mapa da linha do tempo.">
+  <div class="hero-copy">
+    <div class="wrap">
+      <p class="selo">C.R.O.N.O.S. · Divisão de Operações Temporais</p>
+      <h1>PARA<span>DOXO</span></h1>
+      <p class="tag">Trinta séculos numa trilha só. Ir ao futuro é de graça. Ir ao passado cobra energia, e energia é vida.</p>
+    </div>
+  </div>
 </header>
 
 <main>
-  <section class="wrap">
-    <p class="eyebrow">A premissa</p>
-    <h2>Devolver a história ao lugar de onde ela foi arrancada</h2>
-    <div class="lede">
-      <p>A linha do tempo é uma trilha única: os séculos I até XXX, e o Ano Zero como um espaço à parte, logo depois do século I. Dá para andar nos dois sentidos, mas os dois sentidos não custam o mesmo. <b style="color:var(--paper)">Ir para o futuro é de graça. Ir para o passado tira energia de você.</b> Cada viajante começa com quatro vezes o número de jogadores em energia, e é só isso que existe.</p>
-      <p>Aí está o aperto que organiza a partida inteira. Os objetos antigos, os que valem lore e os que a mesa mais quer, moram lá atrás, perto da origem. O caminho até eles é justamente o caminho que sangra. O futuro é seguro, barato e pobre; o passado é caro e é onde está tudo.</p>
-      <p>Zerar a energia é ser <b style="color:var(--paper)">Terminado</b>, e a elegância está em não ser uma eliminação. Seus objetos equipados são reciclados, você é devolvido ao século XXX com doze de energia mais a soma do que reciclou, e mantém ouro e paradoxos. Fica fora só o resto daquela Hora. Da Hora seguinte em diante joga normalmente: pode comprar, entregar, cumprir contrato e vencer a partida. No fim das contas ser Terminado custa exatamente <b style="color:var(--paper)">um ponto</b>, o ponto de sobrevivência.</p>
-      <p>E quem volta volta com salvo-conduto: enquanto estiver no Período Atemporal, do século XXIV para a frente, é imune a perda de energia. Essa imunidade se gasta de vez no instante em que o viajante pisa de novo na era Contemporânea. A morte te devolve à ponta segura e pobre da linha e te dá um fôlego que termina exatamente quando você decide voltar para onde as coisas valem.</p>
-      <p>Espalhado por essa trilha existe um mercado que se move. Ele vende objetos arrancados da história humana e soltos no tempo. Você os compra e os carrega até o século exato de onde vieram, não basta estar na era certa. Entregar conserta aquele pedaço da linha e paga Pontos de Contrato. Quem tiver mais quando o tempo estabilizar é coroado Monarca do Tempo.</p>
-      <p>O nome do jogo é a mecânica central: o paradoxo é ao mesmo tempo a sua arma contra os outros viajantes e parte de como você pontua. Causar dano ao tecido do tempo é útil para você e caro para a mesa, e essa tensão é o motor da partida.</p>
-    </div>
-    <div class="screen">
-      <img src="img/mesa.jpg" alt="Partida do Paradoxo V1 no cliente web: mesa, mapa e inventário do viajante.">
-      <p class="cap">A mesa do Paradoxo V1. O cliente apresenta o estado da partida, os recursos e as decisões de cada viajante.</p>
-    </div>
-  </section>
 
-  <section class="wrap">
-    <p class="eyebrow">O catálogo</p>
-    <h2>Cinquenta e duas peças da história humana</h2>
-    <div class="lede">
-      <p>O baralho é uma tese sobre o que conta como patrimônio. Ele coloca engenharia, mito e crime na mesma prateleira, sem hierarquia, e deixa a mesa decidir o que vale mais quando o preço está na carta.</p>
-    </div>
-    <div class="objetos">
-      <p><b>O Autômato de Ismail Al-Jazari</b>, o engenheiro do século XII cujas máquinas programáveis por came e eixo antecedem em setecentos anos a palavra que hoje usamos para elas.</p>
-      <p><b>A Bandeira Vermelha da Ching Shih</b>, a pirata que comandou mais embarcações do que a maioria das marinhas nacionais da época e se aposentou negociando anistia.</p>
-      <p><b>O Dente Azul do Harald</b>, o rei dinamarquês cujas iniciais em runas viraram o ícone que existe hoje em quase todo aparelho de bolso do planeta.</p>
-      <p><b>O Mapa de Geradus Mercator</b>, a projeção que permitiu navegar em linha reta e, no mesmo gesto, deformou para sempre o tamanho relativo dos continentes na cabeça de todo mundo.</p>
-      <p><b>A Máquina de Alan Turing</b>, e o Heliógrafo de Niépce, e a Máquina a Vapor de James Watt: três objetos que dividem a história em antes e depois deles.</p>
-      <p><b>O Livro de Mistérios de Alexandria</b>, catalogado para uma biblioteca que ardeu, item cuja existência no jogo é uma pergunta sobre o que se perde quando um acervo some.</p>
-      <p><b>Excalibur, a Lança do Destino, o Cálice do Príncipe Drácula</b>, o mito entra sem pedir licença e é comprado com o mesmo ouro que compra o Computador Quântico.</p>
-      <p><b>A Armadura da Joana d'Arc</b> e a <b>Espada do Carlos Magno</b>, e a <b>Mona Lisa</b>, objetos cuja aura hoje vale mais do que a função para a qual foram feitos.</p>
-    </div>
-    <figure class="solo">
-      <img src="img/contratos.jpg" alt="O gabinete de contratos aberto, com as três categorias: Caos, Tempo e Recurso.">
-      <p class="cap">O gabinete de contratos. Três naturezas de encomenda, Caos, Tempo e Recurso, cada uma pedindo um jeito diferente de jogar a mesma partida.</p>
-    </figure>
-  </section>
+<section><div class="wrap bloco">
+  <div class="rotulo">A premissa<b>por que o jogo existe</b></div>
+  <div>
+    <h2>A história não está perdida. Está fora de lugar.</h2>
+    <p class="destaque">Cada objeto do baralho foi arrancado do século em que nasceu. Devolver é o trabalho, e o trabalho paga pontos.</p>
+    <p>O aperto vem da geografia do tempo. Tudo o que vale está atrás: os objetos antigos, o mito, o Ano Zero. O futuro é seguro, barato e pobre. E o caminho até o que importa é exatamente o caminho que sangra, porque só a viagem ao passado tira energia de você.</p>
+    <p>Dois a seis viajantes disputam a mesma trilha com esse aperto. Toda decisão do jogo acaba sendo a mesma decisão: <em>quanto de vida você paga para chegar perto do que importa</em>.</p>
+  </div>
+</div></section>
 
-  <section class="wrap">
-    <p class="eyebrow">A hora</p>
-    <h2>Quatro fases em ordem fixa</h2>
-    <div class="lede">
-      <p>Um turno se chama Hora, e ela sempre corre na mesma sequência. <b style="color:var(--paper)">Entrega</b>, se você está exatamente no século de origem de um objeto equipado. <b style="color:var(--paper)">Mercado</b>, se você está sincrônico com um mercador: comprar, renovar a vitrine, ou declarar. No fim dessa fase o Mercador se move, então a vitrine que você viu não é a vitrine que sobra. <b style="color:var(--paper)">Geradores de Causalidade</b>, o coração do turno. E <b style="color:var(--paper)">Ativação</b>, quando as habilidades ativas dos objetos disparam, em ordem de prioridade.</p>
-      <p>Na fase dos geradores todo mundo rola quatro dados e os aloca em segredo numa matriz de três por três. Só depois que todos travaram é que as matrizes se revelam e resolvem juntas, módulo por módulo. A decisão é simultânea e cega; a consequência é sequencial e pública.</p>
-    </div>
-    <div class="rolagem">
-      <table class="matriz">
-        <thead><tr><th>Função</th><th>Módulo 1</th><th>Módulo 2</th><th>Módulo 3</th></tr></thead>
-        <tbody>
-          <tr><th>Recarga</th><td><b>1</b>energia</td><td><b>2</b>ouro</td><td><b>3</b>energia e ouro</td></tr>
-          <tr><th>Paradoxo</th><td><b>4</b>futuro</td><td><b>5</b>presente</td><td><b>6</b>passado</td></tr>
-          <tr><th>Viagem</th><td><b>7</b>aquecimento</td><td><b>8</b>viajar</td><td><b>9</b>viajar em dobro</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="cap">Os nove módulos resolvem sempre na ordem 1 a 9, de todas as matrizes ao mesmo tempo. É por isso que um paradoxo lançado ao futuro sempre acontece antes de um paradoxo lançado ao passado, mesmo que os dois tenham sido decididos no mesmo instante. A causalidade tem uma fila, e a fila é a mesma para todo mundo.</p>
-  </section>
+<section><div class="wrap bloco">
+  <div class="rotulo">A hora<b>o turno e a máquina</b></div>
+  <div>
+    <h2>Decisão simultânea e cega. Consequência sequencial e pública.</h2>
+    <p>Um turno se chama Hora e corre sempre na mesma ordem: Entrega, Mercado, Geradores, Ativação. Na fase dos Geradores todo mundo rola quatro dados e os aloca em segredo numa matriz de três por três. Só depois que todos travam é que as matrizes se revelam e resolvem juntas, módulo por módulo, do 1 ao 9.</p>
+    <p>É por isso que um paradoxo lançado ao futuro sempre acontece antes de um lançado ao passado, mesmo decididos no mesmo instante. <em>A causalidade tem uma fila, e a fila é a mesma para todo mundo.</em></p>
 
-  <section class="wrap">
-    <p class="eyebrow">O fim</p>
-    <h2>Quatro maneiras de o tempo parar</h2>
-    <div class="lede">
-      <p>A partida não termina por contagem de rodadas. Ela termina no instante em que a primeira destas quatro coisas acontecer, e as quatro estão sempre disponíveis para quem quiser forçá-las.</p>
+    <div class="matriz">
+      <div class="fn">Recarga</div>
+      <div class="mod"><b>1</b>energia</div><div class="mod"><b>2</b>ouro</div><div class="mod"><b>3</b>energia e ouro</div>
+      <div class="fn">Paradoxo</div>
+      <div class="mod"><b>4</b>futuro</div><div class="mod"><b>5</b>presente</div><div class="mod"><b>6</b>passado</div>
+      <div class="fn">Viagem</div>
+      <div class="mod"><b>7</b>aquecimento</div><div class="mod"><b>8</b>viajar</div><div class="mod"><b>9</b>viajar em dobro</div>
     </div>
+
     <ul class="leis">
-      <li><code>§11.1 a · o Ano Zero</code><p>Um viajante alcança o espaço final da trilha. Correr para a origem é uma jogada legítima, e encerra o jogo para todo mundo no seu tempo, não no deles.</p></li>
-      <li><code>§11.1 b · o receptor cheio</code><p>Um viajante entrega em todos os três períodos e completa o Receptor Temporal. É a vitória do colecionador metódico contra o corredor.</p></li>
-      <li><code>§11.1 c · o último de pé</code><p>Sobra um viajante não Terminado. Como energia é vida e o passado cobra energia, matar a mesa pelo desgaste é uma estratégia, não um acidente.</p></li>
-      <li><code>§11.1 d · o estoque do Mercador</code><p>O Mercador fica sem cartas. A própria economia do jogo pode secar, e quem compra muito acelera esse fim sem perceber.</p></li>
+      <li><code>§10.1 · carga cheia</code>Os quatro geradores precisam ser alocados. Não existe guardar dado, nem Hora em branco.</li>
+      <li><code>§10.2 · um valor por função</code>Geradores na mesma função têm que ter o mesmo valor. Rolagem variada obriga a espalhar.</li>
+      <li><code>§10.3 · progressão linear</code>O módulo N só recebe gerador se o N-1 estiver ocupado. Para chegar no bom, paga-se os fracos antes.</li>
+      <li><code>§11.1 · sobrecarga</code>Três geradores numa função a deixam indisponível na Hora seguinte. O turno mais forte é o que te deixa manco depois.</li>
     </ul>
-    <div class="lede" style="margin-top:2rem">
-      <p>O Mercador merece nota à parte, porque ele é a peça mais viva do tabuleiro. Ele se move ao fim de <em>toda</em> fase de mercado e nunca passa duas Horas no mesmo século. E o destino dele não é aleatório: ele anda em direção ao viajante <b style="color:var(--paper)">mais rico</b> que não esteja junto dele. Como comprar gasta ouro, quem compra deixa de ser o mais rico e o Mercador vira as costas. O ouro no Paradoxo é um pêndulo, não uma vantagem que dispara: ficar rico é o que atrai a loja, e usar a loja é o que te faz pobre de novo.</p>
-    </div>
-    <figure class="solo">
-      <img src="img/gavetas.jpg" alt="A parede de arquivos com as gavetas das três eras e a gaveta dos séculos.">
-      <p class="cap">A parede de arquivos. As três eras acima, os séculos abaixo, e o gabinete de contratos ao lado.</p>
-    </figure>
-  </section>
 
-  <section class="wrap">
-    <p class="eyebrow">As leis da matriz</p>
-    <h2>Três restrições que fazem o turno inteiro</h2>
-    <ul class="leis">
-      <li><code>§10.1 · carga cheia</code><p>Os quatro geradores precisam ser alocados. Não existe guardar dado para depois, e não existe hora passada em branco.</p></li>
-      <li><code>§10.2 · um valor por função</code><p>Todos os geradores dentro de uma mesma função têm que ter o mesmo valor. Uma rolagem variada te obriga a espalhar; uma rolagem uniforme te deixa concentrar.</p></li>
-      <li><code>§10.3 · progressão linear</code><p>O módulo N só recebe gerador se o N-1 já estiver ocupado. Para chegar no módulo bom, você precisa pagar os fracos antes dele.</p></li>
-      <li><code>§11.1 · sobrecarga</code><p>Três geradores numa função a sobrecarregam, e ela fica indisponível na hora seguinte. O turno mais forte que você pode jogar é também o que te deixa manco depois.</p></li>
-    </ul>
-    <div class="duo">
+    <figure>
+      <img src="img/manopla.jpg" alt="A máquina de pulso do viajante, com as três funções, os quatro geradores e o fio da vida.">
+      <figcaption>A máquina de pulso. As três funções à esquerda, os quatro geradores embaixo, o fio da vida à direita. Toda ação passa por aqui.</figcaption>
+    </figure>
+  </div>
+</div></section>
+
+<section><div class="wrap bloco">
+  <div class="rotulo">Três ideias<b>o que faz o jogo ser ele</b></div>
+  <div>
+    <h2>As três peças de que eu mais gosto.</h2>
+    <div class="tres">
+      <div>
+        <h3>A morte não elimina</h3>
+        <p>Zerar a energia é ser Terminado: seus objetos são reciclados e você volta ao século XXX com doze de energia mais o que reciclou, com o ouro intacto. Volta imune, enquanto estiver no Período Atemporal, e a imunidade se gasta de vez quando você pisa no Contemporâneo outra vez. No fim das contas, morrer custa <em>exatamente um ponto</em>.</p>
+      </div>
+      <div>
+        <h3>O mercador é um pêndulo</h3>
+        <p>O Mercador anda ao fim de toda fase de mercado, e o destino dele não é sorteio: ele vai na direção do viajante <em>mais rico</em> que não esteja com ele. Comprar gasta ouro, e quem gasta deixa de ser o mais rico. Ficar rico é o que chama a loja; usar a loja é o que a faz ir embora.</p>
+      </div>
+      <div>
+        <h3>O jogo publica, não pune</h3>
+        <p>Roubar o Mercador te torna Procurado. Aí o Temporal Herald, o jornal da mesa, imprime a edição com o seu nome, e ela fica presa por clipe ao seu arquivo. Qualquer viajante que abrir o seu file no resto da partida lê o que você fez. <em>Não é uma penalidade escondida numa tabela: é notícia.</em></p>
+      </div>
+    </div>
+    <div class="par">
       <figure>
-        <img src="img/arquivos.jpg" alt="A gaveta de séculos aberta, com as pastas em algarismo romano.">
-        <p class="cap">A gaveta dos séculos aberta. Cada pasta é um século da linha, e é ali que se consulta o que aquele ponto do tempo guarda.</p>
+        <img src="img/contratos.jpg" alt="O gabinete de contratos, com as três naturezas de encomenda.">
+        <figcaption>O gabinete de contratos. Caos, Tempo e Recurso, cada natureza pedindo um jeito diferente de jogar a mesma partida.</figcaption>
       </figure>
       <figure>
-        <img src="img/manopla.jpg" alt="A máquina de pulso, com as três funções e os quatro geradores.">
-        <p class="cap">A máquina de pulso. As três funções à esquerda, os quatro geradores embaixo, e o fio da vida à direita. Toda ação passa por aqui.</p>
+        <img src="img/arquivos.jpg" alt="A parede de arquivos, com as eras acima e os séculos abaixo.">
+        <figcaption>A parede de arquivos. As três eras acima, os séculos abaixo, e é ali que se lê o que cada viajante fez.</figcaption>
       </figure>
     </div>
-  </section>
+  </div>
+</div></section>
 
-  <section class="wrap">
-    <p class="eyebrow">O roubo e o jornal</p>
-    <h2>Uma ação que ignora o tempo, e um jornal que não esquece</h2>
-    <div class="lede">
-      <p>Quase tudo no jogo depende de sincronicidade: para comprar de um mercador, para fechar um acordo, para atingir alguém, é preciso dividir o mesmo século. O Roubo é a exceção declarada. Ele é <b style="color:var(--paper)">Atemporal</b>, e a razão está na estrutura das regras: a atemporalidade é propriedade da ação, não da zona onde a carta está nem do lugar onde você se encontra. Quem rouba alcança de qualquer distância.</p>
-      <p>Mas roubar o Mercador especificamente te torna <b style="color:var(--paper)">Procurado</b>. E aí entra a peça mais elegante do jogo: o Temporal Herald, o jornal da mesa, imprime a edição que denuncia você. A edição fica presa por clipe ao seu arquivo, e qualquer viajante que abrir o seu file no resto da partida lê o que você fez. O jogo não te pune com uma penalidade numérica escondida numa tabela; ele publica.</p>
+<section><div class="wrap bloco">
+  <div class="rotulo">O catálogo<b>52 cartas</b></div>
+  <div>
+    <h2>Engenharia, mito e crime na mesma prateleira.</h2>
+    <p>O baralho não hierarquiza. Excalibur e a máquina de Turing se compram com o mesmo ouro, e cada carta guarda o século exato de onde veio: é nele, e só nele, que ela pode ser devolvida. Quarenta cartas ficam com o Mercador e doze no Mercado Secreto, fixo no século XI.</p>
+
+    <div class="cartas">
+      <div class="carta">
+        <div class="nome">Excalibur</div>
+        <div class="efeito">Role um gerador comum e cause um paradoxo ao futuro igual ao resultado.</div>
+        <div class="meta"><span><b>2</b> ouro</span><span>entrega <b>VI</b></span><span>recicla <b>2</b></span></div>
+      </div>
+      <div class="carta">
+        <div class="nome">A Máquina de Alan Turing</div>
+        <div class="efeito">Destrói todas as cartas reveladas do Mercado.</div>
+        <div class="meta"><span><b>1</b> ouro</span><span>entrega <b>XX</b></span><span>recicla <b>1</b></span></div>
+      </div>
+      <div class="carta">
+        <div class="nome">Bandeira Vermelha da Ching Shih</div>
+        <div class="efeito">Um viajante da sua era perde 3 de energia e você rouba 1 ouro dele.</div>
+        <div class="meta"><span><b>3</b> ouro</span><span>entrega <b>XIX</b></span><span>recicla <b>3</b></span></div>
+      </div>
+      <div class="carta secreta">
+        <div class="nome">Armadura da Joana d'Arc<span class="tag-sec">secreto</span></div>
+        <div class="efeito">Sempre que você perderia energia, perde 1 a menos, nunca abaixo de 1.</div>
+        <div class="meta"><span><b>4</b> ouro</span><span>entrega <b>XV</b></span><span>recicla <b>3</b></span></div>
+      </div>
+      <div class="carta secreta">
+        <div class="nome">Dente Azul do Harald<span class="tag-sec">secreto</span></div>
+        <div class="efeito">Você pode fazer acordos com viajantes que não dividem o seu século.</div>
+        <div class="meta"><span><b>1</b> ouro</span><span>entrega <b>X</b></span><span>recicla <b>2</b></span></div>
+      </div>
+      <div class="carta">
+        <div class="nome">Autômato de Ismail Al-Jazari</div>
+        <div class="efeito">Sempre que você sobrecarrega uma função, descarta 5 booms.</div>
+        <div class="meta"><span><b>1</b> ouro</span><span>entrega <b>XII</b></span><span>recicla <b>2</b></span></div>
+      </div>
     </div>
-    <figure class="solo">
-      <img src="img/mercado.jpg" alt="A vitrine do mercado, com as cartas disponíveis para compra.">
-      <p class="cap">A vitrine do mercador. O que está ali agora não estará depois que ele se mover, no fim da fase.</p>
-    </figure>
-  </section>
 
-  <section class="wrap">
-    <p class="eyebrow">A cabine</p>
-    <h2>O gato</h2>
-    <figure class="solo">
-      <img src="img/gato.jpg" alt="O gato da cabine, deitado depois do carinho.">
-      <p class="cap">Existe um gato na cabine. Ele anda pela mesa durante a partida e deita quando você faz carinho. Não pontua, não interfere em nenhuma regra e não pode ser roubado.</p>
+    <figure>
+      <img src="img/mercado.jpg" alt="A vitrine do mercador, com as cartas reveladas e uma carta aberta na tela.">
+      <figcaption>A vitrine do mercador. O que está ali agora não estará depois que ele se mover, no fim da fase.</figcaption>
     </figure>
-  </section>
+  </div>
+</div></section>
 
-  <section class="wrap">
-    <p class="eyebrow">Acesso</p>
-    <h2>Dá para jogar</h2>
-    <div class="call">
-      <p>O Paradoxo V1 é um jogo de tabuleiro completo em versão digital, com motor de regras, interface e bots que jogam na mesma mesa. A versão atual roda localmente no computador. O código do jogo não é público; envio o acesso e as instruções para avaliadores mediante pedido por e-mail.</p>
-      <p style="color:var(--paper)">O próximo passo é disponibilizar partidas entre computadores pela internet. Este site apresenta o jogo; para jogar contra bots, execute a versão local.</p>
-      <ul class="links">
-        <li><a href="mailto:rafaelreissaura@gmail.com">rafaelreissaura@gmail.com</a></li>
-        <li><a href="mailto:rafaelreissaura@gmail.com?subject=Paradoxo%20V1">pedir acesso ao jogo</a></li>
-        <li><a href="https://github.com/reisaurafael/paradoxo-simulator">simulador e análise de balanceamento</a></li>
-        <li><a href="https://tabletopia.com/games/paradoxocronos-dpnyrx/play-now">protótipo no Tabletopia</a></li>
-      </ul>
+<section><div class="wrap bloco">
+  <div class="rotulo">O fim<b>quatro maneiras</b></div>
+  <div>
+    <h2>A partida não termina por contagem de rodadas.</h2>
+    <p>Ela termina no instante em que a primeira destas quatro coisas acontece, e as quatro estão sempre ao alcance de quem quiser forçá-las. Quem tiver mais Pontos de Contrato quando o tempo estabilizar é coroado Monarca do Tempo.</p>
+    <ul class="fim">
+      <li><code>§11.1 a · Ano Zero</code>Um viajante alcança o espaço final da trilha e encerra o jogo no tempo dele, não no dos outros.</li>
+      <li><code>§11.1 b · receptor cheio</code>Um viajante entrega nos três períodos. É a vitória do colecionador metódico contra o corredor.</li>
+      <li><code>§11.1 c · o último de pé</code>Sobra um viajante não Terminado. Matar a mesa pelo desgaste é estratégia, não acidente.</li>
+      <li><code>§11.1 d · estoque do Mercador</code>O Mercador fica sem cartas. A economia seca, e quem compra demais acelera esse fim sem perceber.</li>
+    </ul>
+  </div>
+</div></section>
+
+<section><div class="wrap bloco">
+  <div class="rotulo">Da mesa para a regra<b>o que os jogadores mudaram</b></div>
+  <div>
+    <h2>O mercado fixo morreu por causa de uma frase repetida.</h2>
+    <p>Cerca de vinte pessoas jogaram comigo. O retorno que mais voltou foi estratégia repetitiva, e a culpa era do mercado fixo: quem decorava a vitrine jogava sempre igual. Trocar a loja parada por um mercador que anda a cada Hora resolveu, e de quebra criou o pêndulo do ouro.</p>
+    <p>Desde então, mudança de regra passa por lote de mil partidas com semente fixa antes de entrar no jogo. O simulador que faz essa medição é público, com o motor, os quatro perfis de jogador e os testes.</p>
+    <div class="numeros">
+      <div><span class="n">52</span><span class="leg">cartas implementadas e testadas uma a uma</span></div>
+      <div><span class="n">1 000</span><span class="leg">partidas por lote, semente fixa, resultado reprodutível</span></div>
+      <div><span class="n">245</span><span class="leg">testes de regressão no motor de análise</span></div>
     </div>
-  </section>
+  </div>
+</div></section>
+
+<section><div class="wrap bloco">
+  <div class="rotulo">Acesso<b>dá para jogar</b></div>
+  <div>
+    <h2>O jogo está pronto e roda.</h2>
+    <p>O Paradoxo V1 é um jogo de tabuleiro completo em versão digital: motor de regras, servidor, interface e bots que sentam à mesa junto. Roda localmente, do começo ao fim. O código do jogo não é público; envio acesso e instruções para avaliadores mediante pedido por e-mail. O próximo passo é a partida entre computadores pela internet.</p>
+    <ul class="links">
+      <li><a href="mailto:rafaelreissaura@gmail.com?subject=Paradoxo%20V1">pedir acesso ao jogo</a></li>
+      <li><a href="https://github.com/reisaurafael/paradoxo-simulator">simulador e análise de balanceamento</a></li>
+      <li><a href="https://tabletopia.com/games/paradoxocronos-dpnyrx/play-now">protótipo no Tabletopia</a></li>
+      <li><a href="mailto:rafaelreissaura@gmail.com">rafaelreissaura@gmail.com</a></li>
+    </ul>
+    <figure>
+      <img src="img/gato.jpg" alt="O gato da cabine, deitado sobre a mesa do viajante.">
+      <figcaption>Existe um gato na cabine. Ele anda pela mesa durante a partida e deita quando você faz carinho. Não pontua, não interfere em regra nenhuma e não pode ser roubado.</figcaption>
+    </figure>
+  </div>
+</div></section>
+
 </main>
 
-<footer class="wrap">Paradoxo · Rafael Reis Garcia · Campinas</footer>
+<footer><div class="wrap">Paradoxo · Rafael Reis Garcia · Campinas</div></footer>
 </body>
 </html>
