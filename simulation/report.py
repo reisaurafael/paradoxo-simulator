@@ -1,21 +1,19 @@
 """
 simulation/report.py
 =====================
-Single-file visual match report for Paradoxo.
+A single-file visual report of one match.
 
-Runs one full game and writes **one self-contained HTML file** that tells the
-whole match as a story: a player dashboard per Hour, the generator matrix drawn
-as an actual 3x3 grid, the Market as card panels, and a persistent per-traveler
-timeline you can scroll to follow each traveler's arc. No external assets, no
-secondary logs: open the file and read the game.
+Plays one full game and writes one self-contained HTML file that tells it as a
+story: a player dashboard per Hour, the generator matrix drawn as a 3x3 grid,
+the Market as card panels, and a Contract Point timeline to follow each
+traveler's arc. No external assets: open the file and read the game.
 
 Usage:
-    python -m simulation.report                 # random game → paradoxo_report.html
-    python -m simulation.report out.html 42     # seeded game → out.html
+    python -m simulation.report                 # random game -> paradoxo_report.html
+    python -m simulation.report out.html 42     # seeded game -> out.html
 
-The recorder mirrors the authoritative phase order in simulation/runner.py; it
-records structured data instead of printing, then render_html() turns it into a
-styled document.
+record_game() follows the same phase order as simulation/runner.py but records
+structured data along the way; render_html() turns that into the page.
 """
 
 from __future__ import annotations
@@ -25,22 +23,21 @@ import sys
 from dataclasses import dataclass, field
 from typing import Any
 
-from engine.state import GameState, Allocation, GameResult, HourSnapshot
+from engine.state import GameState, Allocation, HourSnapshot
 from engine.dice import roll_generators
 from engine.resolve import resolve_hour, advance_overload
-from engine.constants import (
-    CP_SURVIVAL_BONUS, CP_STABILISATION_BONUS,
-)
+from engine.constants import DECLARE_COST
 from engine.rewards import process_pending_rewards
 from engine.market import (
     MerchantDeck, resolve_market_phase, resolve_deliveries,
     check_merchant_upgrades, check_temporal_receptor_win, effective_card_cost,
-    BuyAction, RenewAction, DeclareAction, UseCardAction, PassAction,
+    BuyAction, RenewAction, DeclareAction, UseCardAction,
 )
 from simulation.strategies.base import Strategy
 from simulation.runner import (
-    resolve_activation_phase, _resolve_free_recycles, _resolve_solo_phases,
-    _check_win_conditions, _determine_cp_winner,
+    resolve_activation_phase, resolve_free_recycles, resolve_solo_phases,
+    check_win_conditions, determine_cp_winner, unpack_allocation,
+    award_full_receptor_bonuses, award_survival_bonus,
 )
 
 _FUNC_ROWS = ["Recharge", "Paradox", "Travel"]
@@ -121,7 +118,6 @@ class PhaseRecord:
     allocations: list[dict] = field(default_factory=list)
     market: dict | None = None
     diffs: list[dict] = field(default_factory=list)
-    note: str = ""
 
 
 @dataclass
@@ -144,8 +140,8 @@ class Report:
 
 
 class Recorder:
-    """Holds the live report and the phase currently being recorded so the
-    RecordingStrategy can attach decisions to the right place."""
+    """Holds the report being built and the phase currently being recorded,
+    so the RecordingStrategy can attach each decision to the right place."""
 
     def __init__(self, report: Report) -> None:
         self.report = report
@@ -167,6 +163,8 @@ class Recorder:
 # ---------------------------------------------------------------------------
 
 class RecordingStrategy(Strategy):
+    """Wraps a strategy and writes its decisions into the report."""
+
     def __init__(self, inner: Strategy, rec: Recorder) -> None:
         self._inner = inner
         self._rec = rec
@@ -189,7 +187,7 @@ class RecordingStrategy(Strategy):
         elif isinstance(action, RenewAction):
             self._rec.decide(f"{tag} renews “{action.card.name}” ({renew_cost}g)")
         elif isinstance(action, DeclareAction):
-            self._rec.decide(f"{tag} declares: clears Wanted (2g)")
+            self._rec.decide(f"{tag} declares: clears Wanted ({DECLARE_COST}g)")
         elif isinstance(action, UseCardAction):
             self._rec.decide(f"{tag} activates “{action.card.name}” at the Market")
         return action
@@ -243,6 +241,7 @@ class RecordingStrategy(Strategy):
 
 def record_game(raw_strategies: dict[str, Strategy], rng: random.Random,
                 max_hours: int = 200) -> Report:
+    """Play one game with the given lineup and return the recorded Report."""
     names = list(raw_strategies.keys())
     report = Report(travelers=names,
                     profiles={n: raw_strategies[n].name for n in names})
@@ -264,7 +263,7 @@ def record_game(raw_strategies: dict[str, Strategy], rng: random.Random,
     def finish(reason: str) -> Report:
         report.result = {
             "reason": reason,
-            "winner": _determine_cp_winner(game),
+            "winner": determine_cp_winner(game),
             "hours": game.hour - 1,
             "standings": sorted(
                 (_traveler_snapshot(t) for t in game.travelers),
@@ -290,19 +289,13 @@ def record_game(raw_strategies: dict[str, Strategy], rng: random.Random,
         p.diffs = _diff(before, _snapshot_all(game))
 
         if check_temporal_receptor_win(game):
-            stab = next(t for t in game.travelers if t.name == game.winner)
-            stab.contract_points += CP_STABILISATION_BONUS
-            game.cp_rewards_pending.append(stab.name)
-            for s in game.travelers:
-                if not s.is_terminated:
-                    s.contract_points += CP_SURVIVAL_BONUS
-                    game.cp_rewards_pending.append(s.name)
+            award_full_receptor_bonuses(game)
             drain_rewards(p)
             _capture_cp(report, game)
             return finish("full_receptor")
         drain_rewards(rec.phase("Rewards", "after Delivery") if game.cp_rewards_pending else p)
 
-        _resolve_free_recycles(game, deck, strategies)
+        resolve_free_recycles(game, deck, strategies)
 
         # --- Phase 2: Market ---
         p = rec.phase("Market", f"Phase 2 · Merchant @ century {game.merchant_century}")
@@ -312,9 +305,7 @@ def record_game(raw_strategies: dict[str, Strategy], rng: random.Random,
         game_over = resolve_market_phase(game, deck, strategies, rng)
         p.diffs = _diff(before, _snapshot_all(game))
         if game_over:
-            for s in game.travelers:
-                if not s.is_terminated:
-                    s.contract_points += CP_SURVIVAL_BONUS
+            award_survival_bonus(game, queue_rewards=False)
             _capture_cp(report, game)
             return finish(game.game_over_reason)
         drain_rewards(p)
@@ -326,12 +317,7 @@ def record_game(raw_strategies: dict[str, Strategy], rng: random.Random,
         caps: dict[str, int | None] = {}
         for t in [t for t in game.travelers if not t.awaiting_respawn]:
             dice = roll_generators(rng=rng)
-            result = strategies[t.name].choose_allocation(t, game, dice)
-            if len(result) == 3:
-                alloc, direction, cap = result
-            else:
-                alloc, direction = result
-                cap = None
+            alloc, direction, cap = unpack_allocation(strategies[t.name].choose_allocation(t, game, dice))
             allocations[t.name] = alloc
             directions[t.name] = direction
             caps[t.name] = cap
@@ -354,10 +340,10 @@ def record_game(raw_strategies: dict[str, Strategy], rng: random.Random,
         if game.solo_phases_pending:
             ps = rec.phase("Solo Generators", "Time I reward")
             before = _snapshot_all(game)
-            _resolve_solo_phases(game, deck, strategies, rng)
+            resolve_solo_phases(game, deck, strategies, rng)
             ps.diffs = _diff(before, _snapshot_all(game))
         else:
-            _resolve_solo_phases(game, deck, strategies, rng)
+            resolve_solo_phases(game, deck, strategies, rng)
 
         check_merchant_upgrades(game)
         if game.merchant_upgrade_x_triggered or game.merchant_upgrade_xx_triggered:
@@ -366,7 +352,7 @@ def record_game(raw_strategies: dict[str, Strategy], rng: random.Random,
 
         _capture_cp(report, game)
 
-        result = _check_win_conditions(game)
+        result = check_win_conditions(game)
         if result is not None:
             drain_rewards(rec.phase("Rewards", "end of Hour"))
             _capture_cp(report, game)
@@ -473,7 +459,7 @@ def _render_matrix(report: Report, a: dict) -> str:
             cls = "cell filled" if v else "cell"
             cells += f'<td class="{cls}">{v if v else ""}</td>'
         body += (f'<tr class="{"ovl" if ovl else ""}">'
-                 f'<th class="rowlab">{_FUNC_ROWS[r]}{" ⚠" if ovl else ""}</th>{cells}</tr>')
+                 f'<th class="rowlab">{_FUNC_ROWS[r]}{" (overloaded)" if ovl else ""}</th>{cells}</tr>')
     dir_txt = "← PAST" if a["direction"] < 0 else "→ FUTURE"
     cap_txt = f" · cap {a['cap']}" if a["cap"] is not None else ""
     ev_txt = f' · escape valve {a["ev"]}' if a["ev"] else ""
@@ -531,7 +517,7 @@ def _render_dashboard(report: Report, dash: list[dict]) -> str:
         elif s["terminated"]:
             flags += '<span class="mini term">terminated</span>'
         if s["overloads"]:
-            flags += f'<span class="mini ovl">⚠ {"+".join(s["overloads"])}</span>'
+            flags += f'<span class="mini ovl">overloaded: {"+".join(s["overloads"])}</span>'
         hand = ", ".join(s["hand"]) or "-"
         rcpt = (" · receptor: " + ", ".join(s["receptor"])) if s["receptor"] else ""
         cells += (
@@ -539,11 +525,11 @@ def _render_dashboard(report: Report, dash: list[dict]) -> str:
             f'<div class="pc-name">{_esc(s["name"])} '
             f'<span class="pc-prof">{_esc(report.profiles[s["name"]])}</span></div>'
             f'<div class="pc-grid">'
-            f'<span>📍 {_century_label(s["century"])}</span>'
-            f'<span>⚡ {s["energy"]}</span>'
-            f'<span>💰 {s["gold"]}</span>'
-            f'<span>💣 {s["booms"]}</span>'
-            f'<span>★ {s["cp"]}</span></div>'
+            f'<span>Cen {_century_label(s["century"])}</span>'
+            f'<span>NRG {s["energy"]}</span>'
+            f'<span>GLD {s["gold"]}</span>'
+            f'<span>BMB {s["booms"]}</span>'
+            f'<span>CP {s["cp"]}</span></div>'
             f'<div class="pc-flags">{flags}</div>'
             f'<div class="pc-hand">{_esc(hand)}{_esc(rcpt)}</div>'
             f'</div>')
@@ -704,7 +690,7 @@ padding:10px 14px;margin:14px 0}
 def render_html(report: Report) -> str:
     title = " vs ".join(f"{n} ({report.profiles[n]})" for n in report.travelers)
     body = (
-        f'<div class="wrap"><h1>Paradoxo: Match Report</h1>'
+        f'<div class="wrap"><h1>Paradox: Match Report</h1>'
         f'<div class="sub">{_esc(title)}</div>'
         f'{_render_timeline(report)}'
         + "".join(_render_hour(report, h) for h in report.hours)
@@ -712,7 +698,7 @@ def render_html(report: Report) -> str:
     )
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8">'
             f'<meta name="viewport" content="width=device-width,initial-scale=1">'
-            f'<title>Paradoxo Match Report</title><style>{_CSS}</style></head>'
+            f'<title>Paradox Match Report</title><style>{_CSS}</style></head>'
             f'<body>{_render_nav(report)}{body}</body></html>')
 
 
@@ -722,6 +708,7 @@ def render_html(report: Report) -> str:
 
 def generate_report(out_path: str = "paradoxo_report.html",
                     seed: int | None = None) -> str:
+    """Play one game with the four profiles and write its HTML report to out_path."""
     from simulation.strategies.aggressive import AggressiveStrategy
     from simulation.strategies.collector import CollectorStrategy
     from simulation.strategies.smart import SmartStrategy

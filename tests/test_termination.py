@@ -20,13 +20,12 @@ from engine.constants import (
     CENTURY_MAX,
     SECRET_MARKET_CENTURY,
     TERMINATION_RESPAWN_ENERGY_BASE,
-    FUNCTION_RECHARGE,
 )
 from engine.resolve import check_termination, advance_overload
 from engine import combat
-from engine.cards import rifle_fergunson, toalha, build_secret_market
+from engine.cards import ferguson_rifle, towel
 from engine.market import MerchantDeck, resolve_market_phase, BuyAction, PassAction
-from simulation.runner import _check_win_conditions, _determine_cp_winner
+from simulation.runner import check_win_conditions, determine_cp_winner
 from simulation.strategies.base import Strategy
 
 
@@ -47,9 +46,9 @@ def _game(*centuries, energy=10, gold=0):
 def test_termination_schedules_respawn_and_recycles_equipment():
     g = _game(10, 20)
     victim = g.travelers[0]
-    rifle = rifle_fergunson()   # recycle_value 3
-    towel = toalha()            # recycle_value 1
-    victim.hand = [rifle, towel]
+    rifle = ferguson_rifle()   # recycle_value 3
+    towel_card = towel()       # recycle_value 1
+    victim.hand = [rifle, towel_card]
     victim.energy = 0
 
     assert check_termination(victim, g) is True
@@ -68,7 +67,7 @@ def test_respawn_returns_traveler_to_xxx_next_hour_keeping_gold_and_booms():
     victim = g.travelers[0]
     victim.gold = 7
     victim.booms = 3
-    victim.hand = [rifle_fergunson()]
+    victim.hand = [ferguson_rifle()]
     victim.energy = 0
     check_termination(victim, g)
 
@@ -206,7 +205,7 @@ def test_game_ends_when_only_one_traveler_not_terminated():
     # victim carries the permanent Terminated condition (still technically playing).
     victim.is_terminated = True
 
-    result = _check_win_conditions(g)
+    result = check_win_conditions(g)
     assert result == (survivor.name, "last_traveler")
 
 
@@ -219,7 +218,7 @@ def test_terminated_but_respawned_traveler_still_keeps_game_going():
     c.is_terminated = True
     assert c.awaiting_respawn is False
     # a and b have never been terminated → two remain → game continues.
-    assert _check_win_conditions(g) is None
+    assert check_win_conditions(g) is None
 
 
 def test_responsible_terminator_gets_termination_and_stabilisation_cp():
@@ -236,10 +235,10 @@ def test_responsible_terminator_gets_termination_and_stabilisation_cp():
     assert killer.is_wanted is True
 
     # Ending the game by being the last standing: +1 stabilisation, +1 survival.
-    result = _check_win_conditions(g)
+    result = check_win_conditions(g)
     assert result == (killer.name, "last_traveler")
     assert killer.contract_points == 3
-    assert _determine_cp_winner(g) == killer.name
+    assert determine_cp_winner(g) == killer.name
 
 
 def test_survival_cp_only_for_non_terminated_players_at_game_end():
@@ -250,7 +249,7 @@ def test_survival_cp_only_for_non_terminated_players_at_game_end():
     # a reaches Year Zero, ending the game.
     a.century = 0
 
-    result = _check_win_conditions(g)
+    result = check_win_conditions(g)
     assert result[1] == "year_zero"
     # a: Year Zero contract+stabilisation (CP_YEAR_ZERO_TOTAL) plus survival.
     assert a.contract_points >= 1
@@ -269,6 +268,6 @@ def test_terminated_traveler_can_still_win_on_cp():
     leader.is_terminated = True          # terminated, pending respawn
 
     # Survivor ends the game (last standing) and picks up stabilisation + survival.
-    _check_win_conditions(g)
+    check_win_conditions(g)
     # Even so, the terminated leader still has the most CP and wins.
-    assert _determine_cp_winner(g) == leader.name
+    assert determine_cp_winner(g) == leader.name

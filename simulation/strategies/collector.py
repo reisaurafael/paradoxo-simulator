@@ -19,8 +19,8 @@ Decision priority (in order):
      landing, travel toward it conservatively.
 
   5. NO DELIVERY CARDS: use gold state to decide movement:
-       Richest traveler: move toward Merchant, then park and farm gold.
-       Not richest:      farm gold (Recharge) until becoming the richest.
+       Richest traveler: move toward the Merchant, then park and farm gold.
+       Not the richest:  farm gold (Recharge) until becoming the richest.
 
 Allocation priority (outside delivery targeting):
   Energy/Gold (Recharge) is always first. Paradox is included only when it
@@ -28,13 +28,13 @@ Allocation priority (outside delivery targeting):
   whatever slots remain.
 
 Market phase:
-  • Clear Wanted status (DeclareAction) to restore Secret Market access.
-  • Buy delivery cards for missing periods first, then energy/survival cards,
-    then market-access helpers. Renew the market when nothing useful is visible.
+  - Clear Wanted status (DeclareAction) to restore Secret Market access.
+  - Buy market-access helpers first, energy cards when critically low, then
+    the easiest delivery card. Renew while there are periods left to chase.
 
 Energy management:
-  • Before Phase 2, recycle held cards whose delivery century has been passed
-    when energy is low (converts now-useless items into energy, §21.1).
+  - Before Phase 2, when energy is low, recycle held cards whose delivery
+    century is already behind (they can no longer be delivered, §21.1).
 """
 
 from __future__ import annotations
@@ -52,31 +52,34 @@ from engine.dice import count_faces
 from engine.cards import Card
 from engine.market import (
     MarketAction, BuyAction, RenewAction, DeclareAction, PassAction,
-    effective_card_cost,
+    SECRET_MARKET_RENEW_COST, effective_card_cost,
 )
 from engine.timeline import periods_for_century
 from simulation.strategies.base import Strategy
-from simulation.strategies.util import paradox_can_terminate, safe_travel_cap
+from simulation.strategies.util import (
+    paradox_can_terminate, refrigerator_choice, safe_travel_cap,
+)
 
 
 # Energy/survival cards worth buying even for a delivery-focused traveler.
 _ENERGY_CARDS = {
-    "Toalha",                               # 1g: no overload
-    "Autômato de Ismail Al-Jazari",         # 1g: -5 booms on overload
-    "Motor de Corrente Alternada de Tesla", # 1g: +1 energy on boom
-    "Escudo Viking",                        # 2g: first energy loss -2/hour
-    "Sismográfico",                         # 2g: -2 booms
-    "Super Motor",                          # 2g: prevent first explosion
-    "Colar de Cavalo",                      # 3g: +1 energy per travel module
-    "Santo Graal",                          # 3g: prevent first death
+    "Towel",                  # 1g: Travel and Paradox never overload
+    "Al-Jazari's Automaton",  # 1g: -5 booms on overload
+    "Tesla's AC Motor",       # 1g: +1 energy on boom
+    "Viking Shield",          # 2g: first energy loss -2/hour
+    "Seismograph",            # 2g: -2 booms
+    "Super Motor",            # 2g: prevent first explosion
+    "Horse Collar",           # 3g: +1 energy per travel module
+    "Holy Grail",             # 3g: prevent first death
 }
 
 # Market helpers that make buying delivery cards cheaper/easier.
 _MARKET_HELPERS = {
-    "Porcelana",            # 1g: market cards cost 1 less
-    "Dente Azul do Harald", # 1g: atemporal market access
-    "Primeiro Smartphone",  # 1g: atemporal market access
+    "Porcelain",             # 1g: market cards cost 1 less
+    "Harald's Bluetooth",    # 1g: atemporal market access
+    "The First Smartphone",  # 1g: atemporal market access
 }
+
 
 class CollectorStrategy(Strategy):
     """
@@ -88,7 +91,6 @@ class CollectorStrategy(Strategy):
     ENERGY_CRITICAL = 3    # prioritise Recharge over Travel below this
     BOOM_DANGER     = 9    # avoid travel when booms are this high
     ENERGY_LOW      = 11   # recycle non-reachable items below this threshold
-    ENERGY_SAFE     = 8    # minimum to consider any weapon use
 
     @property
     def name(self) -> str:
@@ -146,7 +148,7 @@ class CollectorStrategy(Strategy):
         game: GameState | None = None,
         traveler: TravelerState | None = None,
     ) -> Allocation:
-        """No travel: Recharge(2) → Paradox(2 if kill, else 1) → escape valve."""
+        """No travel: Recharge(2), then Paradox (2 for a kill, else 1), then the escape valve."""
         alloc = Allocation.empty()
         remaining = list(dice)
         # High dice into Recharge: energy/gold gained scales with the die value.
@@ -215,9 +217,9 @@ class CollectorStrategy(Strategy):
         held_names = {c.name for c in traveler.hand}
         missing_periods = {"Origins", "Ascension", "Singularity"} - traveler.delivered_periods
 
-        # Clear Wanted poster for Secret Market access.
+        # Clear the Wanted poster for Secret Market access.
         if (traveler.is_wanted
-                and renew_cost != 999
+                and renew_cost != SECRET_MARKET_RENEW_COST
                 and game.secret_market_open
                 and traveler.gold >= DECLARE_COST):
             return DeclareAction()
@@ -297,7 +299,7 @@ class CollectorStrategy(Strategy):
     ) -> list[tuple[Card, object]]:
         activations = []
         for card in list(traveler.hand):
-            if card.name == "Mapa de Geradus Mercator":
+            if card.name == "Gerardus Mercator's Map":
                 # Travel back toward future to recover an overshot delivery century.
                 overshot = [
                     c for c in traveler.hand
@@ -311,18 +313,10 @@ class CollectorStrategy(Strategy):
                 elif traveler.century > 4:
                     activations.append((card, (2, -1)))
 
-            elif card.name == "Geladeira":
-                from simulation.strategies.util import geladeira_context
-                receptor_actives = [c for c in getattr(traveler, "receptor_cards", [])
-                                    if c.ability_type in ("active", "atemporal_active")
-                                    and c.active_effect is not None]
-                chosen = next(
-                    ((rc, sub) for rc in receptor_actives
-                     for ok, sub in [geladeira_context(rc, traveler, game)] if ok),
-                    None,
-                )
+            elif card.name == "Refrigerator":
+                chosen = refrigerator_choice(traveler, game)
                 if chosen is not None:
-                    activations.append((card, (chosen[0], chosen[1])))
+                    activations.append((card, chosen))
 
         return activations
 
@@ -366,7 +360,7 @@ class CollectorStrategy(Strategy):
         return min(market_cards or candidates, key=lambda c: c.gold_cost)
 
     def choose_reward_category(self, traveler, game, available):
-        """Resource (gold/matrix) → Time (market/travel) → Chaos."""
+        """Resource (gold, matrix), then Time (market, travel), then Chaos."""
         for preferred in ("Resource", "Time", "Chaos"):
             if preferred in available:
                 return preferred

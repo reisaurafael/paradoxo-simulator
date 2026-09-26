@@ -13,17 +13,16 @@ This file implements that ordering and every downstream effect:
     §14: Travel (modules 8, 9): movement along the timeline
     §16: Paradox (modules 4, 5, 6): damage pool (see engine/paradox.py)
 
-Priority (§27) is needed for Travel (§12.2 / §14.5). Where order between
-travelers matters for travel, higher century = higher priority. Ties break
-by gold, then energy, then a generator duel (not simulated here, we use
-a deterministic index-based tiebreak in the simulation layer).
+Priority (§27) matters for Heating and Travel (§12.2 / §14.5): the higher
+century goes first, ties break by gold, then energy, then a generator duel.
+The duel is interactive, so I replace it with seating order.
 
-Escape valve energy loss is applied before Phase 3 resolution begins (§11.2).
+The escape valve's energy loss is applied before the modules resolve (§11.2).
 """
 
 from __future__ import annotations
 import copy
-from engine.state import TravelerState, GameState, Allocation, HourSnapshot
+from engine.state import TravelerState, GameState, Allocation, HourSnapshot, ItemEvent
 from engine.constants import (
     BOOM_LIMIT,
     EXPLOSION_ENERGY_LOSS,
@@ -35,14 +34,15 @@ from engine.constants import (
     FUNCTION_RECHARGE,
     FUNCTION_PARADOX,
     FUNCTION_TRAVEL,
-    MILLENNIUM_CENTURIES,
     CP_PER_MILLENNIUM,
     CP_PER_TERMINATION,
+    TERMINATION_RESPAWN_ENERGY_BASE,
     WANTED_BOUNTY,
     OVERDRIVE_THRESHOLD_CENTURY,
     OVERDRIVE_ENERGY_COST_PER_CENTURY,
 )
-from engine.timeline import reached_year_zero, clamp_to_board
+from engine.timeline import clamp_to_board
+from engine.matrix import functions_overloaded_by
 from engine.paradox import resolve_paradox_pool
 from engine import combat
 from engine.cards import passive_source_cards
@@ -60,9 +60,8 @@ def priority_order(travelers: list[TravelerState]) -> list[TravelerState]:
         1. Closest to the future (highest century number) (§27.1)
         2. Most gold
         3. Most energy
-        4. Generator duel: approximated here by stable index order
-           (true duel is interactive; simulation uses insertion order as
-           a deterministic tiebreak that introduces no systematic bias).
+        4. Generator duel: the duel is interactive, so the stable sort keeps
+           seating order as a deterministic tie-break.
     """
     return sorted(
         travelers,
@@ -95,32 +94,29 @@ def apply_escape_valve(traveler: TravelerState, allocation: Allocation,
 # ---------------------------------------------------------------------------
 
 def resolve_module_1(traveler: TravelerState, allocation: Allocation) -> None:
-    """Module 1: energy equal to generator value (§20.1). Carro adds +1."""
+    """Module 1: energy equal to the generator value (§20.1)."""
     v = combat.effective_generator(traveler, allocation, FUNCTION_RECHARGE, 0)
     if v:
         traveler.energy += v
 
 
 def resolve_module_2(traveler: TravelerState, allocation: Allocation) -> None:
-    """Module 2: gold equal to generator value (§20.1). Carro adds +1."""
+    """Module 2: gold equal to the generator value (§20.1)."""
     v = combat.effective_generator(traveler, allocation, FUNCTION_RECHARGE, 1)
     if v:
         traveler.gold += v
 
 
 def resolve_module_3(traveler: TravelerState, allocation: Allocation) -> None:
-    """Module 3: both energy and gold equal to generator value (§20.1). Carro adds +1."""
+    """Module 3: energy and gold, each equal to the generator value (§20.1)."""
     v = combat.effective_generator(traveler, allocation, FUNCTION_RECHARGE, 2)
     if v:
         traveler.energy += v
         traveler.gold += v
 
 
-# ---------------------------------------------------------------------------
-# Paradox: modules 4, 5, 6 (§16), dispatched to engine/paradox.py
-# ---------------------------------------------------------------------------
-# Paradox resolution is handled by resolve_paradox_pool() in paradox.py.
-# It is called once for each of modules 4, 5, 6 in the per-module loop below.
+# Paradox (modules 4, 5, 6, §16) is resolved by engine/paradox.py, called once
+# per module from resolve_hour() below.
 
 
 # ---------------------------------------------------------------------------
@@ -138,7 +134,7 @@ def _apply_boom_hooks(traveler: TravelerState, booms: int,
 
 def _apply_travel_cost_hooks(traveler: TravelerState, cost: int, direction: int,
                              game: GameState | None = None) -> int:
-    """Apply on_travel_cost hooks (Máquina Voadora, Telescópio, Armadura). Returns cost."""
+    """Apply on_travel_cost hooks (Flying Machine, Telescope, Armor). Returns the cost."""
     for card in passive_source_cards(traveler, game):
         if card.on_travel_cost:
             cost = card.on_travel_cost(traveler, cost, direction, game)
@@ -146,17 +142,17 @@ def _apply_travel_cost_hooks(traveler: TravelerState, cost: int, direction: int,
 
 
 def _apply_overload_hooks(traveler: TravelerState, game: GameState) -> None:
-    """Call on_overload hooks after overload markers are set."""
-    # Toalha prevents overload entirely: checked in apply_overload_markers.
+    """Call on_overload hooks after overload markers are set.
+
+    The Towel, which prevents the overload itself, is handled in apply_overload_markers."""
     for card in passive_source_cards(traveler, game):
         if card.on_overload:
             card.on_overload(traveler, game)
 
 
-def _colar_de_cavalo_bonus(traveler: TravelerState, allocation: Allocation) -> None:
-    """Colar de Cavalo: +1 energy for each travel module with a placed generator."""
-    has_colar = any(c.name == "Colar de Cavalo" for c in traveler.hand)
-    if not has_colar:
+def _horse_collar_bonus(traveler: TravelerState, allocation: Allocation) -> None:
+    """Horse Collar: +1 energy for each travel module with a placed generator."""
+    if not any(c.name == "Horse Collar" for c in traveler.hand):
         return
     for col in range(3):
         if allocation.get(FUNCTION_TRAVEL, col) > 0:
@@ -184,7 +180,7 @@ def resolve_module_7(traveler: TravelerState, allocation: Allocation,
     traveler.booms += booms_gained
 
     if traveler.booms >= BOOM_LIMIT:
-        # Check if any card prevents the explosion (e.g. Super Motor)
+        # A card may prevent the explosion (Super Motor)
         prevented = False
         for card in list(traveler.hand):
             if card.on_explosion_check:
@@ -200,7 +196,7 @@ def resolve_module_7(traveler: TravelerState, allocation: Allocation,
             traveler.exploded_this_hour = True
             combat.register_loss(game, traveler, actual)
             # §28.1 + §18: a motor explosion is self-inflicted. If it lands the
-            # killing blow, no other traveler is responsible, drop any stale
+            # killing blow, no other traveler is responsible: drop any stale
             # Paradox attribution from earlier this Hour.
             if traveler.energy <= 0:
                 traveler.eliminated_by.clear()
@@ -218,10 +214,11 @@ def _past_travel_cost(
 ) -> int:
     """Energy cost of moving from ``prev_century`` to ``new_century`` in the past.
 
-    Overdrive rule: every century traveled at a position ≤ OVERDRIVE_THRESHOLD_CENTURY
-    costs OVERDRIVE_ENERGY_COST_PER_CENTURY instead of PAST_TRAVEL_ENERGY_COST_PER_CENTURY.
-    Card cost-reduction passives (Máquina Voadora, Telescópio, Armadura) apply to
-    the combined total. Returns 0 for non-past movement.
+    Overdrive rule: every century traveled from a position at or below
+    OVERDRIVE_THRESHOLD_CENTURY costs OVERDRIVE_ENERGY_COST_PER_CENTURY instead of
+    PAST_TRAVEL_ENERGY_COST_PER_CENTURY. The cost-reducing passives (Flying
+    Machine, Telescope, Armor) apply to the combined total. Returns 0 for
+    movement that is not toward the past.
     """
     if new_century >= prev_century:
         return 0
@@ -278,14 +275,14 @@ def execute_travel(traveler: TravelerState, centuries: int,
 
     Positive movement (toward future, toward XXX) costs 0 energy (§30.2).
     Negative movement (toward past, toward Year Zero) costs 1 energy per
-    century traveled (§30.2), modified by travel-cost passives (Máquina Voadora,
-    Telescópio, Armadura).
+    century traveled (§30.2, 2 in the overdrive zone), modified by the
+    travel-cost passives (Flying Machine, Telescope, Armor).
 
     The traveler stops at XXX and cannot pass it (§30.4).
     Reaching Year Zero is a legal terminal position that ends the game (§30.4).
 
-    Public so card actives that grant movement (Mapa de Geradus Mercator) reuse
-    the exact same cost/passive handling. Mutates traveler in place.
+    Public so card actives that grant movement (Gerardus Mercator's Map) reuse
+    exactly the same cost and passive handling. Mutates traveler in place.
     """
     if centuries == 0:
         return
@@ -302,7 +299,7 @@ def execute_travel(traveler: TravelerState, centuries: int,
         combat.register_loss(game, traveler, actual)
         # §28.1 + §18 ("responsibility for a kill goes to whichever instance
         # landed the killing blow"): past-travel cost is self-inflicted. If it
-        # takes the traveler's last energy, the killing blow is their own, no
+        # takes the traveler's last energy, the killing blow is their own and no
         # other traveler is responsible. Clear any stale attribution from earlier
         # (non-lethal) Paradox damage this Hour so a self-termination credits
         # nobody. (Survival is normally preserved by the caller's clamp; this
@@ -321,7 +318,6 @@ def execute_travel(traveler: TravelerState, centuries: int,
     if game is not None and traveler.hand:
         lo = min(prev_century, new_century)
         hi = max(prev_century, new_century)
-        from engine.state import ItemEvent
         for card in traveler.hand:
             dc = getattr(card, "delivery_century", None)
             if dc is not None and lo <= dc <= hi and dc != new_century:
@@ -334,14 +330,14 @@ def execute_travel(traveler: TravelerState, centuries: int,
                 ))
 
 
-def _award_millennium_crossings(
+def check_millennium_milestones(
     traveler: TravelerState,
-    game: "GameState | None" = None,
+    game: GameState | None = None,
 ) -> None:
     """Award milestone CP when the traveler ends an Hour on century X or XX (§8.1c).
 
-    Must be called after all travel for the Hour has resolved so that
-    ``traveler.century`` reflects the final position. Idempotent.
+    Call it after all travel for the Hour has resolved, so ``traveler.century``
+    is the final position. Each milestone scores once per traveler.
     """
     for milestone, scored_attr in (
         (10, "scored_century_x"),
@@ -402,27 +398,12 @@ def resolve_module_9(
 
 
 # ---------------------------------------------------------------------------
-# Milestone CP check (§25.3)
-# ---------------------------------------------------------------------------
-
-def check_millennium_milestones(
-    traveler: TravelerState,
-    game: "GameState | None" = None,
-) -> None:
-    """Evaluate the end-of-Hour millennium milestone for X/XX (§8.1c).
-
-    Called after all travel for the Hour has resolved; reads the final position. Idempotent.
-    """
-    _award_millennium_crossings(traveler, game)
-
-
-# ---------------------------------------------------------------------------
 # Termination check (§30)
 # ---------------------------------------------------------------------------
 
 def check_termination(
     traveler: TravelerState,
-    game: "GameState | None" = None,
+    game: GameState | None = None,
 ) -> bool:
     """
     A traveler whose energy reaches 0 is terminated (§28.1).
@@ -433,7 +414,7 @@ def check_termination(
     condition counts. A terminated traveler otherwise plays normally once they
     have respawned.
 
-    Santo Graal prevents the first termination (restores 1 energy, then recycles).
+    Holy Grail prevents the first termination (restores 1 energy, then recycles).
 
     On termination (§28.2-28.3, §33.1, §28.4-28.5):
         - the traveler's equipped objects are recycled, and respawn energy is
@@ -450,11 +431,11 @@ def check_termination(
     Returns True if the traveler was terminated by this check.
     """
     if traveler.energy <= 0 and not traveler.awaiting_respawn:
-        # Santo Graal: prevent the death (restore energy; not a termination).
-        graal = next((c for c in traveler.hand if c.name == "Santo Graal"), None)
-        if graal is not None:
+        # Holy Grail: prevent the death (restore energy; not a termination).
+        grail = next((c for c in traveler.hand if c.name == "Holy Grail"), None)
+        if grail is not None:
             traveler.energy = 1
-            traveler.hand.remove(graal)
+            traveler.hand.remove(grail)
             return False
 
         # Instant Recycle to survive *enemy-caused* lethal damage (§3.3 Recycle is
@@ -468,7 +449,7 @@ def check_termination(
         # survives, and only when it can actually save them (a doomed traveler
         # keeps its objects so they convert to respawn energy, §28.2).
         #
-        # This does NOT apply to self-inflicted deaths, past-travel cost (§30.2),
+        # This does NOT apply to self-inflicted deaths: past-travel cost (§30.2),
         # a motor explosion (§15.2), or the escape valve (§11.2). Those clear
         # ``eliminated_by`` at the loss site, so a non-empty list here is exactly
         # the signal that an enemy landed the killing blow.
@@ -511,7 +492,6 @@ def check_termination(
         traveler.is_wanted = False                    # §28.5
 
         # §28.2 / §12.5: recycle equipment and bank the respawn energy.
-        from engine.constants import TERMINATION_RESPAWN_ENERGY_BASE
         respawn_energy = TERMINATION_RESPAWN_ENERGY_BASE
         for card in list(traveler.hand):
             respawn_energy += getattr(card, "recycle_value", 0)
@@ -537,17 +517,13 @@ def apply_overload_markers(
     At the end of Phase 3, place overload markers on functions that were
     overloaded this Hour (§8.3, §11.1).
 
-    Toalha: travel and paradox functions cannot be overloaded.
-    Relógio Mecânico / Autômato: fire on_overload hooks when overload occurs.
+    Towel: travel and paradox functions cannot be overloaded.
+    Mechanical Clock / Al-Jazari's Automaton: on_overload hooks fire on overload.
     Mutates traveler in place.
     """
-    from engine.matrix import functions_overloaded_by
-    from engine.constants import FUNCTION_PARADOX, FUNCTION_TRAVEL
     overloaded = functions_overloaded_by(allocation)
 
-    # Toalha prevents travel and paradox overloads
-    has_toalha = any(c.name == "Toalha" for c in traveler.hand)
-    if has_toalha:
+    if any(c.name == "Towel" for c in traveler.hand):
         overloaded.discard(FUNCTION_TRAVEL)
         overloaded.discard(FUNCTION_PARADOX)
 
@@ -587,7 +563,7 @@ def advance_overload(traveler: TravelerState) -> None:
     traveler.overloaded_next = set()
     traveler.exploded_this_hour = False
     # Per-hour "first time this Hour" trackers reset at the start of the Hour so
-    # they cover every phase, including Item Activation (§Escudo Viking).
+    # they cover every phase, including Item Activation (Viking Shield).
     traveler.cards_used_this_hour = set()
 
 
@@ -604,15 +580,16 @@ def resolve_hour(
     """
     Resolve Phase 3 of one Hour: all 9 modules, in order, across all travelers.
 
-    This is the core simulation step. It mutates `game` in place and
-    returns a list of HourSnapshot records (one per traveler) for the
-    metrics and graph modules.
+    This is the core simulation step. It mutates `game` in place and returns
+    one HourSnapshot per traveler for the metrics module.
 
     Args:
         game:              Current game state (mutated in place).
         allocations:       traveler_name → Allocation for this Hour.
         travel_directions: traveler_name → +1 (future) or -1 (past).
                            Only consulted for modules 8 and 9.
+        travel_caps:       traveler_name → most centuries to travel this Hour,
+                           or None for the full rolled distance.
 
     Returns:
         List of HourSnapshot objects, one per traveler.
@@ -669,14 +646,14 @@ def resolve_hour(
     for t in still_active:
         check_termination(t, game)
 
-    # --- Post-travel: Colar de Cavalo bonus, milestone CP, overload markers, hour-end hooks ---
+    # --- Post-travel: Horse Collar bonus, milestone CP, overload markers ---
     for t in game.travelers:
         if not t.awaiting_respawn:
-            _colar_de_cavalo_bonus(t, allocations.get(t.name, Allocation.empty()))
+            _horse_collar_bonus(t, allocations.get(t.name, Allocation.empty()))
             check_millennium_milestones(t, game)
         apply_overload_markers(t, allocations.get(t.name, Allocation.empty()), game)
 
-    # Hour-end card hooks (James Watt, Bússola, etc.)
+    # Hour-end card hooks (James Watt's Steam Engine, Navigation Compass)
     for t in game.travelers:
         if not t.awaiting_respawn:
             for card in t.hand:

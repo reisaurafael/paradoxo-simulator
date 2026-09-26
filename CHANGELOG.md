@@ -77,15 +77,15 @@ plus the two Special cards (Divine Comedy, Trinity, set aside for now and flagge
 open point D4).
 
 - Added `engine/combat.py`: unified energy-loss pipeline (`lose_energy`, `deal_energy`,
-  `recycle_card`) with modifiers for Pólvora, Escudo Viking, Armadura, Espada de Laser,
-  Cálice do Príncipe Drácula, Porcelana, Caldeirão da Agnes.
+  `recycle_card`) with modifiers for Gunpowder, Viking Shield, Joan of Arc's Armor, Laser Sword,
+  Prince Dracula's Chalice, Porcelain, Agnes's Cauldron.
 - Added `engine/rewards.py`: Chaos/Time/Resource reward table (§23); solo phase
   (Time I), vouchers (Time II/III), matrix buff (Resource III).
 - Added Phase 4 Item Activation to `simulation/runner.py`.
 - Added `recycle_value` to all 52 cards (needed for §28.2 respawn energy calculation,
   even though respawn itself is not yet implemented, see BUG-001).
-- Added `passive_source_cards()` meta mechanism: Computador Quântico (copies receptor
-  passives) and Prensa Móvel (copies revealed market passives).
+- Added `passive_source_cards()` meta mechanism: Quantum Computer (copies receptor
+  passives) and Movable-Type Press (copies revealed market passives).
 - 173 tests passing.
 
 Known gaps at this milestone (still open):
@@ -149,7 +149,7 @@ root, each with a regression test in `tests/test_termination.py`.
 - `engine/resolve.py:check_termination()` now models termination as the transient
   state the rules describe rather than a permanent drop-out. On reaching 0 energy a
   traveler's equipped objects are recycled (through `combat.recycle_card`, so the
-  Caldeirão da Agnes steal trigger still fires), and the respawn energy
+  Agnes's Cauldron steal trigger still fires), and the respawn energy
   `12 + Σ recycle value` is banked on the traveler.
 - `engine/resolve.py:advance_overload()` applies the respawn at the start of the next
   Hour: the traveler returns to XXX with the banked energy, keeps their gold and booms,
@@ -214,32 +214,32 @@ root, each with a regression test in `tests/test_termination.py`.
 ### FIX BUG-008: Chaos I damage through full combat pipeline (§23.3, §18)
 - `engine/rewards.py:_chaos()`: replaced direct `target.energy -= 3` plus
   `combat.register_loss` with `combat.deal_energy(game, traveler, targets, 3, kind="paradox")`,
-  so Escudo Viking, Armadura, Espada de Laser, Pólvora, and Cálice all apply to Chaos I.
-- Guarded by: `tests/test_bug_fixes_batch2.py` (Escudo reduces damage, respawning
+  so Viking Shield, Joan of Arc's Armor, Laser Sword, Gunpowder, and Chalice all apply to Chaos I.
+- Guarded by: `tests/test_bug_fixes_batch2.py` (Viking Shield reduces damage, respawning
   travelers are unaffected).
 
 ### FIX BUG-009 + BUG-014: Voucher and atemporal cards grant Secret Market access (§23.3, §24.4)
 - `engine/market.py`: extracted `_has_atemporal_access()` and added
   `_traveler_can_access_secret_market()`. The Secret Market loop now uses the new helper
-  instead of a raw century check, admitting holders of Janela do Tempo, Primeiro Smartphone,
+  instead of a raw century check, admitting holders of Window of Time, The First Smartphone,
   and market vouchers.
 - Voucher consumption is now tracked per-phase via a local `voucher_consumed` set:
   one voucher is consumed at most once per phase regardless of how many markets the
   traveler visits.
 - Guarded by: `tests/test_bug_fixes_batch2.py` (voucher access, voucher consumed once,
-  Janela grants access, Primeiro Smartphone grants access).
+  Window of Time grants access, The First Smartphone grants access).
 
-### FIX BUG-010: Free-recycle fires Caldeirão da Agnes trigger (§21.3)
+### FIX BUG-010: Free-recycle fires Agnes's Cauldron trigger (§21.3)
 - `simulation/runner.py:_resolve_free_recycles()`: replaced the inline energy-grant and
   `deck._discard.append` with `combat.recycle_card(game, traveler, card, grant_energy=True)`,
-  so the Caldeirão da Agnes steal trigger fires on free recycles.
-- Guarded by: `tests/test_bug_fixes_batch2.py` (Caldeirão steal fires, recycler energy granted).
+  so the Agnes's Cauldron steal trigger fires on free recycles.
+- Guarded by: `tests/test_bug_fixes_batch2.py` (Cauldron steal fires, recycler energy granted).
 
-### FIX BUG-011: Simulador da Realidade does not block atemporal travelers (§42)
-- `engine/market.py:resolve_market_phase()`: the Simulador buy-block guard now checks
+### FIX BUG-011: Reality Simulator does not block atemporal travelers (§42)
+- `engine/market.py:resolve_market_phase()`: the Reality Simulator buy-block guard now checks
   `not _has_atemporal_access(traveler) and not traveler.market_voucher` before blocking,
-  so Janela and Smartphone holders are correctly treated as synchronic.
-- Guarded by: `tests/test_bug_fixes_batch2.py` (Janela holder not blocked,
+  so Window of Time and Smartphone holders are correctly treated as synchronic.
+- Guarded by: `tests/test_bug_fixes_batch2.py` (Window of Time holder not blocked,
   genuinely non-synchronic traveler blocked).
 
 ### FIX BUG-012: Mona Lisa occupies the exact vacated slot (§6.1)
@@ -255,10 +255,10 @@ root, each with a regression test in `tests/test_termination.py`.
   reject allocations with a gap. No code change was needed. Regression tests added.
 
 ### FIX BUG-015: Merchant steals set Wanted (§26.4, §3.4)
-- `engine/cards.py:carretel_de_pesca()` and `heliografo_de_niepce()`: added
+- `engine/cards.py:fishing_reel()` and `niepces_heliograph()`: added
   `traveler.is_wanted = True` after a successful steal from the Merchant's revealed stock,
   as ruled in D2, now resolved.
-- Guarded by: `tests/test_bug_fixes_batch2.py` (Carretel deterministic steal, Heliógrafo steal).
+- Guarded by: `tests/test_bug_fixes_batch2.py` (Fishing Reel deterministic steal, Heliograph steal).
 
 ---
 
@@ -334,8 +334,8 @@ root, each with a regression test in `tests/test_termination.py`.
   for mild pressure unless a kill shot is available, in which case the order flips to
   Recharge → Paradox(2) → Travel.
 - **Card preferences**: expanded from a narrow "safety" list to three tiers, survival
-  cards (Santo Graal, Escudo Viking, Toalha, etc.), market-access helpers (Porcelana,
-  Dente Azul, Primeiro Smartphone), and travel/speed cards. Delivery cards for missing
+  cards (Holy Grail, Viking Shield, Towel, etc.), market-access helpers (Porcelain,
+  Harald's Bluetooth, The First Smartphone), and travel/speed cards. Delivery cards for missing
   Temporal Receptor periods added as the top buy priority.
 - **Market**: DeclareAction clears the Wanted poster at the Merchant (enables Secret Market
   next phase); Renew cycles the market when nothing useful is visible.
@@ -352,9 +352,9 @@ root, each with a regression test in `tests/test_termination.py`.
   as Conservative), Recharge second, Paradox(1) last. In kill-threat mode the order
   becomes Recharge → Paradox(2) → Travel: explicitly sacrificing one turn's speed for a
   termination. `_recharge_first` and `_avoid_heating` updated to the same discipline.
-- **Card preferences**: extended to include Cálice do Príncipe Drácula (+2 energy per
-  paradox hit), Armadura da Joana d'Arc (−1 per energy loss), Computador Quântico
-  (inherits receptor passives), Porcelana, Dente Azul, and Primeiro Smartphone.
+- **Card preferences**: extended to include Prince Dracula's Chalice (+2 energy per
+  paradox hit), Joan of Arc's Armor (−1 per energy loss), Quantum Computer
+  (inherits receptor passives), Porcelain, Harald's Bluetooth, and The First Smartphone.
 - **Market**: DeclareAction for Wanted; cheap market helpers (≤ 2g) bought opportunistically
   before delivery cards; Renew up to cost 2.
 
@@ -408,8 +408,8 @@ past, each century traveled costs 2 energy instead of the normal 1.
 - Added `OVERDRIVE_THRESHOLD_CENTURY = 10` and `OVERDRIVE_ENERGY_COST_PER_CENTURY = 2`
   to `constants.py`.
 - `execute_travel` now splits past movement into a normal segment (position > X, cost 1/century)
-  and an overdrive segment (position ≤ X, cost 2/century). Card cost-reduction hooks (Telescópio,
-  Máquina Voadora, Armadura da Joana d'Arc) still apply to the combined total.
+  and an overdrive segment (position ≤ X, cost 2/century). Card cost-reduction hooks (Galileo's Telescope,
+  da Vinci's Flying Machine, Joan of Arc's Armor) still apply to the combined total.
 
 **Strategy updates (all four profiles):**
 - Added `safe_travel_cap(traveler, reserve)` to `simulation/strategies/util.py`: computes the
@@ -421,3 +421,53 @@ past, each century traveled costs 2 energy instead of the normal 1.
 
 **Tests:** `tests/test_overdrive.py`, 14 regression cases covering cost formula, boundary
 conditions, `safe_travel_cap` behavior, and per-profile cap assertions.
+
+---
+
+## [2026-09-26] REFACTOR: English card names and a cleanup pass
+
+**Cards in English.** All 52 cards now carry their official English names (the same names
+the V1 client shows), and every card factory is named after them: `haralds_bluetooth()`,
+`gerardus_mercators_map()`, `agnes_cauldron()`, and so on. Comments, docstrings, tests and
+docs follow. The engine's card identity is still the name, so strategies, receptor lookups
+and combat modifiers match on the English name now.
+
+**Same numbers.** Two shopping lists (Conservative and Smart delivery purchases) broke ties
+between equally good cards by name, and English names sort differently. The tie-break now
+reads `engine/cards.py:TIEBREAK_RANK`, a fixed ranking that reproduces the old order, so the
+1,000-game benchmark (seed 7) and the scenario sweep give exactly the same results.
+
+**Removed (unused anywhere):**
+- `engine/cards.py`: the fixed 40/12 split helpers `build_deck()`, `build_merchant_deck()`,
+  `build_secret_market()` and `SECRET_MARKET_NAMES`. `MerchantDeck` has picked the Secret
+  Market at random for months; `tests/test_cards.py` now checks that real split instead.
+  Also the `on_recharge_energy` hook, which no card set.
+- `engine/dice.py:roll_merchant_movement()` and `GameState.merchant_movement_dice`; the
+  Merchant's dice come from the upgrade flags.
+- `engine/constants.py`: `MODULE_LABELS` and `FUTURE_TRAVEL_ENERGY_COST_PER_CENTURY`.
+- `TravelerState.equipment` and `GameState.never_terminated_count()`.
+- `engine/market.py:_effective_card_cost` (alias of `effective_card_cost`).
+- `simulation/metrics.py:head_to_head()`, `simulation/reports.py:item_report()`, and
+  `simulation/strategies/util.py:paradox_kill_direction()`.
+- `simulation/verbose_run.py`: `run_to_report()` (a second copy of `simulation/report.py`)
+  and a reward wrapper that called an attribute that does not exist.
+
+**Reorganised:**
+- `item_batch_stats()` moved from `simulation/reports.py` into `simulation/metrics.py`;
+  `reports.py` is gone (it was too easy to confuse with `report.py`).
+- The runner helpers that `report.py` and `verbose_run.py` share are public now:
+  `resolve_free_recycles`, `resolve_solo_phases`, `check_win_conditions`,
+  `determine_cp_winner`, `award_survival_bonus`, plus `unpack_allocation()` and
+  `award_full_receptor_bonuses()`, which replace code that was repeated three times.
+- `engine/timeline.py` gained `same_era()` and `in_older_era()`, replacing five copies of the
+  same era checks in the cards and the strategies. Shared strategy decisions (Astrolabe
+  destination, Refrigerator target, Chaos III Merchant move) live in `strategies/util.py`.
+- `simulation/sim_menu.py:generate_charts()` split into one function per chart.
+- `engine/market.py:SECRET_MARKET_RENEW_COST` names the old `999` sentinel.
+
+**Fixed:**
+- `python -m simulation.verbose_run` prints the narrated game again, as the README says (it
+  had been writing an HTML report instead), and no longer crashes at game end when started
+  from `sim_menu`.
+- A free recycle was logged twice in the item events.
+- Reports showed the Declare cost as 2 gold; it is 4 (`DECLARE_COST`).

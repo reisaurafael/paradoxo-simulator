@@ -28,7 +28,9 @@ Reward table (§26.3):
 
 from __future__ import annotations
 import random
-from engine.state import GameState, TravelerState
+from engine import combat
+from engine.constants import CENTURY_MAX
+from engine.state import GameState, TravelerState, ItemEvent
 
 
 # ---------------------------------------------------------------------------
@@ -37,7 +39,7 @@ from engine.state import GameState, TravelerState
 
 def process_pending_rewards(
     game: GameState,
-    deck,           # MerchantDeck: imported lazily to avoid circular imports
+    deck,           # engine.market.MerchantDeck
     strategies: dict,
     rng: random.Random,
 ) -> None:
@@ -56,14 +58,13 @@ def process_pending_rewards(
         strategy = strategies.get(name)
         if strategy is None:
             continue
-        _fire_one_reward(traveler, game, deck, strategies, rng, strategy)
+        _fire_one_reward(traveler, game, deck, rng, strategy)
 
 
 def _fire_one_reward(
     traveler: TravelerState,
     game: GameState,
     deck,
-    strategies: dict,
     rng: random.Random,
     strategy,
 ) -> None:
@@ -74,23 +75,6 @@ def _fire_one_reward(
         category = available[0]
     traveler.last_reward_category = category
     die = rng.randint(1, 3)
-    _apply_reward(traveler, game, deck, strategies, rng, category, die, strategy)
-
-
-# ---------------------------------------------------------------------------
-# Reward effects
-# ---------------------------------------------------------------------------
-
-def _apply_reward(
-    traveler: TravelerState,
-    game: GameState,
-    deck,
-    strategies: dict,
-    rng: random.Random,
-    category: str,
-    die: int,
-    strategy,
-) -> None:
     if category == "Chaos":
         _chaos(traveler, game, deck, die, strategy)
     elif category == "Time":
@@ -99,19 +83,22 @@ def _apply_reward(
         _resource(traveler, game, deck, die, strategy)
 
 
+# ---------------------------------------------------------------------------
+# Reward effects
+# ---------------------------------------------------------------------------
+
 def _chaos(traveler: TravelerState, game: GameState, deck, die: int, strategy) -> None:
     if die == 1:
-        # Chaos I: Timeline paradox, 3 damage to every other active traveler.
-        # Passes through the full combat pipeline (§18), so Escudo Viking,
-        # Armadura, Espada de Laser, Pólvora, Cálice all apply.
-        from engine import combat
+        # Chaos I: a paradox across the whole timeline, 3 damage to every other
+        # active traveler. It goes through the combat pipeline (§18), so Viking
+        # Shield, Joan of Arc's Armor, Laser Sword, Gunpowder and the Chalice apply.
         targets = [t for t in game.travelers if t is not traveler and not t.awaiting_respawn]
         combat.deal_energy(game, traveler, targets, 3, kind="paradox")
 
     elif die == 2:
-        # Chaos II: Destroy one card chosen by strategy.
-        # Candidates: revealed Merchant cards, open Secret Market card, other travelers' equipped cards.
-        # Never from a Temporal Receptor.
+        # Chaos II: destroy one card the strategy picks among the revealed
+        # Merchant cards, the open Secret Market card and the other travelers'
+        # equipment. Never from a Temporal Receptor.
         candidates = []
         if deck is not None:
             candidates.extend(deck.snapshot_revealed())
@@ -146,7 +133,6 @@ def _chaos(traveler: TravelerState, game: GameState, deck, die: int, strategy) -
         for t in game.travelers:
             if target_card in t.hand:
                 t.hand.remove(target_card)
-                from engine.state import ItemEvent
                 game.item_events.append(ItemEvent(
                     hour=game.hour,
                     traveler=t.name,
@@ -157,22 +143,21 @@ def _chaos(traveler: TravelerState, game: GameState, deck, die: int, strategy) -
                 return
 
     else:
-        # Chaos III: Teleport the Merchant to a century chosen by strategy (not Year Zero).
+        # Chaos III: move the Merchant to a century the strategy picks (not Year Zero).
         chosen = strategy.choose_chaos_merchant_century(traveler, game)
-        from engine.constants import CENTURY_MAX
         chosen = max(1, min(CENTURY_MAX, chosen))
         game.merchant_century = chosen
 
 
 def _time(traveler: TravelerState, game: GameState, die: int) -> None:
     if die == 1:
-        # Time I: Solo generators phase, deferred; runner resolves after Phase 4.
+        # Time I: a solo generators phase, which the runner resolves after Phase 4.
         game.solo_phases_pending.append(traveler.name)
     elif die == 2:
-        # Time II: Market voucher, may buy at any market (accumulates).
+        # Time II: market voucher, buy at any market (vouchers accumulate).
         traveler.market_voucher += 1
     else:
-        # Time III: Item voucher, all others count as synchronic this activation (accumulates).
+        # Time III: item voucher, everyone counts as synchronic for one activation.
         traveler.item_voucher += 1
 
 
@@ -183,7 +168,7 @@ def _resource(traveler: TravelerState, game: GameState, deck, die: int, strategy
         traveler.gold += 3
 
     elif die == 2:
-        # Resource II: Steal 1 item from the Merchant's revealed stock.
+        # Resource II: steal 1 item from the Merchant's revealed stock.
         if deck is None:
             return
         revealed = deck.snapshot_revealed()
@@ -202,23 +187,22 @@ def _resource(traveler: TravelerState, game: GameState, deck, die: int, strategy
         except (ValueError, AttributeError):
             return
         traveler.hand.append(target_card)
-        from engine.state import ItemEvent
         game.item_events.append(ItemEvent(
             hour=game.hour,
             traveler=traveler.name,
-            event_type="bought",  # treated as acquisition; open question on Wanted status
+            event_type="bought",  # logged as an acquisition; whether it makes you Wanted is an open question
             card_name=target_card.name,
             century=traveler.century,
         ))
 
     else:
-        # Resource III: Permanent matrix buff, +1 to chosen module's generator value.
+        # Resource III: permanent +1 on a module the strategy picks.
         already_buffed = set(traveler.matrix_buffs.keys())
         if len(already_buffed) >= 9:
             return  # all modules already buffed
         module_index = strategy.choose_matrix_buff_module(traveler, game)
         if module_index not in range(9) or module_index in already_buffed:
-            # Fallback: first unbuffed module
+            # Fall back to the first unbuffed module
             module_index = next((m for m in range(9) if m not in already_buffed), None)
         if module_index is not None:
             traveler.matrix_buffs[module_index] = 1

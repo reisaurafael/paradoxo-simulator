@@ -1,7 +1,7 @@
 """
 engine/paradox.py
 =================
-Paradox damage resolution for Paradoxo.
+Paradox damage resolution.
 
 §18 defines a pool mechanic with distance-ordered application:
 
@@ -20,14 +20,15 @@ Paradox damage resolution for Paradoxo.
 
     18.4  Emitter-to-target pairs of equal distance resolve together.
 
-Every hit is applied through engine/combat.lose_energy, so the source-side
-amplifier (Pólvora), target shields (Escudo Viking, Armadura), reflection
-(Espada de Laser) and the Carro generator buff all apply consistently. Two
-card behaviours live here because they are paradox-specific:
+Every hit goes through engine/combat.lose_energy, so Gunpowder, Viking Shield,
+Joan of Arc's Armor, Laser Sword and the Automobile's generator bonus apply the
+same way as for any other damage. Three card behaviours live here because they
+only concern paradoxes:
 
-    - Lança do Destino: a future paradox also emits a past paradox of equal value.
-    - Simulador da Realidade: causing a present paradox recycles the card.
-    - Cálice do Príncipe Drácula: causing 1+ travelers to lose energy grants +2.
+    - Spear of Destiny: a future paradox also emits a past paradox of equal value.
+    - Reality Simulator: causing a present paradox recycles the card.
+    - Prince Dracula's Chalice: +2 energy once per module for a causer who made
+      at least one traveler lose energy.
 """
 
 from __future__ import annotations
@@ -106,13 +107,13 @@ def resolve_paradox_pool(
 
         add_hits(causer, paradox_col, damage)
 
-        # Lança do Destino: a future paradox also fires a past paradox of equal value.
-        if paradox_col == 0 and any(c.name == "Lança do Destino" for c in causer.hand):
+        # Spear of Destiny: a future paradox also fires a past paradox of equal value.
+        if paradox_col == 0 and any(c.name == "Spear of Destiny" for c in causer.hand):
             add_hits(causer, 2, damage)
 
-        # Simulador da Realidade recycles itself when its holder causes a present paradox.
+        # Reality Simulator recycles itself when its holder causes a present paradox.
         if paradox_col == 1:
-            sim = next((c for c in causer.hand if c.name == "Simulador da Realidade"), None)
+            sim = next((c for c in causer.hand if c.name == "Reality Simulator"), None)
             if sim is not None:
                 combat.recycle_card(game, causer, sim)
 
@@ -135,9 +136,9 @@ def resolve_paradox_pool(
             causer_hits[hit.causer_name] = causer_hits.get(hit.causer_name, 0) + 1
         applied.append(hit)
 
-    # Cálice do Príncipe Drácula: +2 energy to each causer that made someone lose energy.
+    # Prince Dracula's Chalice: +2 energy to each causer that made someone lose energy.
     for name, hits in causer_hits.items():
-        if hits and any(c.name == "Cálice do Príncipe Drácula" for c in traveler_map[name].hand):
+        if hits and any(c.name == "Prince Dracula's Chalice" for c in traveler_map[name].hand):
             traveler_map[name].energy += 2
 
     return applied

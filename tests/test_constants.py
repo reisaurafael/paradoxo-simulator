@@ -7,7 +7,6 @@ These are not trivial: they document the design decisions and catch
 regressions if a constant is accidentally changed.
 """
 
-import pytest
 from engine.constants import (
     YEAR_ZERO, CENTURY_MAX, CENTURY_START,
     ENERGY_PER_TRAVELER,

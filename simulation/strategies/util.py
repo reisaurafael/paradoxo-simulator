@@ -1,47 +1,50 @@
 """
 simulation/strategies/util.py
 ==============================
-Shared helpers used by all strategy agents.
+Helpers shared by the strategy profiles.
 """
 
 from __future__ import annotations
 from typing import TYPE_CHECKING
+
+from engine.constants import CENTURY_MAX, ERAS, OVERDRIVE_THRESHOLD_CENTURY
+from engine.timeline import eras_for_century, same_era
 
 if TYPE_CHECKING:
     from engine.state import TravelerState, GameState
     from engine.cards import Card
 
 
-# Cards whose active_effect needs a MerchantDeck (or similar market object),
-# which is not available during Phase 4 activation.
+# Cards whose active effect needs the Merchant deck, which Phase 4 does not
+# hand to the strategies.
 _MARKET_DECK_CARDS = {
-    "A Máquina de Alan Turing",
-    "Carretel de Pesca",
+    "Alan Turing's Machine",
+    "Fishing Reel",
     "Mona Lisa",
-    "Óculos",
-    "Livro de Mistérios de Alexandria",
-    "Heliógrafo de Niépce",
-    "A Lâmpada de Thomas Edison",
-    "Xilogravura",
+    "Eyeglasses",
+    "Book of Mysteries of Alexandria",
+    "Niépce's Heliograph",
+    "Thomas Edison's Lamp",
+    "Woodblock Print",
 }
 
-# Cards whose active_effect operates with no external context (AoE / self).
+# Cards whose active effect needs no context (area effects, or the user alone).
 _NO_CONTEXT_CARDS = {
-    "Canhão de Vingança da Rainha Anne",
+    "Queen Anne's Revenge Cannon",
     "Excalibur",
-    "A Espada de Átila",
-    "Primeira Maquina do Tempo",
+    "Attila's Sword",
+    "The First Time Machine",
 }
 
-# Cards that teleport/swap and need a TravelerState target.
+# Cards whose active effect needs a target traveler.
 _TARGET_TRAVELER_CARDS = {
-    "Rifle Fergunson",
-    "Lança de Fogo",
-    "Bandeira Vermelha da Ching Shih",
-    "Arma de Laser",
-    "Arma de Portais",
-    "Revolver de Pólvora",
-    "Espada do Carlos Magno",
+    "Ferguson Rifle",
+    "Fire Lance",
+    "Ching Shih's Red Flag",
+    "Laser Gun",
+    "Portal Gun",
+    "Gunpowder Revolver",
+    "Charlemagne's Sword",
 }
 
 
@@ -52,12 +55,11 @@ def paradox_can_terminate(
 ) -> bool:
     """True if using the best available die in Paradox could drop any rival to 0 energy.
 
-    Used by non-Aggressive profiles to decide when Paradox deserves higher priority
-    than Travel: if a kill shot is on the table, commit to it; otherwise, keep dice
-    in Recharge/Gold. Checks all active rivals regardless of direction, the caller
-    fills Paradox from col 0 (future) onward, so actual reach depends on how many
-    dice go in, but the simple "can any rival be killed with max die?" is the right
-    threshold for deciding whether to invest at all.
+    The non-Aggressive profiles use this to decide when Paradox deserves more
+    dice than Travel: if a kill is on the table, commit to it; otherwise keep
+    the dice in Recharge. It checks every active rival regardless of direction.
+    Actual reach depends on how many columns get filled, but "could the best
+    die kill anyone?" is the right threshold for deciding whether to invest at all.
     """
     if not dice:
         return False
@@ -69,50 +71,29 @@ def paradox_can_terminate(
     )
 
 
-def paradox_kill_direction(
-    traveler: "TravelerState",
-    game: "GameState",
-    dice: list[int],
-) -> int | None:
-    """Return the Paradox column (0=future, 1=present, 2=past) that covers the most
-    killable rivals, weighted by how many fit under max(dice). Returns None if no
-    rivals can be killed.
-
-    Used when a strategy wants to place just one Paradox column optimally rather
-    than filling all three.
-    """
-    if not dice:
+def astrolabe_destination(traveler: "TravelerState") -> int | None:
+    """Where an Astrolabe should take the traveler: the oldest century of their
+    current era, or None if they are already there (or on Year Zero)."""
+    eras = eras_for_century(traveler.century)
+    if not eras:
         return None
-    best_val = max(dice)
-    pos = traveler.century
-    buckets = {0: 0, 1: 0, 2: 0}  # col → count of killable rivals
-    for t in game.travelers:
-        if t is traveler or t.awaiting_respawn:
-            continue
-        if t.energy > best_val:
-            continue
-        if t.century > pos:
-            buckets[0] += 1
-        elif t.century == pos:
-            buckets[1] += 1
-        else:
-            buckets[2] += 1
-    best_col = max(buckets, key=lambda c: buckets[c])
-    return best_col if buckets[best_col] > 0 else None
+    era_start = min(ERAS[e][0] for e in eras)
+    if era_start >= traveler.century:
+        return None
+    return era_start
 
 
-def geladeira_context(
+def refrigerator_context(
     receptor_card: "Card",
     traveler: "TravelerState",
     game: "GameState",
 ) -> tuple[bool, object]:
     """
-    Determine whether a receptor card can be activated via Geladeira during
-    Phase 4, and return the sub-context to pass to its effect.
+    Decide whether a receptor card can be used through the Refrigerator during
+    Phase 4, and return the context to pass to its effect.
 
-    Returns (can_use: bool, sub_context: object).
-    Returns (False, None) for cards that need a market deck or have no
-    useful target in Phase 4.
+    Returns (can_use, sub_context). Cards that need the Merchant deck, or have
+    no useful target right now, return (False, None).
     """
     name = receptor_card.name
 
@@ -123,11 +104,11 @@ def geladeira_context(
         return True, None
 
     if name in _TARGET_TRAVELER_CARDS:
-        # Find the weakest enemy in era as target.
+        # Aim at the weakest rival: synchronic first, then anyone in the era.
         era_enemies = [
             t for t in game.travelers
             if t is not traveler and not t.awaiting_respawn
-            and _same_era(traveler.century, t.century)
+            and same_era(traveler.century, t.century)
         ]
         sync_enemies = [t for t in era_enemies if t.century == traveler.century]
         target = (
@@ -138,48 +119,65 @@ def geladeira_context(
             return False, None
         return True, target
 
-    if name == "Mapa de Geradus Mercator":
+    if name == "Gerardus Mercator's Map":
         if traveler.century <= 3:
             return False, None
         return True, (3, -1)
 
-    if name == "Astrolábio":
-        from engine.timeline import eras_for_century
-        from engine.constants import ERAS
-        eras = eras_for_century(traveler.century)
-        if not eras:
+    if name == "Astrolabe":
+        destination = astrolabe_destination(traveler)
+        if destination is None:
             return False, None
-        era_start = min(ERAS[e][0] for e in eras)
-        if era_start >= traveler.century:
-            return False, None
-        return True, era_start
+        return True, destination
 
-    if name == "Geladeira":
-        return False, None  # no recursive Geladeira chains
-
-    # Unknown / unhandled card: skip safely.
+    # The Refrigerator itself (no chains) and any card not handled above.
     return False, None
+
+
+def refrigerator_choice(traveler: "TravelerState", game: "GameState") -> tuple | None:
+    """The (receptor card, sub_context) a Refrigerator should use, or None.
+
+    Takes the first active card in the Temporal Receptor that can be used now.
+    """
+    receptor_actives = [c for c in getattr(traveler, "receptor_cards", [])
+                        if c.ability_type in ("active", "atemporal_active")
+                        and c.active_effect is not None]
+    return next(
+        ((rc, sub) for rc in receptor_actives
+         for ok, sub in [refrigerator_context(rc, traveler, game)] if ok),
+        None,
+    )
+
+
+def century_farthest_from_rivals(traveler: "TravelerState", game: "GameState") -> int:
+    """The century (never Year Zero) as far as possible from every rival in
+    play, where a Chaos III Merchant move hurts their market access most."""
+    others = [t for t in game.travelers if t is not traveler and not t.awaiting_respawn]
+    if not others:
+        return CENTURY_MAX
+    best, best_dist = 1, -1
+    for c in range(1, CENTURY_MAX + 1):
+        min_dist = min(abs(c - t.century) for t in others)
+        if min_dist > best_dist:
+            best_dist = min_dist
+            best = c
+    return best
 
 
 def safe_travel_cap(traveler: "TravelerState", reserve: int = 2) -> int:
     """Max past-travel steps before energy drops to or below `reserve`.
 
-    Accounts for the overdrive rule (centuries ≤ 10 cost 2 each instead of 1).
-    Ignores card-hook cost reductions: conservative estimate for strategy use.
+    Accounts for the overdrive rule (centuries at or below X cost 2 each
+    instead of 1). Ignores card discounts, so it errs on the safe side.
     """
     available = max(0, traveler.energy - reserve)
     pos = traveler.century
     steps = 0
     while steps < pos:
         current_pos = pos - steps
-        cost = 2 if current_pos <= 10 else 1  # overdrive zone
+        cost = 2 if current_pos <= OVERDRIVE_THRESHOLD_CENTURY else 1
         if available < cost:
             break
         available -= cost
         steps += 1
     return steps
-
-
-def _same_era(a: int, b: int) -> bool:
-    from engine.timeline import eras_for_century
-    return bool(set(eras_for_century(a)) & set(eras_for_century(b)))

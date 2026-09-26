@@ -54,7 +54,7 @@ one was reproduced as a failing test before it was fixed.
 | **Cards** | All 52 cards implemented and individually tested |
 | **Win conditions** | Year Zero, Full Receptor, Last Traveler Standing, Merchant-Empty |
 | **Market** | Merchant deck (40 cards, Priority movement, century upgrades) and Secret Market (12 cards, gated by century, passives, vouchers) |
-| **Paradox pipeline** | Distance-ordered damage with 6 stackable combat modifiers (Pólvora, Escudo, Armadura, Espada, Cálice, Caldeirão) |
+| **Paradox pipeline** | Distance-ordered damage with 6 stackable combat modifiers (Gunpowder, Viking Shield, Joan of Arc's Armor, Laser Sword, Prince Dracula's Chalice, Agnes's Cauldron) |
 | **Allocation matrix** | Linear progression (§10), overload (§11.1b) and escape valve (§11.2) enforced |
 | **Termination** | Travelers eliminated and respawned at century XXX with banked energy; the last-survivor check fires before respawns |
 
@@ -118,7 +118,7 @@ board decides what is for sale.
 ```bash
 pip install -e ".[dev]"
 
-pytest                                                   # 245 tests, about 0.2 s
+pytest                                                   # 245 tests, under a second
 
 python -m examples.run_benchmark 1000 7 benchmark.json   # summary and per-game JSON
 python -m examples.make_plots                            # regenerate the charts
@@ -161,11 +161,12 @@ paradoxo/
 │   └── verbose_run.py       # Narrated play by play of one game
 │
 ├── examples/                # Reproducible entry points
-└── tests/                   # 245 tests, about 0.2 s
+└── tests/                   # 245 tests, under a second
 ```
 
-Python 3.11 or newer, dataclasses and `__slots__`, no runtime dependencies. About 500
-games per minute, so a 1,000 game batch takes roughly two minutes.
+Python 3.11 or newer and plain dataclasses. The engine and the game loop use only the
+standard library; numpy and matplotlib are there for the charts. A 1,000 game batch runs in
+well under a minute.
 
 ## Where the project is
 

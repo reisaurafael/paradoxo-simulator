@@ -1,36 +1,37 @@
 """
 engine/combat.py
 ================
-Shared effect plumbing that several cards and the paradox/travel resolvers
-all depend on. Keeping it in one place means a damage rule (Pólvora, Cálice,
-Espada de Laser, Escudo Viking, Armadura, …) is written once and obeyed
-everywhere: paradoxes, weapon actives, and reward effects alike.
+The shared plumbing for energy loss and recycling.
 
-Three concerns live here:
+Several cards change how energy is lost (Gunpowder, Prince Dracula's Chalice,
+Laser Sword, Viking Shield, Joan of Arc's Armor, and more). Keeping those rules
+here means each one is written once and holds for every damage source:
+paradoxes, weapon actives and rewards alike.
 
-1. ``effective_generator``: the value a placed generator actually reads,
-   accounting for the Carro passive (+1 to every causality generator, §card).
+Three things live here:
 
-2. ``lose_energy`` / ``deal_energy``: the single channel through which one
-   traveler (or the environment) reduces another traveler's energy. It applies,
-   in order: the source-side amplifier (Pólvora), the target-side first-hit
-   shield (Escudo Viking), the target's standing reductions (Armadura and any
-   ``on_energy_loss`` passive, including those copied by Computador Quântico),
-   then the reflection passive (Espada de Laser) and the source-side reward
-   (Cálice do Príncipe Drácula).
+1. ``effective_generator``: the value a placed generator actually reads, with
+   the Automobile's +1 and any Resource III matrix buff.
+
+2. ``lose_energy`` / ``deal_energy``: the single channel through which a
+   traveler (or the game itself) takes energy from a traveler. It applies, in
+   order: the attacker's Gunpowder, the target's Viking Shield, the target's
+   standing reductions (Joan of Arc's Armor and any other ``on_energy_loss``
+   passive, including ones copied by the Quantum Computer), then the Laser
+   Sword reflection and the attacker's Prince Dracula's Chalice.
 
 3. ``recycle_card``: moving an equipped card to the recycling pile, firing the
-   Caldeirão da Agnes steal trigger and (optionally) granting the recycle
-   value as energy for the free Recycle action.
+   Agnes's Cauldron steal and, for the free Recycle action, granting the
+   recycle value as energy.
 
-To avoid an import cycle (cards.py imports this module for its active effects)
-every reference back into engine.cards is a function-local import.
+engine.cards imports this module for its active effects, so every reference
+back into engine.cards is imported inside the function that needs it.
 """
 
 from __future__ import annotations
 from typing import TYPE_CHECKING, Iterable, Optional
 
-from engine.constants import FUNCTION_TRAVEL
+from engine.state import ItemEvent
 
 if TYPE_CHECKING:
     from engine.state import TravelerState, GameState, Allocation
@@ -38,7 +39,7 @@ if TYPE_CHECKING:
 
 
 # ---------------------------------------------------------------------------
-# Carro: +1 to every causality generator value (§card "Carro")
+# Generator value
 # ---------------------------------------------------------------------------
 
 def _has(traveler: "TravelerState", name: str) -> bool:
@@ -54,14 +55,13 @@ def effective_generator(
     """
     Return the value a generator placed at (row, col) reads during resolution.
 
-    An empty module reads 0. A placed generator reads its face value, plus 1
-    for every level of the Carro passive the traveler currently equips
-    (Carro adds +1 to the value of all common causality generators).
+    An empty module reads 0. A placed generator reads its face value, +1 while
+    the traveler equips the Automobile, plus any Resource III buff on that module.
     """
     v = allocation.get(row, col)
     if v <= 0:
         return 0
-    if _has(traveler, "Carro"):
+    if _has(traveler, "Automobile"):
         v += 1
     module_index = row * 3 + col
     if hasattr(traveler, "matrix_buffs") and module_index in traveler.matrix_buffs:
@@ -73,26 +73,20 @@ def effective_generator(
 # Energy loss pipeline
 # ---------------------------------------------------------------------------
 
-def _mitigation_cards(target: "TravelerState", game: "GameState | None") -> list["Card"]:
-    """Cards whose ``on_energy_loss`` passive applies to this target."""
-    from engine.cards import passive_source_cards
-    return passive_source_cards(target, game)
-
-
 def register_loss(game: "GameState", traveler: "TravelerState", actual: int) -> None:
     """
     Fire any "when you lose energy" triggers after a confirmed loss.
 
-    Currently: Porcelana recycles itself the moment its holder loses any energy
-    (§card). Called from ``lose_energy`` and from the self-inflicted loss sites
-    in resolve.py (escape valve, explosion, past-travel) so the trigger fires
-    regardless of the loss source.
+    Today that is only Porcelain, which recycles itself the moment its holder
+    loses any energy. Called from ``lose_energy`` and from the self-inflicted
+    loss sites in resolve.py (escape valve, explosion, past travel), so the
+    trigger fires whatever caused the loss.
     """
     if actual <= 0 or game is None:
         return
-    porcelana = next((c for c in traveler.hand if c.name == "Porcelana"), None)
-    if porcelana is not None:
-        recycle_card(game, traveler, porcelana)
+    porcelain = next((c for c in traveler.hand if c.name == "Porcelain"), None)
+    if porcelain is not None:
+        recycle_card(game, traveler, porcelain)
 
 
 def lose_energy(
@@ -115,8 +109,8 @@ def lose_energy(
         source:  Traveler causing the loss, or None for environmental loss
                  (escape valve, explosion, self-inflicted): modifiers that
                  only apply to "another traveler causing the loss" are skipped.
-        kind:    Free-text tag for the cause ("paradox", "weapon", "reflect"…).
-        reflect: Whether Espada de Laser may reflect this loss (set False on
+        kind:    Free-text tag for the cause ("paradox", "weapon", "reflect").
+        reflect: Whether Laser Sword may reflect this loss (set False on
                  the reflected hit itself to prevent an infinite bounce).
     """
     if amount <= 0 or target.awaiting_respawn:
@@ -124,20 +118,21 @@ def lose_energy(
 
     by_other = source is not None and source is not target
 
-    # Source amplifier (Pólvora): the target loses 1 more.
-    if by_other and _has(source, "Pólvora"):
+    # Source amplifier (Gunpowder): the target loses 1 more.
+    if by_other and _has(source, "Gunpowder"):
         amount += 1
 
-    # Target first-hit shield (Escudo Viking): the first enemy-caused loss
+    # Target first-hit shield (Viking Shield): the first enemy-caused loss
     # each Hour is reduced by 2.
-    if by_other and _has(target, "Escudo Viking") \
-            and "Escudo Viking" not in target.cards_used_this_hour:
-        target.cards_used_this_hour.add("Escudo Viking")
+    if by_other and _has(target, "Viking Shield") \
+            and "Viking Shield" not in target.cards_used_this_hour:
+        target.cards_used_this_hour.add("Viking Shield")
         amount = max(0, amount - 2)
 
-    # Standing reductions: Armadura da Joana d'Arc and any other
-    # on_energy_loss passive (including those copied by Computador Quântico).
-    for card in _mitigation_cards(target, game):
+    # Standing reductions: Joan of Arc's Armor and any other
+    # on_energy_loss passive (including those copied by Quantum Computer).
+    from engine.cards import passive_source_cards
+    for card in passive_source_cards(target, game):
         if card.on_energy_loss:
             amount = card.on_energy_loss(target, amount)
     amount = max(0, amount)
@@ -150,11 +145,11 @@ def lose_energy(
     if by_other and actual > 0:
         target.eliminated_by.append(source.name)
 
-    # Reflection (Espada de Laser): the attacker loses what the holder lost.
-    if reflect and by_other and actual > 0 and _has(target, "Espada de Laser"):
+    # Reflection (Laser Sword): the attacker loses what the holder lost.
+    if reflect and by_other and actual > 0 and _has(target, "Laser Sword"):
         lose_energy(game, source, actual, source=None, kind="reflect", reflect=False)
 
-    # "When you lose energy" triggers (Porcelana).
+    # "When you lose energy" triggers (Porcelain).
     register_loss(game, target, actual)
 
     return actual
@@ -171,8 +166,8 @@ def deal_energy(
     """
     Make a batch of targets lose ``amount`` energy from one source effect.
 
-    Applies ``lose_energy`` per target, then the source-side Cálice do Príncipe
-    Drácula reward once if at least one target actually lost energy. Returns the
+    Applies ``lose_energy`` per target, then the attacker's Prince Dracula's
+    Chalice once if at least one target actually lost energy. Returns the
     number of targets that lost energy.
     """
     hits = 0
@@ -182,14 +177,14 @@ def deal_energy(
         if lose_energy(game, t, amount, source=source, kind=kind) > 0:
             hits += 1
 
-    if hits and source is not None and _has(source, "Cálice do Príncipe Drácula"):
+    if hits and source is not None and _has(source, "Prince Dracula's Chalice"):
         source.energy += 2
 
     return hits
 
 
 # ---------------------------------------------------------------------------
-# Recycling with the Caldeirão da Agnes trigger
+# Recycling with the Agnes's Cauldron trigger
 # ---------------------------------------------------------------------------
 
 def recycle_card(
@@ -200,17 +195,16 @@ def recycle_card(
     grant_energy: bool = False,
 ) -> None:
     """
-    Move ``card`` out of ``owner``'s equipment to the recycling pile (§Recycle).
+    Move ``card`` out of ``owner``'s equipment to the recycling pile (§21).
 
-    - If ``grant_energy`` (the free Recycle action), the owner gains the card's
-      recycle value (§Recycling: energy = recycle value printed bottom-right).
-    - Caldeirão da Agnes: when another traveler recycles a card, a holder of
-      Caldeirão may steal it, modelled here as: the first such holder with room
-      takes the card instead of it reaching the pile.
+    - With ``grant_energy`` (the free Recycle action) the owner gains the card's
+      recycle value, the number printed bottom-right.
+    - Agnes's Cauldron: when another traveler recycles a card, a Cauldron
+      holder may steal it. I model that as the first holder with room taking
+      the card before it reaches the pile.
 
-    The recycling pile itself is not otherwise tracked in game state, so a card
-    that is not stolen simply leaves play (functionally equivalent for the
-    analysis engine).
+    The recycling pile itself is not tracked, so a card nobody steals simply
+    leaves play. For the analysis that is the same thing.
     """
     if card in owner.hand:
         owner.hand.remove(card)
@@ -221,9 +215,8 @@ def recycle_card(
     for t in game.travelers:
         if t is owner or t.awaiting_respawn:
             continue
-        if any(c.name == "Caldeirão da Agnes" for c in t.hand) and t.can_hold(card):
+        if any(c.name == "Agnes's Cauldron" for c in t.hand) and t.can_hold(card):
             t.hand.append(card)
-            from engine.state import ItemEvent
             game.item_events.append(ItemEvent(
                 hour=game.hour,
                 traveler=owner.name,
@@ -239,7 +232,6 @@ def recycle_card(
                 century=t.century,
             ))
             return
-    from engine.state import ItemEvent
     game.item_events.append(ItemEvent(
         hour=game.hour,
         traveler=owner.name,

@@ -1,39 +1,36 @@
 """
 simulation/strategies/base.py
 ==============================
-Abstract base class for all Paradoxo strategy agents.
+The interface every strategy implements.
 
-Every strategy, whether a hand-crafted heuristic, a Monte Carlo agent,
-or eventually a learned AI, implements this interface. The simulation
-runner calls it without knowing which concrete strategy it is talking to.
+The runner calls these methods without knowing which strategy it is talking
+to, so a hand-written profile and a learned player plug in the same way.
 
-The interface is deliberately minimal:
-    - `choose_allocation` is the only required method.
-    - It receives the full game state and the dice rolled this Hour.
-    - It returns a completed Allocation and a travel direction.
+`choose_allocation` is the only required method: it receives the traveler, the
+game and the dice rolled this Hour, and returns a completed Allocation and a
+travel direction. Every other decision has a simple default below.
 
-Strategies must not mutate game state. The runner owns state mutation.
+Strategies must not mutate game state; the runner owns every change.
 """
 
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from engine.state import TravelerState, GameState, Allocation
-from engine.dice import count_faces
-from engine.market import MarketAction, PassAction, UseCardAction
+from engine.state import TravelerState, GameState
+from engine.market import MarketAction, PassAction
 from engine.cards import Card
 
 
 class Strategy(ABC):
     """
-    Abstract base for all strategy agents.
+    Base class for all strategy agents.
 
-    Subclasses implement `choose_allocation` and may optionally override
-    `name` to provide a human-readable label for reports.
+    Subclasses implement `choose_allocation` and may override `name` to give
+    reports a readable label.
     """
 
     @property
     def name(self) -> str:
-        """Human-readable strategy name, used in reports and graph labels."""
+        """Human-readable strategy name, used in reports and chart labels."""
         return self.__class__.__name__
 
     @abstractmethod
@@ -91,9 +88,10 @@ class Strategy(ABC):
 
         Return a list of ``(card, context)`` pairs (up to one per equipped object,
         §2.3). Each card must be in hand and have an Active ability. ``context``
-        is the card-specific argument (a target traveler for weapons, a
-        ``(centuries, direction)`` tuple for Mapa, a receptor card for Geladeira,
-        …). The runner resolves them in this traveler's priority window.
+        is the card-specific argument: a target traveler for weapons, a
+        ``(centuries, direction)`` tuple for Gerardus Mercator's Map, a receptor
+        card for the Refrigerator, and so on. The runner resolves them in this
+        traveler's priority window.
 
         Default: activate nothing. Subclasses override to use weapons/utilities.
         """

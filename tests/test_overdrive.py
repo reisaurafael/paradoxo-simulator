@@ -9,14 +9,11 @@ that strategy profiles cap travel to avoid self-termination.
 """
 
 import random
-import pytest
 
-from engine.state import GameState, Allocation
+from engine.state import GameState
 from engine.constants import (
-    OVERDRIVE_THRESHOLD_CENTURY,
     OVERDRIVE_ENERGY_COST_PER_CENTURY,
     PAST_TRAVEL_ENERGY_COST_PER_CENTURY,
-    CENTURY_MAX,
 )
 from engine.resolve import execute_travel
 from simulation.strategies.util import safe_travel_cap

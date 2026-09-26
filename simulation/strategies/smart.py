@@ -18,11 +18,11 @@ the strategy evaluates three levers in order:
      AND energy is comfortable enough to absorb the next-Hour escape-valve penalty.
 
 Market behaviour:
-  • DeclareAction to clear Wanted before entering the Secret Market loop.
-  • Wide card wishlist: delivery periods, energy/survival, market access, travel,
-    Cálice do Príncipe Drácula (energy on paradox hits), Computador Quântico,
-    Armadura da Joana d'Arc.
-  • Renew up to cost 2 when the revealed set has nothing useful.
+  - DeclareAction to clear Wanted before entering the Secret Market loop.
+  - Wide card wishlist: delivery periods, energy/survival, market access, travel,
+    Prince Dracula's Chalice (energy on paradox hits), Quantum Computer,
+    Joan of Arc's Armor.
+  - Renew up to cost 2 when the revealed set has nothing useful.
 """
 
 from __future__ import annotations
@@ -36,11 +36,15 @@ from engine.constants import (
 )
 from engine.matrix import place, send_to_escape_valve
 from engine.dice import count_faces
-from engine.cards import Card
-from engine.market import MarketAction, BuyAction, RenewAction, DeclareAction, PassAction
-from engine.timeline import periods_for_century
+from engine.cards import Card, TIEBREAK_RANK
+from engine.market import (
+    MarketAction, BuyAction, RenewAction, DeclareAction, PassAction, SECRET_MARKET_RENEW_COST,
+)
+from engine.timeline import in_older_era, periods_for_century, same_era
 from simulation.strategies.base import Strategy
-from simulation.strategies.util import paradox_can_terminate, safe_travel_cap
+from simulation.strategies.util import (
+    astrolabe_destination, paradox_can_terminate, refrigerator_choice, safe_travel_cap,
+)
 
 
 class SmartStrategy(Strategy):
@@ -55,41 +59,41 @@ class SmartStrategy(Strategy):
     ENERGY_SAFE        = 6     # Above this: can consider weapons
     BOOM_DANGER        = 9     # Above this: skip heating module (no Travel)
 
-    # ---------------------------------------------------------------------------
+    # ------------------------------------------------------------------
     # Card wish-lists
-    # ---------------------------------------------------------------------------
+    # ------------------------------------------------------------------
 
     # Tier A: cheap, high-value survivability.
     _ENERGY_CARDS = {
-        "Toalha",                               # 1g: no overload
-        "Autômato de Ismail Al-Jazari",         # 1g: -5 booms on overload
-        "Motor de Corrente Alternada de Tesla", # 1g: +1 energy on boom gain
-        "Escudo Viking",                        # 2g: first energy loss -2/hour
-        "Sismográfico",                         # 2g: -2 booms on gain
-        "Super Motor",                          # 2g: prevent first explosion
-        "Colar de Cavalo",                      # 3g: +1 energy per travel module
-        "Santo Graal",                          # 3g: prevent first death
-        "Armadura da Joana d'Arc",              # 4g: -1 to every energy loss
-        "Cálice do Príncipe Drácula",           # 3g: +2 energy when paradox lands
+        "Towel",                     # 1g: Travel and Paradox never overload
+        "Al-Jazari's Automaton",     # 1g: -5 booms on overload
+        "Tesla's AC Motor",          # 1g: +1 energy on boom gain
+        "Viking Shield",             # 2g: first energy loss -2/hour
+        "Seismograph",               # 2g: -2 booms on gain
+        "Super Motor",               # 2g: prevent first explosion
+        "Horse Collar",              # 3g: +1 energy per travel module
+        "Holy Grail",                # 3g: prevent first death
+        "Joan of Arc's Armor",       # 4g: -1 to every energy loss
+        "Prince Dracula's Chalice",  # 3g: +2 energy when paradox lands
     }
 
     # Tier B: market efficiency / access.
     _MARKET_CARDS = {
-        "Porcelana",                            # 1g: market cards cost 1 less
-        "Dente Azul do Harald",                 # 1g: atemporal market access
-        "Primeiro Smartphone",                  # 1g: atemporal market access
-        "Máquina de Venda Automática",          # 2g: +1 gold when others buy
-        "Computador Quântico",                  # 2g: inherits receptor passives
-        "Janela do Tempo",                      # 4g: always synchronic
+        "Porcelain",             # 1g: market cards cost 1 less
+        "Harald's Bluetooth",    # 1g: atemporal market access
+        "The First Smartphone",  # 1g: atemporal market access
+        "Vending Machine",       # 2g: +1 gold when others buy
+        "Quantum Computer",      # 2g: inherits receptor passives
+        "Window of Time",        # 4g: always synchronic
     }
 
     # Tier C: travel and positioning.
     _TRAVEL_CARDS = {
-        "Mapa de Geradus Mercator",              # 2g: free 3-step active move
-        "Bússola de Navegação",                  # 3g: passive bonus travel
-        "Colar de Cavalo",                       # (also in Tier A)
-        "Telescópio de Galileu Galilei",         # 3g: reduces past-travel cost
-        "Máquina Voadora da da Vinci",           # 4g: large item, reduces travel cost
+        "Gerardus Mercator's Map",    # 2g: free 3-step active move
+        "Navigation Compass",         # 3g: passive bonus travel
+        "Horse Collar",               # (also in Tier A)
+        "Galileo's Telescope",        # 3g: reduces past-travel cost
+        "da Vinci's Flying Machine",  # 4g: large item, reduces travel cost
     }
 
     @property
@@ -160,7 +164,7 @@ class SmartStrategy(Strategy):
         return alloc, direction, energy_cap
 
     def _park_alloc(self, dice: list[int], unavailable: set[int]) -> Allocation:
-        """No travel: Recharge(2) → Paradox(1) → escape valve."""
+        """No travel: Recharge(2), then Paradox(1), then the escape valve."""
         alloc = Allocation.empty()
         remaining = list(dice)
         remaining = self._fill_max(alloc, FUNCTION_RECHARGE, remaining, unavailable, max_slots=2)
@@ -175,7 +179,7 @@ class SmartStrategy(Strategy):
     # ------------------------------------------------------------------
 
     def _recharge_first(self, alloc, counts, remaining, unavailable):
-        """Energy critical: Recharge(2) → Travel(2) → Paradox(1).
+        """Energy critical: Recharge(2), then Travel(2), then Paradox(1).
         Recharge before Travel to stabilise; Paradox last with leftovers."""
         remaining = self._fill_max(alloc, FUNCTION_RECHARGE, remaining, unavailable, max_slots=2)
         remaining = self._fill_max(alloc, FUNCTION_TRAVEL,   remaining, unavailable, max_slots=2)
@@ -184,7 +188,7 @@ class SmartStrategy(Strategy):
 
     def _avoid_heating(self, alloc, counts, remaining, unavailable, kill_threat: bool):
         """Booms dangerously high: skip Travel (heating module is col 0).
-        Recharge(2) → Paradox(2 if kill, else 1)."""
+        Recharge(2), then Paradox (2 for a kill, else 1)."""
         remaining = self._fill_max(alloc, FUNCTION_RECHARGE, remaining, unavailable, max_slots=2)
         paradox_slots = 2 if kill_threat else 1
         remaining = self._fill_max(alloc, FUNCTION_PARADOX, remaining, unavailable,
@@ -201,7 +205,7 @@ class SmartStrategy(Strategy):
         return self._fill_rest(alloc, remaining, unavailable, skip={FUNCTION_TRAVEL})
 
     def _balanced(self, alloc, counts, remaining, unavailable, kill_threat: bool):
-        """Default: Travel(2) → Recharge(2) → Paradox(1 or 2).
+        """Default: Travel(2), then Recharge(2), then Paradox(1 or 2).
 
         Travel fills first so the dominant die value goes into movement, not into
         Recharge. Recharge then gets the next-best value. Paradox gets 2 cols when
@@ -265,7 +269,7 @@ class SmartStrategy(Strategy):
         return 0 < dist <= 6
 
     # ------------------------------------------------------------------
-    # Delivery targeting (shared with Collector)
+    # Delivery targeting (close to the Collector's version, with its own thresholds)
     # ------------------------------------------------------------------
 
     def _try_target_delivery(self, traveler, dice, unavailable):
@@ -330,9 +334,9 @@ class SmartStrategy(Strategy):
         held_names = {c.name for c in traveler.hand}
         missing_periods = {"Origins", "Ascension", "Singularity"} - traveler.delivered_periods
 
-        # Clear Wanted poster for Secret Market access.
+        # Clear the Wanted poster for Secret Market access.
         if (traveler.is_wanted
-                and renew_cost != 999
+                and renew_cost != SECRET_MARKET_RENEW_COST
                 and game.secret_market_open
                 and traveler.gold >= DECLARE_COST):
             return DeclareAction()
@@ -366,7 +370,7 @@ class SmartStrategy(Strategy):
                 if traveler.gold < card.gold_cost or not traveler.can_hold(card):
                     continue
                 steps = traveler.century - card.delivery_century
-                candidates.append((-len(new_p), steps, card.gold_cost, card.name, card))
+                candidates.append((-len(new_p), steps, card.gold_cost, TIEBREAK_RANK[card.name], card))
             candidates.sort(key=lambda x: x[:4])
             if candidates:
                 return BuyAction(candidates[0][4])
@@ -416,7 +420,7 @@ class SmartStrategy(Strategy):
                         and t.century == traveler.century]
         era_enemies  = [t for t in game.travelers
                         if t is not traveler and not t.awaiting_respawn
-                        and self._same_era(traveler.century, t.century)]
+                        and same_era(traveler.century, t.century)]
         weakest_sync = min(sync_enemies, key=lambda t: t.energy, default=None)
         weakest_era  = min(era_enemies,  key=lambda t: t.energy, default=None)
         use_weapons  = traveler.energy >= self.ENERGY_SAFE
@@ -425,7 +429,7 @@ class SmartStrategy(Strategy):
             name = card.name
             ctx: object = None
 
-            if name == "Mapa de Geradus Mercator":
+            if name == "Gerardus Mercator's Map":
                 overshot = [c for c in traveler.hand
                             if c.delivery_century is not None
                             and 1 <= c.delivery_century - traveler.century <= 3]
@@ -437,44 +441,38 @@ class SmartStrategy(Strategy):
                 else:
                     continue
 
-            elif name == "Astrolábio":
-                from engine.timeline import eras_for_century
-                from engine.constants import ERAS
-                eras = eras_for_century(traveler.century)
-                if not eras:
+            elif name == "Astrolabe":
+                ctx = astrolabe_destination(traveler)
+                if ctx is None:
                     continue
-                era_start = min(ERAS[e][0] for e in eras)
-                if era_start >= traveler.century:
-                    continue
-                ctx = era_start
 
-            elif name == "Primeira Maquina do Tempo":
+            elif name == "The First Time Machine":
                 if traveler.century >= 20 and traveler.gold <= 1:
                     ctx = None
                 else:
                     continue
 
-            elif name == "Canhão de Vingança da Rainha Anne":
+            elif name == "Queen Anne's Revenge Cannon":
                 if not use_weapons or not era_enemies:
                     continue
                 ctx = None
 
-            elif name in ("Arma de Laser", "Lança de Fogo"):
+            elif name in ("Laser Gun", "Fire Lance"):
                 if not use_weapons or weakest_sync is None:
                     continue
                 ctx = weakest_sync
 
-            elif name == "Bandeira Vermelha da Ching Shih":
+            elif name == "Ching Shih's Red Flag":
                 if not use_weapons or not era_enemies:
                     continue
                 ctx = max(era_enemies, key=lambda t: t.gold, default=weakest_era)
 
-            elif name == "Rifle Fergunson":
+            elif name == "Ferguson Rifle":
                 if not use_weapons or weakest_era is None:
                     continue
                 ctx = weakest_era
 
-            elif name == "Revolver de Pólvora":
+            elif name == "Gunpowder Revolver":
                 if not use_weapons or not sync_enemies:
                     continue
                 ctx = max(sync_enemies, key=lambda t: len(t.hand))
@@ -488,45 +486,29 @@ class SmartStrategy(Strategy):
                     continue
                 ctx = None
 
-            elif name == "Espada do Carlos Magno":
+            elif name == "Charlemagne's Sword":
                 if not use_weapons or weakest_sync is None or traveler.gold == 0:
                     continue
                 ctx = weakest_sync
 
-            elif name == "A Espada de Átila":
+            elif name == "Attila's Sword":
                 if not use_weapons:
                     continue
-                from engine.timeline import eras_for_century
-                from engine.constants import ERAS
-                order = list(ERAS.keys())
-                my_eras = eras_for_century(traveler.century)
-                my_oldest = min(order.index(e) for e in my_eras) if my_eras else 0
-                older = [t for t in game.travelers
-                         if not t.awaiting_respawn and t is not traveler
-                         and eras_for_century(t.century)
-                         and max(order.index(e) for e in eras_for_century(t.century)) < my_oldest]
-                if not older:
+                if not any(not t.awaiting_respawn and t is not traveler
+                           and in_older_era(t.century, traveler.century)
+                           for t in game.travelers):
                     continue
                 ctx = None
 
-            elif name == "Arma de Portais":
+            elif name == "Portal Gun":
                 if not use_weapons or weakest_era is None:
                     continue
                 ctx = weakest_era
 
-            elif name == "Geladeira":
-                from simulation.strategies.util import geladeira_context
-                receptor_actives = [c for c in getattr(traveler, "receptor_cards", [])
-                                    if c.ability_type in ("active", "atemporal_active")
-                                    and c.active_effect is not None]
-                chosen = next(
-                    ((rc, sub) for rc in receptor_actives
-                     for ok, sub in [geladeira_context(rc, traveler, game)] if ok),
-                    None,
-                )
-                if chosen is None:
+            elif name == "Refrigerator":
+                ctx = refrigerator_choice(traveler, game)
+                if ctx is None:
                     continue
-                ctx = (chosen[0], chosen[1])
 
             else:
                 continue
@@ -556,7 +538,7 @@ class SmartStrategy(Strategy):
         return traveler.century
 
     def choose_reward_category(self, traveler, game, available):
-        """Time (voucher/market) → Resource (gold/matrix) → Chaos."""
+        """Time (vouchers, market), then Resource (gold, matrix), then Chaos."""
         for preferred in ("Time", "Resource", "Chaos"):
             if preferred in available:
                 return preferred
@@ -565,9 +547,9 @@ class SmartStrategy(Strategy):
     def choose_cards_to_deliver(self, traveler, game, deliverable):
         to_keep: set[str] = set()
         for card in deliverable:
-            if card.name == "Sismográfico" and traveler.booms >= 6:
+            if card.name == "Seismograph" and traveler.booms >= 6:
                 to_keep.add(card.name)
-            elif card.name == "Escudo Viking":
+            elif card.name == "Viking Shield":
                 same_era = any(
                     t for t in game.travelers
                     if t is not traveler and not t.awaiting_respawn
@@ -575,9 +557,9 @@ class SmartStrategy(Strategy):
                 )
                 if same_era:
                     to_keep.add(card.name)
-            elif card.name == "Toalha":
+            elif card.name == "Towel":
                 to_keep.add(card.name)
-            elif card.name == "Santo Graal" and traveler.energy <= 6:
+            elif card.name == "Holy Grail" and traveler.energy <= 6:
                 to_keep.add(card.name)
         return [c for c in deliverable if c.name not in to_keep]
 
@@ -610,7 +592,3 @@ class SmartStrategy(Strategy):
         if required is not None:
             return required if required in remaining else None
         return max(set(remaining), key=lambda v: (remaining.count(v), v))
-
-    def _same_era(self, a: int, b: int) -> bool:
-        from engine.timeline import eras_for_century
-        return bool(set(eras_for_century(a)) & set(eras_for_century(b)))

@@ -17,12 +17,11 @@ import random
 from engine.state import GameState
 from engine.constants import (
     CENTURY_MIN,
-    CP_YEAR_ZERO_TOTAL,
     DECLARE_COST,
     FUNCTION_TRAVEL,
 )
-from engine.market import BuyAction, DeclareAction, PassAction
-from engine.cards import rifle_fergunson
+from engine.market import BuyAction, DeclareAction
+from engine.cards import ferguson_rifle
 from simulation.strategies.aggressive import AggressiveStrategy
 
 
@@ -148,7 +147,7 @@ def test_buys_weapon_cards():
     g = _game((10, 0, False), (12, 0, False))
     aggro = g.travelers[0]
     aggro.gold = 50
-    rifle = rifle_fergunson()
+    rifle = ferguson_rifle()
     action = strat.choose_market_action(aggro, g, [rifle], renew_cost=1)
     assert isinstance(action, BuyAction)
     assert action.card.name == rifle.name

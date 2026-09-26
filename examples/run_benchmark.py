@@ -26,7 +26,7 @@ from pathlib import Path
 if __name__ == "__main__" and hasattr(sys.stdout, "buffer"):
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
-from simulation.runner import simulate_n_games
+from simulation.runner import simulate_n_games, MAX_HOURS_DEFAULT
 from simulation.metrics import summarise, print_summary
 from simulation.strategies.aggressive import AggressiveStrategy
 from simulation.strategies.conservative import ConservativeStrategy
@@ -35,6 +35,7 @@ from simulation.strategies.collector import CollectorStrategy
 
 
 def build_lineup() -> dict:
+    """The four profiles in the fixed seating order the README numbers use."""
     return {
         "Aggressive":   AggressiveStrategy(),
         "Conservative": ConservativeStrategy(),
@@ -55,7 +56,7 @@ def main(n_games: int = 1000, seed: int = 7, output: str | None = None) -> None:
             "python": platform.python_version(),
             "seed": seed,
             "lineup_order": list(build_lineup()),
-            "max_hours": 200,
+            "max_hours": MAX_HOURS_DEFAULT,
             "summary": asdict(summary),
             "games": [
                 {"index": i, "winner": r.winner, "hours": r.hours_played,

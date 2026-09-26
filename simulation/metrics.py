@@ -1,17 +1,19 @@
 """
 simulation/metrics.py
 =====================
-Statistical analysis of GameResult batches produced by simulate_n_games().
+Statistics over a batch of GameResults from simulate_n_games().
 
-All functions are pure: they take a list[GameResult] and return plain dicts
-or dataclasses. No side effects and no file I/O: that belongs in reports.py.
+Everything here is a pure function: a list of GameResult in, plain dicts or
+dataclasses out. Printing is limited to print_summary() at the bottom.
 """
 
 from __future__ import annotations
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from statistics import mean, median, stdev
-from collections import Counter
+from collections import Counter, defaultdict
+from engine.constants import PERIODS
 from engine.state import GameResult, HourSnapshot
+from engine.timeline import periods_for_century
 
 
 # ---------------------------------------------------------------------------
@@ -206,27 +208,66 @@ def trajectories(results: list[GameResult]) -> dict[str, Trajectory]:
 
 
 # ---------------------------------------------------------------------------
-# Matchup matrix
+# Item events
 # ---------------------------------------------------------------------------
 
-def head_to_head(results: list[GameResult]) -> dict[tuple[str, str], int]:
+def item_batch_stats(results: list[GameResult]) -> dict:
     """
-    Count how many times each traveler beat each other traveler.
+    Aggregate the item events of a batch of games.
 
-    Returns a dict of (winner, loser) → count. Useful for spotting
-    dominant strategies in multi-player matchups.
+    Returns a dict with keys:
+        avg_buys_per_game               dict[traveler_name, float]
+        avg_deliveries_per_game         dict[traveler_name, float]
+        avg_missed_deliveries_per_game  dict[traveler_name, float]
+        delivery_period_coverage        dict[traveler_name, dict[period, float]]:
+                                        the share of games in which the traveler
+                                        delivered at least one card in that period
+        full_receptor_rate              float: share of games won by full_receptor
     """
-    matrix: Counter[tuple[str, str]] = Counter()
-    all_names = list(results[0].strategy_names.keys())
+    if not results:
+        return {}
 
-    for r in results:
-        if r.winner is None:
-            continue
-        for loser in all_names:
-            if loser != r.winner:
-                matrix[(r.winner, loser)] += 1
+    all_travelers = list(results[0].strategy_names.keys())
+    n = len(results)
 
-    return dict(matrix)
+    buys: dict[str, int] = defaultdict(int)
+    deliveries: dict[str, int] = defaultdict(int)
+    missed: dict[str, int] = defaultdict(int)
+    # traveler -> period -> number of games where it was covered
+    period_covered: dict[str, dict[str, int]] = {
+        t: {period: 0 for period in PERIODS} for t in all_travelers
+    }
+    full_receptor_count = 0
+
+    for result in results:
+        if result.end_reason == "full_receptor":
+            full_receptor_count += 1
+
+        covered: dict[str, set[str]] = defaultdict(set)
+        for ev in result.item_events:
+            if ev.event_type == "bought":
+                buys[ev.traveler] += 1
+            elif ev.event_type == "delivered":
+                deliveries[ev.traveler] += 1
+                covered[ev.traveler].update(periods_for_century(ev.century))
+            elif ev.event_type == "missed_delivery":
+                missed[ev.traveler] += 1
+
+        for t in all_travelers:
+            for period in covered.get(t, set()):
+                if period in period_covered[t]:
+                    period_covered[t][period] += 1
+
+    return {
+        "avg_buys_per_game": {t: buys[t] / n for t in all_travelers},
+        "avg_deliveries_per_game": {t: deliveries[t] / n for t in all_travelers},
+        "avg_missed_deliveries_per_game": {t: missed[t] / n for t in all_travelers},
+        "delivery_period_coverage": {
+            t: {p: period_covered[t][p] / n for p in period_covered[t]}
+            for t in all_travelers
+        },
+        "full_receptor_rate": full_receptor_count / n,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -249,11 +290,11 @@ def print_summary(summary: BatchSummary) -> None:
     print(f"\nGame length (hours):  mean={gl.mean:.1f}  median={gl.median:.0f}"
           f"  std={gl.stdev:.1f}  min={gl.min}  max={gl.max}")
 
-    print(f"\nEnd reasons:")
+    print("\nEnd reasons:")
     for reason, count in sorted(summary.end_reasons.items(), key=lambda x: -x[1]):
         print(f"  {reason}: {count}")
 
-    print(f"\nPer-traveler detail:")
+    print("\nPer-traveler detail:")
     for name, ts in summary.per_traveler.items():
         print(f"  {name} ({ts.strategy}):")
         print(f"    Avg final century : {ts.mean_final_century:.1f}  "

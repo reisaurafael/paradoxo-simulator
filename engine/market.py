@@ -16,16 +16,17 @@ Key rules implemented here:
 
 from __future__ import annotations
 import random
-from dataclasses import dataclass, field
-from engine.state import GameState, TravelerState
-from engine.cards import Card, build_all_cards
-from engine.constants import SECRET_MARKET_CARD_COUNT
+from dataclasses import dataclass
+from engine.state import GameState, TravelerState, ItemEvent
+from engine.cards import Card, build_all_cards, passive_source_cards
+from engine.timeline import periods_for_century
 from engine.constants import (
     MERCHANT_UPGRADE_1_CENTURY,
     MERCHANT_UPGRADE_2_CENTURY,
     SECRET_MARKET_CENTURY,
     SECRET_MARKET_CARD_COUNT,
     CENTURY_MAX,
+    CP_PER_DELIVERY,
     DECLARE_COST,
     RENEW_COST_BASE,
     MERCHANT_REVEALED_CARDS,
@@ -40,28 +41,37 @@ from engine.constants import (
 class BuyAction:
     card: Card
 
+
 @dataclass
 class RenewAction:
     card: Card
+
 
 @dataclass
 class DeclareAction:
     pass
 
+
 @dataclass
 class UseCardAction:
     card: Card
-    context: object = None  # card-specific context (target, rng, deck, etc.)
+    context: object = None  # card-specific context (a target, the deck, ...)
+
 
 @dataclass
 class PassAction:
     pass
 
+
 MarketAction = BuyAction | RenewAction | DeclareAction | UseCardAction | PassAction
+
+# The Secret Market has no renewal. Its loop passes this as the renew cost, so a
+# strategy can tell which market is asking.
+SECRET_MARKET_RENEW_COST = 999
 
 
 # ---------------------------------------------------------------------------
-# Merchant deck
+# Merchant deck and Secret Market
 # ---------------------------------------------------------------------------
 
 class SecretMarket:
@@ -123,7 +133,7 @@ class MerchantDeck:
         self._rng = rng or random.Random()
         all_cards: list[Card] = build_all_cards()
         self._rng.shuffle(all_cards)
-        # First 12 (random) go to the Secret Market; rest to Merchant draw pile.
+        # The first 12 after the shuffle go to the Secret Market, the rest to the Merchant.
         secret_cards = all_cards[:SECRET_MARKET_CARD_COUNT]
         self._draw: list[Card] = all_cards[SECRET_MARKET_CARD_COUNT:]
         self._discard: list[Card] = []
@@ -183,8 +193,8 @@ def merchant_target(game: GameState) -> int:
     non_sync = [t for t in active if t.century != merchant_pos]
     if non_sync:
         # Richest non-synchronic traveler. §17.7: gold ties break by Priority,
-        # which is century (closest to future) → energy → duel (§19.1). The duel
-        # is approximated by list order. (BUG-006)
+        # which is century (closest to the future), then energy, then a duel
+        # (§19.1) that I approximate with seating order. (BUG-006)
         target_traveler = max(
             non_sync,
             key=lambda t: (t.gold, t.century, t.energy, -game.travelers.index(t)),
@@ -216,8 +226,7 @@ def move_merchant(game: GameState, rng: random.Random) -> None:
 
     while steps_remaining > 0:
         next_pos = current + direction
-        # Clamp: never go below 1 (Year Zero is 0, Merchant can't go there)
-        # and never above XXX
+        # The Merchant never enters Year Zero (0) and never passes XXX.
         next_pos = max(1, min(CENTURY_MAX, next_pos))
         current = next_pos
         steps_remaining -= 1
@@ -255,15 +264,14 @@ def check_merchant_upgrades(game: GameState) -> None:
 # Market phase resolution (§18)
 # ---------------------------------------------------------------------------
 
-_ATEMPORAL_MARKET_CARDS = {"Janela do Tempo", "Primeiro Smartphone"}
+_ATEMPORAL_MARKET_CARDS = {"Window of Time", "The First Smartphone"}
 
 
 def _has_atemporal_access(traveler: TravelerState) -> bool:
     return any(c.name in _ATEMPORAL_MARKET_CARDS for c in traveler.hand)
 
 
-def _traveler_can_access_market(traveler: TravelerState, game: GameState,
-                                market_pos: int) -> bool:
+def _traveler_can_access_market(traveler: TravelerState, market_pos: int) -> bool:
     """True if this traveler may participate in the Merchant market this phase."""
     if traveler.century == market_pos:
         return True
@@ -277,8 +285,8 @@ def _traveler_can_access_market(traveler: TravelerState, game: GameState,
 def _traveler_can_access_secret_market(traveler: TravelerState) -> bool:
     """True if this traveler may access the Secret Market (§24.4, §16.2, §23.3).
 
-    Physically at century XI, or an atemporal card grants market access,
-    or the traveler holds a market voucher (Time II reward).
+    Standing on century XI, holding an atemporal access card, or holding a
+    market voucher (Time II reward).
     """
     if traveler.century == SECRET_MARKET_CENTURY:
         return True
@@ -290,24 +298,16 @@ def _traveler_can_access_secret_market(traveler: TravelerState) -> bool:
 
 
 def effective_card_cost(card: Card, traveler: TravelerState) -> int:
-    """Card cost after the Porcelana discount (-1g while held, never below 1g).
-
-    The discount applies to every revealed Market card while the traveler holds
-    Porcelana; the floor is 1 gold, not 0 (a card never becomes free).
-    """
-    if any(c.name == "Porcelana" for c in traveler.hand):
+    """Card cost after the Porcelain discount: 1 gold less while it is held,
+    never below 1 gold (a card never becomes free)."""
+    if any(c.name == "Porcelain" for c in traveler.hand):
         return max(1, card.gold_cost - 1)
     return card.gold_cost
 
 
-# Backwards-compatible private alias (older call sites).
-_effective_card_cost = effective_card_cost
-
-
 def _notify_buy_observers(buyer: TravelerState, card: Card,
                           game: GameState, all_travelers: list[TravelerState]) -> None:
-    """Fire on_market_buy_other hooks on all other travelers (Máquina de Venda)."""
-    from engine.cards import passive_source_cards
+    """Fire on_market_buy_other hooks on all other travelers (Vending Machine)."""
     for t in all_travelers:
         if t is buyer or t.awaiting_respawn:
             continue
@@ -316,10 +316,10 @@ def _notify_buy_observers(buyer: TravelerState, card: Card,
                 held.on_market_buy_other(t, buyer, card, game)
 
 
-def _simulador_in_play(game: GameState) -> bool:
-    """True if any traveler equips Simulador da Realidade (§card)."""
+def _reality_simulator_in_play(game: GameState) -> bool:
+    """True if any traveler in play equips the Reality Simulator."""
     return any(
-        c.name == "Simulador da Realidade"
+        c.name == "Reality Simulator"
         for t in game.travelers if not t.awaiting_respawn
         for c in t.hand
     )
@@ -335,8 +335,8 @@ def resolve_market_phase(
     Run the full Market phase for all travelers who can access the market.
 
     Two markets exist:
-    - Merchant market: any traveler synchronic with the Merchant (or via
-      Janela/Smartphone). Shows 4 random cards; supports Buy and Renew.
+    - Merchant market: any traveler synchronic with the Merchant (or holding
+      Window of Time or The First Smartphone). Shows 4 cards; Buy and Renew.
     - Secret Market (§19): permanently at century XI. Shows 1 card at a
       time; supports Buy only (no renewal). Opens the first time any traveler
       ends an Hour on century XI.
@@ -369,22 +369,23 @@ def resolve_market_phase(
             if traveler.is_wanted:
                 continue
             # Consume a voucher only if it was the sole reason for access.
-            _sm_natural = (traveler.century == SECRET_MARKET_CENTURY
+            natural_access = (traveler.century == SECRET_MARKET_CENTURY
                            or _has_atemporal_access(traveler))
-            if not _sm_natural and traveler.market_voucher > 0:
+            if not natural_access and traveler.market_voucher > 0:
                 traveler.market_voucher -= 1
                 voucher_consumed.add(traveler.name)
             strategy = strategies[traveler.name]
             while sm.current_card is not None:
                 revealed_sm = sm.snapshot_revealed()
-                action = strategy.choose_market_action(traveler, game, revealed_sm, 999)
+                action = strategy.choose_market_action(traveler, game, revealed_sm,
+                                                       SECRET_MARKET_RENEW_COST)
                 if isinstance(action, PassAction):
                     break
                 elif isinstance(action, BuyAction):
                     card = action.card
                     if card is not sm.current_card:
                         break
-                    cost = _effective_card_cost(card, traveler)
+                    cost = effective_card_cost(card, traveler)
                     if traveler.gold < cost:
                         break
                     if not traveler.can_hold(card):
@@ -393,7 +394,6 @@ def resolve_market_phase(
                     sm.take(card)
                     traveler.hand.append(card)
                     _notify_buy_observers(traveler, card, game, game.travelers)
-                    from engine.state import ItemEvent
                     game.item_events.append(ItemEvent(
                         hour=game.hour,
                         traveler=traveler.name,
@@ -408,7 +408,7 @@ def resolve_market_phase(
     for traveler in game.travelers:
         if traveler.awaiting_respawn:
             continue
-        if not _traveler_can_access_market(traveler, game, market_pos):
+        if not _traveler_can_access_market(traveler, market_pos):
             continue
 
         strategy = strategies[traveler.name]
@@ -416,8 +416,8 @@ def resolve_market_phase(
         # Consume one voucher only if it is what granted this traveler access
         # and it hasn't already been consumed this phase (one voucher covers
         # all markets in the phase: §23.3 Time II).
-        _natural = (traveler.century == market_pos or _has_atemporal_access(traveler))
-        if (not _natural and traveler.market_voucher > 0
+        natural_access = (traveler.century == market_pos or _has_atemporal_access(traveler))
+        if (not natural_access and traveler.market_voucher > 0
                 and traveler.name not in voucher_consumed):
             traveler.market_voucher -= 1
             voucher_consumed.add(traveler.name)
@@ -436,14 +436,14 @@ def resolve_market_phase(
                 card = action.card
                 if card not in deck.revealed:
                     break
-                # Simulador blocks non-synchronic travelers, but atemporal
-                # access cards make the traveler synchronic for market purposes.
+                # The Reality Simulator blocks non-synchronic buyers, but an
+                # atemporal access card counts as synchronic for the market.
                 if (traveler.century != market_pos
                         and not _has_atemporal_access(traveler)
                         and not traveler.market_voucher
-                        and _simulador_in_play(game)):
+                        and _reality_simulator_in_play(game)):
                     break
-                cost = _effective_card_cost(card, traveler)
+                cost = effective_card_cost(card, traveler)
                 if traveler.gold < cost:
                     break
                 if not traveler.can_hold(card):
@@ -452,7 +452,6 @@ def resolve_market_phase(
                 deck.take(card)
                 traveler.hand.append(card)
                 _notify_buy_observers(traveler, card, game, game.travelers)
-                from engine.state import ItemEvent
                 game.item_events.append(ItemEvent(
                     hour=game.hour,
                     traveler=traveler.name,
@@ -474,7 +473,6 @@ def resolve_market_phase(
                 traveler.gold -= renew_cost
                 renew_cost += 1
                 deck.discard(card)
-                from engine.state import ItemEvent
                 game.item_events.append(ItemEvent(
                     hour=game.hour,
                     traveler=traveler.name,
@@ -515,14 +513,13 @@ def resolve_market_phase(
 
 def resolve_deliveries(game: GameState, strategies: dict | None = None) -> None:
     """
-    Phase 1: each traveler delivers cards whose delivery_century matches their
-    current century (§21). Delivery earns 1 CP and adds the card to the
-    Temporal Receptor. The delivery period is derived from the card's century.
+    Phase 1: each traveler delivers the cards whose delivery_century matches
+    their current century (§21). A delivery earns 1 CP and puts the card in the
+    Temporal Receptor, covering the period of the card's century.
 
-    Strategy may choose which deliverable cards to hold back via
-    choose_cards_to_deliver() (default: deliver all eligible cards).
+    A strategy may hold cards back through choose_cards_to_deliver(); without
+    strategies every eligible card is delivered.
     """
-    from engine.timeline import periods_for_century
 
     for traveler in game.travelers:
         if traveler.awaiting_respawn:
@@ -535,13 +532,13 @@ def resolve_deliveries(game: GameState, strategies: dict | None = None) -> None:
         if not deliverable:
             continue
 
-        # Ask strategy which ones to actually deliver
+        # Ask the strategy which ones to actually deliver
         if strategies and traveler.name in strategies:
             to_deliver = strategies[traveler.name].choose_cards_to_deliver(
                 traveler, game, deliverable
             )
         else:
-            to_deliver = deliverable  # default: deliver all
+            to_deliver = deliverable
 
         for card in to_deliver:
             if card not in traveler.hand:
@@ -549,12 +546,10 @@ def resolve_deliveries(game: GameState, strategies: dict | None = None) -> None:
             traveler.hand.remove(card)
             traveler.temporal_receptor.append(card.name)
             traveler.receptor_cards.append(card)
-            traveler.contract_points += 1
+            traveler.contract_points += CP_PER_DELIVERY
             game.cp_rewards_pending.append(traveler.name)
-            # Track which periods are now covered
             for period in periods_for_century(card.delivery_century):
                 traveler.delivered_periods.add(period)
-            from engine.state import ItemEvent
             game.item_events.append(ItemEvent(
                 hour=game.hour,
                 traveler=traveler.name,
@@ -566,8 +561,8 @@ def resolve_deliveries(game: GameState, strategies: dict | None = None) -> None:
 
 def check_temporal_receptor_win(game: GameState) -> bool:
     """
-    Check win condition (b): a traveler has completed all 3 delivery periods.
-    Sets game_over fields if triggered. Returns True if game is over.
+    Win condition (b): a traveler has covered all 3 delivery periods (§31.1b).
+    Sets the game-over fields and returns True when it triggers.
     """
     for t in game.travelers:
         if len(t.delivered_periods) >= 3:

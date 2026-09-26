@@ -25,46 +25,51 @@ from engine.constants import (
 )
 from engine.matrix import place, send_to_escape_valve
 from engine.dice import count_faces
-from engine.cards import Card
-from engine.market import MarketAction, BuyAction, RenewAction, DeclareAction, PassAction
-from engine.timeline import periods_for_century
+from engine.cards import Card, TIEBREAK_RANK
+from engine.market import (
+    MarketAction, BuyAction, RenewAction, DeclareAction, PassAction, SECRET_MARKET_RENEW_COST,
+)
+from engine.timeline import periods_for_century, same_era
 from simulation.strategies.base import Strategy
-from simulation.strategies.util import paradox_can_terminate, safe_travel_cap
+from simulation.strategies.util import (
+    astrolabe_destination, century_farthest_from_rivals, paradox_can_terminate,
+    refrigerator_choice, safe_travel_cap,
+)
 
 
 # ---------------------------------------------------------------------------
-# Card wish-lists (ordered by value within each tier)
+# Card wish-lists
 # ---------------------------------------------------------------------------
 
 # Tier 1: immediate survival value; buy even with low gold.
 _SURVIVAL_CARDS = {
-    "Toalha",                               # 1g: no overload ever
-    "Autômato de Ismail Al-Jazari",         # 1g: -5 booms on overload
-    "Motor de Corrente Alternada de Tesla", # 1g: +1 energy on boom gain
-    "Escudo Viking",                        # 2g: first energy loss -2/hour
-    "Sismográfico",                         # 2g: -2 booms on gain
-    "Super Motor",                          # 2g: prevent first explosion
-    "Santo Graal",                          # 3g: prevent first death
-    "Armadura da Joana d'Arc",              # 4g: −1 to every energy loss
+    "Towel",                  # 1g: Travel and Paradox never overload
+    "Al-Jazari's Automaton",  # 1g: -5 booms on overload
+    "Tesla's AC Motor",       # 1g: +1 energy on boom gain
+    "Viking Shield",          # 2g: first energy loss -2/hour
+    "Seismograph",            # 2g: -2 booms on gain
+    "Super Motor",            # 2g: prevent first explosion
+    "Holy Grail",             # 3g: prevent first death
+    "Joan of Arc's Armor",    # 4g: -1 to every energy loss
 }
 
 # Tier 2: market efficiency; cheap discounts and access.
 _MARKET_CARDS = {
-    "Porcelana",                            # 1g: cards cost 1g less
-    "Dente Azul do Harald",                 # 1g: atemporal market access
-    "Primeiro Smartphone",                  # 1g: atemporal market access
-    "Máquina de Venda Automática",          # 2g: +1 gold when others buy
-    "Janela do Tempo",                      # 4g: always synchronic
+    "Porcelain",             # 1g: cards cost 1g less
+    "Harald's Bluetooth",    # 1g: atemporal market access
+    "The First Smartphone",  # 1g: atemporal market access
+    "Vending Machine",       # 2g: +1 gold when others buy
+    "Window of Time",        # 4g: always synchronic
 }
 
 # Tier 3: travel and delivery acceleration.
 _TRAVEL_CARDS = {
-    "Mapa de Geradus Mercator",             # 2g: active: free 3-century move
-    "Colar de Cavalo",                      # 3g: +1 energy per travel module
-    "Bússola de Navegação",                 # 3g: passive bonus travel each hour
-    "Telescópio de Galileu Galilei",        # 3g: reduces past-travel cost
-    "Máquina Voadora da da Vinci",          # 4g: large item, reduces travel cost
-    "Astrolábio",                           # 3g: free in-era travel (recycles)
+    "Gerardus Mercator's Map",    # 2g: active: 3-century move
+    "Horse Collar",               # 3g: +1 energy per travel module
+    "Navigation Compass",         # 3g: passive bonus travel each hour
+    "Galileo's Telescope",        # 3g: reduces past-travel cost
+    "da Vinci's Flying Machine",  # 4g: large item, reduces travel cost
+    "Astrolabe",                  # 3g: free in-era travel (recycles)
 }
 
 
@@ -77,9 +82,6 @@ class ConservativeStrategy(Strategy):
 
     ENERGY_SAFETY = 6     # Below this: prefer Recharge over everything
     ENERGY_LOW    = 4     # Below this: skip Travel entirely
-    BOOM_DANGER   = 9     # At/above this, heating to travel would explode (§15.2):
-                          #   don't waste the dominant dice on a trip that never
-                          #   happens: route them to Recharge instead.
 
     @property
     def name(self) -> str:
@@ -118,13 +120,13 @@ class ConservativeStrategy(Strategy):
         remaining = list(dice)
 
         if kill_threat:
-            # Kill shot available: Recharge → Paradox(2) → Travel with leftovers.
+            # Kill shot available: Recharge, then Paradox(2), then Travel with leftovers.
             remaining = self._fill_max(alloc, FUNCTION_RECHARGE, remaining, unavailable, max_slots=2)
             remaining = self._fill_max(alloc, FUNCTION_PARADOX,  remaining, unavailable, max_slots=2)
             if can_travel:
                 remaining = self._fill_max(alloc, FUNCTION_TRAVEL, remaining, unavailable, max_slots=2)
         elif not energy_ok:
-            # Energy low: Recharge → Travel → Paradox (survival first, still move).
+            # Energy low: Recharge, Travel, Paradox (survival first, still move).
             remaining = self._fill_max(alloc, FUNCTION_RECHARGE, remaining, unavailable, max_slots=2)
             if can_travel:
                 remaining = self._fill_max(alloc, FUNCTION_TRAVEL, remaining, unavailable, max_slots=2)
@@ -154,7 +156,7 @@ class ConservativeStrategy(Strategy):
         return alloc, direction, energy_cap
 
     def _park_alloc(self, dice: list[int], unavailable: set[int]) -> Allocation:
-        """No travel: Recharge → Paradox → escape valve."""
+        """No travel: Recharge, then Paradox, then the escape valve."""
         alloc = Allocation.empty()
         remaining = list(dice)
         remaining = self._fill_max(alloc, FUNCTION_RECHARGE, remaining, unavailable, max_slots=2)
@@ -178,14 +180,15 @@ class ConservativeStrategy(Strategy):
         held_names = {c.name for c in traveler.hand}
         missing_periods = {"Origins", "Ascension", "Singularity"} - traveler.delivered_periods
 
-        # Clear Wanted poster at the Merchant so we can use the Secret Market next phase.
+        # Clear the Wanted poster at the Merchant to use the Secret Market next phase.
         if (traveler.is_wanted
-                and renew_cost != 999          # not inside Secret Market loop
+                and renew_cost != SECRET_MARKET_RENEW_COST
                 and game.secret_market_open
                 and traveler.gold >= DECLARE_COST):
             return DeclareAction()
 
-        # 1. Delivery cards for still-missing periods (cheapest first).
+        # 1. Delivery cards for still-missing periods (cheapest first; equal
+        #    prices fall back on the fixed card ranking).
         if missing_periods:
             candidates = []
             for card in revealed:
@@ -199,7 +202,7 @@ class ConservativeStrategy(Strategy):
                     continue
                 if traveler.gold < card.gold_cost or not traveler.can_hold(card):
                     continue
-                candidates.append((card.gold_cost, card.name, card))
+                candidates.append((card.gold_cost, TIEBREAK_RANK[card.name], card))
             if candidates:
                 candidates.sort()
                 return BuyAction(candidates[0][2])
@@ -253,7 +256,7 @@ class ConservativeStrategy(Strategy):
         era_enemies = [
             t for t in game.travelers
             if t is not traveler and not t.awaiting_respawn
-            and _same_era(traveler.century, t.century)
+            and same_era(traveler.century, t.century)
         ]
         sync_enemies = [t for t in era_enemies if t.century == traveler.century]
         weakest_sync = min(sync_enemies, key=lambda t: t.energy, default=None)
@@ -266,48 +269,33 @@ class ConservativeStrategy(Strategy):
             name = card.name
             ctx: object = None
 
-            if name == "Mapa de Geradus Mercator":
+            if name == "Gerardus Mercator's Map":
                 if traveler.century <= 3:
                     continue
                 ctx = (min(3, traveler.century - 1), -1)
 
-            elif name == "Astrolábio":
-                from engine.timeline import eras_for_century
-                from engine.constants import ERAS
-                eras = eras_for_century(traveler.century)
-                if not eras:
+            elif name == "Astrolabe":
+                ctx = astrolabe_destination(traveler)
+                if ctx is None:
                     continue
-                era_start = min(ERAS[e][0] for e in eras)
-                if era_start >= traveler.century:
-                    continue
-                ctx = era_start
 
-            elif name == "Geladeira":
-                from simulation.strategies.util import geladeira_context
-                receptor_actives = [c for c in getattr(traveler, "receptor_cards", [])
-                                    if c.ability_type in ("active", "atemporal_active")
-                                    and c.active_effect is not None]
-                chosen = next(
-                    ((rc, sub) for rc in receptor_actives
-                     for ok, sub in [geladeira_context(rc, traveler, game)] if ok),
-                    None,
-                )
-                if chosen is None:
+            elif name == "Refrigerator":
+                ctx = refrigerator_choice(traveler, game)
+                if ctx is None:
                     continue
-                ctx = (chosen[0], chosen[1])
 
-            # Weapons: only if energy is comfortable AND the target is low enough to kill.
-            elif name in ("Arma de Laser", "Lança de Fogo"):
+            # Weapons: only while energy is comfortable.
+            elif name in ("Laser Gun", "Fire Lance"):
                 if not use_weapons or weakest_sync is None:
                     continue
                 ctx = weakest_sync
 
-            elif name == "Rifle Fergunson":
+            elif name == "Ferguson Rifle":
                 if not use_weapons or weakest_era is None:
                     continue
                 ctx = weakest_era
 
-            elif name == "Arma de Portais":
+            elif name == "Portal Gun":
                 if not use_weapons or weakest_era is None:
                     continue
                 ctx = weakest_era
@@ -332,13 +320,13 @@ class ConservativeStrategy(Strategy):
         """Hold key passives while they're actively helping; deliver the rest."""
         to_keep: set[str] = set()
         for card in deliverable:
-            if card.name == "Sismográfico" and traveler.booms >= 7:
+            if card.name == "Seismograph" and traveler.booms >= 7:
                 to_keep.add(card.name)
             elif card.name == "Super Motor" and traveler.booms >= 8:
                 to_keep.add(card.name)
-            elif card.name == "Santo Graal" and traveler.energy <= 4:
+            elif card.name == "Holy Grail" and traveler.energy <= 4:
                 to_keep.add(card.name)
-            elif card.name == "Toalha":
+            elif card.name == "Towel":
                 to_keep.add(card.name)
         return [c for c in deliverable if c.name not in to_keep]
 
@@ -352,7 +340,7 @@ class ConservativeStrategy(Strategy):
         game: GameState,
         available: list[str],
     ) -> str:
-        """Resource first (gold/matrix), then Time (market/travel), then Chaos."""
+        """Resource first (gold, matrix), then Time (market, travel), then Chaos."""
         for preferred in ("Resource", "Time", "Chaos"):
             if preferred in available:
                 return preferred
@@ -368,18 +356,8 @@ class ConservativeStrategy(Strategy):
         return min(candidates, key=lambda c: c.gold_cost)
 
     def choose_chaos_merchant_century(self, traveler, game):
-        """Push Merchant away from rivals to block their market access."""
-        from engine.constants import CENTURY_MAX
-        others = [t for t in game.travelers if t is not traveler and not t.awaiting_respawn]
-        if not others:
-            return CENTURY_MAX
-        best, best_dist = 1, -1
-        for c in range(1, CENTURY_MAX + 1):
-            min_dist = min(abs(c - t.century) for t in others)
-            if min_dist > best_dist:
-                best_dist = min_dist
-                best = c
-        return best
+        """Push the Merchant away from rivals to block their market access."""
+        return century_farthest_from_rivals(traveler, game)
 
     def choose_matrix_buff_module(self, traveler, game):
         """Buff Recharge modules first (energy/gold income), then Travel."""
@@ -429,8 +407,3 @@ class ConservativeStrategy(Strategy):
             remaining = list(remaining)
             remaining.remove(val)
         return remaining
-
-
-def _same_era(a: int, b: int) -> bool:
-    from engine.timeline import eras_for_century
-    return bool(set(eras_for_century(a)) & set(eras_for_century(b)))

@@ -1,21 +1,25 @@
 """
 engine/state.py
 ===============
-Dataclasses for all Paradoxo game state.
+Dataclasses for the whole game state.
 
-Plain data containers only: logic belongs in the resolver modules.
-All fields map directly to concepts in the Rules Reference.
+These are plain data containers: the rules live in the resolver modules. Every
+field maps to something the Rules Reference tracks.
 """
 
 from __future__ import annotations
 from dataclasses import dataclass, field
-from typing import Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING
 from engine.constants import (
     CENTURY_START,
     ENERGY_PER_TRAVELER,
     GOLD_START,
     BOOMS_START,
     EQUIPMENT_SLOTS,
+    LARGE_ITEM_SLOTS,
+    MERCHANT_START_CENTURY,
+    MERCHANT_STARTING_CARDS,
+    SECRET_MARKET_CARD_COUNT,
 )
 
 if TYPE_CHECKING:
@@ -78,8 +82,7 @@ class TravelerState:
     """
     The complete state of one traveler at any point in the game.
 
-    All fields correspond directly to tracked quantities in the Rules Reference.
-    The simulation runner snapshots this after each module resolves.
+    Every field is a quantity the Rules Reference tracks for a traveler.
     """
     name: str
 
@@ -119,7 +122,7 @@ class TravelerState:
     scored_century_x: bool = False
     scored_century_xx: bool = False
 
-    # Cards currently held (equipment + undelivered delivery cards + unused actives) (§22)
+    # Cards currently held: equipment, cards waiting for delivery, unused actives (§22)
     hand: list["Card"] = field(default_factory=list)
 
     # Temporal Receptor: names of cards that have been delivered (§21)
@@ -127,25 +130,26 @@ class TravelerState:
 
     # Temporal Receptor: the delivered Card objects themselves.
     # Kept alongside the name list so effects that read a delivered card's text
-    # (Geladeira) or copy its passives (Computador Quântico) can reach it (§2.4).
+    # (Refrigerator) or copy its passives (Quantum Computer) can reach it (§2.4).
     receptor_cards: list["Card"] = field(default_factory=list, repr=False, compare=False)
 
-    # Delivery period tracking: used for win condition (§31.1b)
-    # Populated whenever a card is delivered; period is derived from delivery_century.
+    # Periods covered by deliveries so far, for the Full Receptor win (§31.1b).
+    # The period comes from each delivered card's delivery_century.
     delivered_periods: set[str] = field(default_factory=set)
 
-    # Per-hour usage tracking for "first time this hour" card effects
+    # Card names already used this Hour, for "the first time each Hour" effects
     cards_used_this_hour: set[str] = field(default_factory=set)
 
-    # Wanted bounty contributed-by tracking
+    # Travelers who made this one lose energy, most recent last. The last entry
+    # gets the credit for a termination (§28.1); the list is cleared on respawn.
     eliminated_by: list[str] = field(default_factory=list)
 
     # Reward tracking (§26)
     last_reward_category: str | None = None  # "Chaos" | "Time" | "Resource"; §26.2 no repeat
     market_voucher: int = 0                  # Time II: buy at any market (accumulated count)
     item_voucher: int = 0                    # Time III: others count as synchronic this activation
-    # Matrix buffs from Resource III: module_index (0-8) → +1 buff (permanent, no stack per slot)
-    matrix_buffs: dict = field(default_factory=dict)
+    # Resource III buffs: module index (0-8) -> +1, permanent, one per module
+    matrix_buffs: dict[int, int] = field(default_factory=dict)
 
     @property
     def survival_eligible(self) -> bool:
@@ -157,15 +161,10 @@ class TravelerState:
         return not self.is_terminated
 
     @property
-    def equipment(self) -> list[str]:
-        """Names of held cards: kept for backward compatibility."""
-        return [c.name for c in self.hand]
-
-    @property
     def equipment_capacity(self) -> int:
-        """Max equipment slots; +2 if Operacional de Dimensões Relativas is held."""
+        """Max equipment slots; +2 if Relative Dimensions Operative is held."""
         base = EQUIPMENT_SLOTS
-        if any(c.name == "Operacional de Dimensões Relativas" for c in self.hand):
+        if any(c.name == "Relative Dimensions Operative" for c in self.hand):
             base += 2
         return base
 
@@ -196,14 +195,14 @@ class TravelerState:
 
     def slots_used(self) -> int:
         """Count equipment slots consumed (large items take 2)."""
-        return sum(2 if c.is_large_item else 1 for c in self.hand)
+        return sum(LARGE_ITEM_SLOTS if c.is_large_item else 1 for c in self.hand)
 
     def equipment_full(self) -> bool:
         return self.slots_used() >= self.equipment_capacity
 
     def can_hold(self, card: "Card") -> bool:
         """True if there is room for this card (accounting for large item size)."""
-        needed = 2 if card.is_large_item else 1
+        needed = LARGE_ITEM_SLOTS if card.is_large_item else 1
         return self.slots_used() + needed <= self.equipment_capacity
 
 
@@ -214,10 +213,9 @@ class TravelerState:
 @dataclass
 class GameState:
     """
-    The complete state of an in-progress Paradoxo game.
+    The complete state of a game in progress.
 
-    The runner builds a new snapshot of this after each module resolves.
-    Fields here track game-level state that is not owned by any single traveler.
+    Holds everything that belongs to the table rather than to one traveler.
     """
     travelers: list[TravelerState]
 
@@ -225,47 +223,47 @@ class GameState:
     hour: int = 1       # Current Hour number (§8)
 
     # Merchant position and stock (§17)
-    merchant_century: int = 20              # Starts on XX (§7.2)
-    merchant_card_count: int = 40           # Starts with 40 cards (§7.2)
-    merchant_movement_dice: int = 1         # 1d3 initially; upgrades at XX and X (§17.6)
+    merchant_century: int = MERCHANT_START_CENTURY
+    # The two card counts are set at setup and not updated as cards are bought.
+    merchant_card_count: int = MERCHANT_STARTING_CARDS
     merchant_upgrade_xx_triggered: bool = False
     merchant_upgrade_x_triggered: bool = False
 
     # Secret Market (§19)
     secret_market_open: bool = False        # Opens when a traveler ends an Hour on XI (§19.1)
-    secret_market_card_count: int = 12      # 12 cards at setup (§7.2)
+    secret_market_card_count: int = SECRET_MARKET_CARD_COUNT
 
-    # Snapshot of the currently revealed Merchant cards, refreshed by the
-    # market phase. Lets resolution-time passives (Prensa Móvel) read what the
-    # Merchant is showing without the engine depending on the deck object.
+    # The Merchant cards currently revealed, refreshed by the market phase, so
+    # a passive that resolves later (Movable-Type Press) can see them without
+    # the engine holding on to the deck object.
     market_revealed: list["Card"] = field(default_factory=list, repr=False, compare=False)
 
-    # Random source used by card effects that roll an independent generator
-    # (Excalibur, Carretel de Pesca, Bússola). Set by the runner each game.
+    # Random source for card effects that roll their own generator (Excalibur,
+    # Fishing Reel, Navigation Compass). The runner sets it for each game.
     rng: object = field(default=None, repr=False, compare=False)
 
     # Game-over flag and reason
     game_over: bool = False
-    game_over_reason: Optional[str] = None  # "year_zero" | "full_receptor" | "last_traveler" | "merchant_empty"
-    winner: Optional[str] = None
+    game_over_reason: str | None = None  # "year_zero" | "full_receptor" | "last_traveler" | "merchant_empty"
+    winner: str | None = None
 
     # Name of the traveler responsible for the most recent termination of another
     # traveler. Used to credit the §32.3 stabilisation bonus when the game ends by
     # §11.1c (terminating the last not-yet-terminated traveler ends the game).
-    last_termination_causer: Optional[str] = None
+    last_termination_causer: str | None = None
 
-    # Time III item voucher: name of the traveler whose voucher is currently active
-    # during Phase 4 (their activation window). Card effects check this to treat
-    # all other travelers as synchronic with that traveler.
-    item_voucher_active_for: Optional[str] = None
+    # Time III item voucher: the traveler whose voucher is active during their
+    # Phase 4 window. No card effect reads it yet, so the voucher is spent
+    # without changing who counts as synchronic (open point).
+    item_voucher_active_for: str | None = None
 
-    # Item event log: populated by market, combat, and resolve modules
+    # Item event log, filled by the market, combat, and resolve modules
     item_events: list["ItemEvent"] = field(default_factory=list, repr=False, compare=False)
 
-    # Pending reward queue: list of traveler names, one entry per CP earned.
-    # Processed by runner.py after each phase with access to deck/strategies/rng.
+    # Reward queue: one traveler name per CP earned. The runner drains it after
+    # each phase, when the deck, the strategies and the rng are at hand.
     cp_rewards_pending: list[str] = field(default_factory=list, repr=False, compare=False)
-    # Solo generators phases earned via Time I reward; processed after Phase 4.
+    # Solo generator phases earned with the Time I reward, run after Phase 4.
     solo_phases_pending: list[str] = field(default_factory=list, repr=False, compare=False)
 
     @classmethod
@@ -292,10 +290,6 @@ class GameState:
         """
         return [t for t in self.travelers if not t.awaiting_respawn]
 
-    def never_terminated_count(self) -> int:
-        """How many travelers have never been terminated (§11.1c, §32.2)."""
-        return sum(1 for t in self.travelers if not t.is_terminated)
-
 
 # ---------------------------------------------------------------------------
 # Simulation result snapshot
@@ -304,8 +298,8 @@ class GameState:
 @dataclass
 class HourSnapshot:
     """
-    A record of one traveler's state at the end of a resolved Hour.
-    Used by the graph and metrics modules to analyse game trajectories.
+    One traveler's state at the end of a resolved Hour. The metrics module
+    builds game trajectories from these.
     """
     hour: int
     traveler_name: str
@@ -323,26 +317,26 @@ class HourSnapshot:
 @dataclass
 class ItemEvent:
     """
-    A record of an item-related event during a game (buy, deliver, recycle, etc.).
+    One item event during a game (bought, delivered, recycled, and so on).
     Collected in GameState.item_events and carried into GameResult for reporting.
     """
     hour: int
     traveler: str
     event_type: str   # "bought" | "delivered" | "recycled" | "destroyed" | "missed_delivery" | "renewed"
     card_name: str
-    century: int = 0  # traveler's century when event fires
+    century: int = 0  # the traveler's century when the event fired
 
 
 @dataclass
 class GameResult:
     """
-    The final outcome of one completed simulation run.
-    Collected by runner.py and consumed by metrics.py and graph.py.
+    The final outcome of one simulated game, produced by the runner and read
+    by the metrics and reporting modules.
     """
-    winner: Optional[str]
+    winner: str | None
     hours_played: int
     end_reason: str                     # One of the four §31.1 conditions
     traveler_results: list[TravelerState]
-    history: list[HourSnapshot]         # Full trajectory for graph analysis
-    strategy_names: dict[str, str]      # traveler_name → strategy class name
+    history: list[HourSnapshot]         # Full trajectory, one snapshot per traveler per Hour
+    strategy_names: dict[str, str]      # traveler_name -> strategy name
     item_events: list["ItemEvent"] = field(default_factory=list)

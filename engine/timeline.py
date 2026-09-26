@@ -1,10 +1,9 @@
 """
 engine/timeline.py
 ==================
-The Paradoxo timeline: board geometry, era and period lookups, and
-distance calculations.
+The timeline: board geometry, era and period lookups, and distances.
 
-All rules here are from §5 of the Rules Reference.
+Everything here comes from §5 of the Rules Reference.
 
 Key facts:
     - The board is a linear track: Year Zero, then centuries I-XXX (§5.1).
@@ -77,6 +76,28 @@ def eras_for_century(century: int) -> list[str]:
     if century == YEAR_ZERO or not (CENTURY_MIN <= century <= CENTURY_MAX):
         return []
     return [name for name, (start, end) in ERAS.items() if start <= century <= end]
+
+
+def same_era(a: int, b: int) -> bool:
+    """True if the two centuries share at least one era (§5.4)."""
+    return bool(set(eras_for_century(a)) & set(eras_for_century(b)))
+
+
+def in_older_era(century: int, reference: int) -> bool:
+    """
+    True if every era of ``century`` is older than the oldest era of ``reference``.
+
+    This is the "older era than yours" test used by Galileo's Telescope and
+    Attila's Sword. A boundary century counts in both of its eras, so it is only
+    older when even its newer era comes before the reference's oldest one. Year
+    Zero has no era and is never older or newer than anything.
+    """
+    order = list(ERAS)
+    mine = eras_for_century(reference)
+    theirs = eras_for_century(century)
+    if not mine or not theirs:
+        return False
+    return max(order.index(e) for e in theirs) < min(order.index(e) for e in mine)
 
 
 def period_for_era(era_name: str) -> str | None:

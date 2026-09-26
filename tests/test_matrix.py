@@ -6,7 +6,6 @@ Tests for engine/matrix.py: allocation rules §10-11.
 Each test is named for the rule section it validates.
 """
 
-import pytest
 from engine.state import Allocation
 from engine.matrix import can_place, validate_allocation, functions_overloaded_by
 from engine.constants import FUNCTION_RECHARGE, FUNCTION_PARADOX, FUNCTION_TRAVEL

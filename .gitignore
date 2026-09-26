@@ -32,8 +32,7 @@ outputs/
 # Exception: committed sample match report (regenerate with simulation/report.py)
 !docs/sample_report.html
 
-# Playable client and illustrated portfolio
-!v1/**/*.png
+# Illustrated portfolio
 !docs/**/*.html
 !docs/index.html
 

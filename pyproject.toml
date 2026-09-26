@@ -11,12 +11,11 @@ dependencies = [
     "numpy>=1.26",
     "pandas>=2.2",
     "matplotlib>=3.8",
-    "networkx>=3.2",
-    "pytest>=8.0",
 ]
 
 [project.optional-dependencies]
 dev = [
+    "pytest>=8.0",
     "pytest-cov",
     "ipykernel",
     "jupyterlab",

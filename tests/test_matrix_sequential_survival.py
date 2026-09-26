@@ -32,7 +32,7 @@ from engine.resolve import (
     check_termination,
 )
 from engine import combat
-from engine.cards import rifle_fergunson, toalha
+from engine.cards import ferguson_rifle, towel
 
 
 def _game(*centuries, energy=10):
@@ -107,7 +107,7 @@ def test_self_travel_to_year_zero_credits_no_causer():
 def test_enemy_kill_is_denied_by_instant_recycle():
     g = _game(10, 10, energy=10)
     victim, causer = g.travelers
-    victim.hand = [rifle_fergunson()]     # recycle value 3
+    victim.hand = [ferguson_rifle()]     # recycle value 3
     causer.energy = 10
 
     combat.lose_energy(g, victim, 10, source=causer, kind="paradox")
@@ -128,9 +128,9 @@ def test_instant_recycle_keeps_the_more_valuable_card():
     """When choosing, the least-important (lowest recycle value) card goes first."""
     g = _game(10, 10, energy=10)
     victim, causer = g.travelers
-    rifle = rifle_fergunson()             # recycle value 3 (keep)
-    towel = toalha()                      # recycle value 1 (recycle this one)
-    victim.hand = [rifle, towel]
+    rifle = ferguson_rifle()             # recycle value 3 (keep)
+    towel_card = towel()                 # recycle value 1 (recycle this one)
+    victim.hand = [rifle, towel_card]
 
     combat.lose_energy(g, victim, 12, source=causer, kind="paradox")
     assert victim.energy == 0
@@ -138,7 +138,7 @@ def test_instant_recycle_keeps_the_more_valuable_card():
     assert check_termination(victim, g) is False
     assert victim.energy == 1                       # towel's recycle value
     held = {c.name for c in victim.hand}
-    assert rifle.name in held and towel.name not in held
+    assert rifle.name in held and towel_card.name not in held
 
 
 def test_enemy_kill_terminates_when_no_recyclable_card():

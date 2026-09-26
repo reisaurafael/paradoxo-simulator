@@ -5,6 +5,35 @@ For a raw list of every code change, see `CHANGELOG.md` at the repo root.
 
 ---
 
+## 2026-09-26: The cards speak English, and a cleanup pass
+
+### Context
+
+The repository is public and the people reading it read English, so the cards now use their
+official English names, the ones the V1 client already shows. The rules engine identifies a
+card by its name, so this touched every strategy wish-list, every combat modifier and most of
+the tests.
+
+### The one thing that could have moved the numbers
+
+Two shopping decisions, the Conservative and Smart delivery purchases, sort their candidates
+and fall back on the card name when two cards are equally good. English names sort in a
+different order from the Portuguese ones, and with that single change the 1,000-game benchmark
+moved (Aggressive 441 wins became 451). The fix was to make the old order explicit:
+`engine/cards.py:TIEBREAK_RANK` ranks the cards in the alphabetical order of their Portuguese
+names, and both strategies read it. With that, every game of the benchmark and of the scenario
+sweep ends exactly as before.
+
+### What went
+
+The same pass removed code nothing used: the fixed Secret Market split from before
+`MerchantDeck` chose it at random, a merchant dice roller, a few constants and helpers, and a
+second HTML report generator that had crept into `verbose_run.py`. Duplicated logic (era
+checks, the end-of-game bonuses, the activation window) now lives in one place each. The list
+is in the CHANGELOG.
+
+---
+
 ## 2026-06-23: Overdrive mechanic + simulation tooling overhaul
 
 ### Context
@@ -31,7 +60,7 @@ overdrive_cents = max(0, min(prev, THRESHOLD) - new)
 total_cost = normal_cents × 1 + overdrive_cents × 2
 ```
 
-Card hooks (Telescópio, Máquina Voadora, Armadura da Joana d'Arc) still apply to the combined
+Card hooks (Galileo's Telescope, da Vinci's Flying Machine, Joan of Arc's Armor) still apply to the combined
 total, so cards that reduce travel cost remain effective even in the overdrive zone.
 
 ### Strategy safety: safe_travel_cap
@@ -63,7 +92,7 @@ reveal whether the new mechanic is changing where travelers spend their time.
 
 ### Context
 
-After Phase 1 fixed the Aggressive profile's blind Year Zero rush, the baseline agents still had two structural weaknesses: (1) their allocation logic did not distinguish between Paradox-as-pressure and Paradox-as-kill-shot, leading to either too much or too little paradox investment, and (2) their card-buying lists were narrow and did not cover important market-efficiency cards like Porcelana or atemporal-access cards. The request for Phase 2 was to make all non-Aggressive profiles prioritize Energy/Gold over Paradox, but only in the normal case; escalate Paradox investment when it can actually terminate a rival.
+After Phase 1 fixed the Aggressive profile's blind Year Zero rush, the baseline agents still had two structural weaknesses: (1) their allocation logic did not distinguish between Paradox-as-pressure and Paradox-as-kill-shot, leading to either too much or too little paradox investment, and (2) their card-buying lists were narrow and did not cover important market-efficiency cards like Porcelain or atemporal-access cards. The request for Phase 2 was to make all non-Aggressive profiles prioritize Energy/Gold over Paradox, but only in the normal case; escalate Paradox investment when it can actually terminate a rival.
 
 ### The dice-sequencing constraint
 
@@ -71,15 +100,15 @@ The key engineering insight: with 4 dice and the linear-progression rule (all ge
 
 ### Shared utility: paradox kill threshold
 
-A single helper, `util.paradox_can_terminate(traveler, game, dice)`, encodes the kill condition: any active rival with energy ≤ max(dice) can be terminated if the right Paradox column fires. All three non-Aggressive profiles consult this before deciding how many Paradox columns to fill. A companion function, `paradox_kill_direction`, identifies which direction (future/present/past) covers the most killable targets, available for future use in more targeted allocation strategies.
+A single helper, `util.paradox_can_terminate(traveler, game, dice)`, encodes the kill condition: any active rival with energy ≤ max(dice) can be terminated if the right Paradox column fires. All three non-Aggressive profiles consult this before deciding how many Paradox columns to fill. A companion function, `paradox_kill_direction`, identified which direction (future/present/past) covered the most killable targets, for more targeted allocation later. Nothing ever used it, and it went in the September 2026 cleanup.
 
 ### Strategy-by-strategy changes
 
-**Conservative** now buys delivery cards for missing Temporal Receptor periods as its top market priority, followed by cheap survival cards (Toalha, Escudo Viking, etc.), market-access helpers (Porcelana, Dente Azul, Primeiro Smartphone), and travel cards. It also pays off its Wanted poster (DeclareAction at the Merchant) to restore Secret Market access. The allocation order is Travel → Recharge → Paradox(1) in normal mode, and Recharge → Paradox(2) → Travel in kill mode.
+**Conservative** now buys delivery cards for missing Temporal Receptor periods as its top market priority, followed by cheap survival cards (Towel, Viking Shield, etc.), market-access helpers (Porcelain, Harald's Bluetooth, The First Smartphone), and travel cards. It also pays off its Wanted poster (DeclareAction at the Merchant) to restore Secret Market access. The allocation order is Travel → Recharge → Paradox(1) in normal mode, and Recharge → Paradox(2) → Travel in kill mode.
 
 **Collector** keeps its delivery-first logic unchanged but adds a DeclareAction for the Wanted poster and cheap market helpers at the top of the buying queue. Energy cards are only bought at the critical threshold (energy < 3) so survival purchases do not crowd out deliveries. The Paradox column count is tied to the kill flag.
 
-**Smart** received the most card-list expansion: Cálice do Príncipe Drácula (+2 energy per paradox hit, synergises with the kill-mode investment), Armadura da Joana d'Arc (reduces every energy loss), Computador Quântico (copies receptor passives after delivery), plus the market-access helpers. Its allocation modes now all follow the Travel-first / kill-flip discipline.
+**Smart** received the most card-list expansion: Prince Dracula's Chalice (+2 energy per paradox hit, synergises with the kill-mode investment), Joan of Arc's Armor (reduces every energy loss), Quantum Computer (copies receptor passives after delivery), plus the market-access helpers. Its allocation modes now all follow the Travel-first / kill-flip discipline.
 
 ### Benchmark outcome
 
@@ -92,8 +121,8 @@ Average game length rose from 13.3 to 16.9 Hours. The `full_receptor` end condit
 ### Context
 
 A batch run surfaced a balance problem hiding behind a suspected rules bug: games almost
-never ended by the "all but one traveler Terminated" condition, and one profile, Aggressive
-- seemed to be ending games it went on to lose.
+never ended by the "all but one traveler Terminated" condition, and one profile, Aggressive,
+seemed to be ending games it went on to lose.
 
 ### Diagnosis: the engine was right, the strategy was reckless
 
@@ -158,10 +187,10 @@ contract constants.
 
 The Chaos I reward (§23.3) deals a "Paradox" across the entire timeline, 3 damage to
 every other traveler. The rule text and §18 (paradox resolution) require that damage go
-through the full combat pipeline: Escudo Viking's first-hit shield, Armadura da Joana d'Arc's
-standing reduction, Espada de Laser's reflection, Pólvora's amplifier, and Cálice do
-Príncipe Drácula's lifesteal. The old code in `rewards._chaos` decremented `target.energy`
-directly, then called `combat.register_loss` (which only fires Porcelana). Replacing those
+through the full combat pipeline: Viking Shield's first-hit shield, Joan of Arc's Armor's
+standing reduction, Laser Sword's reflection, Gunpowder's amplifier, and Prince Dracula's
+Chalice's lifesteal. The old code in `rewards._chaos` decremented `target.energy`
+directly, then called `combat.register_loss` (which only fires Porcelain). Replacing those
 lines with `combat.deal_energy(game, traveler, targets, 3, kind="paradox")` routes Chaos I
 through the same pipeline as every other paradox, with no code duplication.
 
@@ -170,7 +199,7 @@ through the same pipeline as every other paradox, with no code duplication.
 The Secret Market loop in `market.resolve_market_phase` had a hard `continue` if the
 traveler was not physically on century XI. Two things bypass that requirement under the
 rules: the Time II market voucher (§23.3, "buy at any market even non-synchronic, Secret
-Market only if open") and the atemporal market cards Janela do Tempo and Primeiro
+Market only if open") and the atemporal market cards Window of Time and The First
 Smartphone (§16.2 / §24.4: "access to the Market regardless of century", which §24.4
 extends to include the open Secret Market).
 
@@ -182,24 +211,24 @@ unified: a local `voucher_consumed` set ensures that one voucher is consumed at 
 per phase even if the traveler accesses both markets in the same phase (which the rule
 clearly intends: one voucher grants access to all markets for that Hour).
 
-### BUG-010: Free-recycle bypassed Caldeirão da Agnes trigger
+### BUG-010: Free-recycle bypassed Agnes's Cauldron trigger
 
 `runner._resolve_free_recycles` was directly removing the card from the traveler's hand,
 adding the recycle value to energy, and appending the card to `deck._discard`. This
 bypassed `combat.recycle_card`, which is the single function responsible for firing the
-Caldeirão da Agnes steal trigger (§21.3: "some effects watch the moment a card enters
+Agnes's Cauldron steal trigger (§21.3: "some effects watch the moment a card enters
 the recycling pile"). The free-recycle body is now replaced by a single call to
 `combat.recycle_card(game, traveler, card, grant_energy=True)`, which already handles
-energy grant, Caldeirão, and deck discard in the correct order.
+energy grant, Cauldron, and deck discard in the correct order.
 
-### BUG-011: Simulador da Realidade blocked atemporal travelers
+### BUG-011: Reality Simulator blocked atemporal travelers
 
-The Simulador (§card) blocks non-synchronic travelers from buying at the Merchant.
-"Non-synchronic" should exclude travelers who hold Janela do Tempo or Primeiro Smartphone,
+The Reality Simulator (§card) blocks non-synchronic travelers from buying at the Merchant.
+"Non-synchronic" should exclude travelers who hold Window of Time or The First Smartphone,
 since those cards make the traveler synchronic for market purposes (§16.2). The guard at
 line 402 was checking `traveler.century != market_pos` alone, which is too broad. It now
 also checks `not _has_atemporal_access(traveler) and not traveler.market_voucher` before
-applying the Simulador block.
+applying the Reality Simulator block.
 
 ### BUG-012: Mona Lisa slot replacement
 
@@ -219,10 +248,10 @@ within a function) is already enforced at line 78-83 (`can_place`) and lines 174
 (`validate_allocation`). No code change was needed; regression tests were added to guard
 the behaviour.
 
-### BUG-015: Carretel de Pesca and Heliógrafo de Niépce steal without Wanted
+### BUG-015: Fishing Reel and Niépce's Heliograph steal without Wanted
 
 Ruling (open point D2, now closed): stealing a Merchant card via
-Carretel de Pesca or Heliógrafo de Niépce sets the acting traveler Wanted (§26.4 / §3.4).
+Fishing Reel or Niépce's Heliograph sets the acting traveler Wanted (§26.4 / §3.4).
 Neither card effect called `traveler.is_wanted = True`. One line was added after the
 `deck.take` call in each effect function.
 
@@ -252,7 +281,7 @@ keeps the §11.1c "only one traveler not terminated" ending intact: it is still 
 at end of Hour, before anyone respawns, so a genuine last-traveler-standing still ends
 the game.
 
-Recycling on termination goes through `combat.recycle_card`, so the Caldeirão da Agnes
+Recycling on termination goes through `combat.recycle_card`, so the Agnes's Cauldron
 steal trigger fires on the recycled equipment exactly as it would for any other recycle.
 
 ### BUG-002: Wanted on a kill
@@ -350,16 +379,16 @@ whatever engine structure was required so effects actually fire during play.
 - **`engine/combat.py`**: unified energy-loss pipeline (`lose_energy`, `deal_energy`,
   `recycle_card`) so cross-traveler damage rules are written once.
 - **`engine/cards.py`**: `recycle_value` added to all 52 cards; every active/passive
-  effect fully implemented; `passive_source_cards()` realises Computador Quântico and
-  Prensa Móvel.
+  effect fully implemented; `passive_source_cards()` realises Quantum Computer and
+  Movable-Type Press.
 - **`engine/rewards.py`**: full Chaos/Time/Resource reward table (§23).
 - **`simulation/runner.py`**: Phase 4 Item Activation wired; solo phases (Time I)
   resolved after Phase 4.
 
 ### Card text vs. reference reconciliations
-- Prensa Móvel copies **passive** abilities of revealed market cards, not active ones.
+- Movable-Type Press copies **passive** abilities of revealed market cards, not active ones.
   Corrected from an earlier comment.
-- Geladeira activates an ability of a delivered receptor card. Golden rule 0.1 (card
+- Refrigerator activates an ability of a delivered receptor card. Golden rule 0.1 (card
   text wins for its specific interaction) overrides the receptor's default "never
   activated again" (§2.4). This is intentional; the card text explicitly targets the
   receptor.
@@ -368,7 +397,7 @@ whatever engine structure was required so effects actually fire during play.
 - Termination respawn (BUG-001) deferred: flagged in CHANGELOG.
 - Wanted on termination (BUG-002) deferred: flagged in CHANGELOG.
 - Agreements (§4) are not simulated. `Bluetooth of Harald` passive is a no-op.
-- The recycling pile has two representations: deck discard (Óculos can rescue from it)
+- The recycling pile has two representations: deck discard (Eyeglasses can rescue from it)
   and `combat.recycle_card` (in-resolution recycles). These should be unified.
 
 ### Tests

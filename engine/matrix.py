@@ -1,7 +1,7 @@
 """
 engine/matrix.py
 ================
-Matrix allocation validation and overload detection for Paradoxo.
+Allocation validation and overload detection for the time machine matrix.
 
 This module enforces the three allocation rules from §10 and the overload
 and escape valve mechanics from §11. It contains no strategy logic:
@@ -22,7 +22,6 @@ Rules implemented:
 """
 
 from engine.constants import (
-    GENERATORS_FOR_OVERLOAD,
     FUNCTION_RECHARGE,
     FUNCTION_PARADOX,
     FUNCTION_TRAVEL,
@@ -142,8 +141,8 @@ def validate_allocation(
     if allocation.escape_valve > 0:
         placed_values.append(allocation.escape_valve)
 
-    # We can't match individual dice exactly since dice may repeat, but we
-    # can check the multiset: sorted placed values must equal sorted dice.
+    # Dice repeat, so compare multisets: the sorted placed values must equal
+    # the sorted dice.
     if sorted(placed_values) != sorted(dice):
         errors.append(
             f"§10.1 violated: dice {sorted(dice)} not fully allocated; "
@@ -191,7 +190,7 @@ def validate_allocation(
 
 
 # ---------------------------------------------------------------------------
-# Convenience constructors for common allocations
+# Placement helpers used by the strategies
 # ---------------------------------------------------------------------------
 
 def place(allocation: Allocation, row: int, col: int, value: int) -> None:

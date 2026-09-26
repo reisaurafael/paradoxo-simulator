@@ -3,8 +3,8 @@ simulation/strategies/aggressive.py
 =====================================
 Aggressive strategy: overload Travel whenever dice allow it.
 
-Translated from the MS529 Julia prototype `model_agressive`, corrected
-against the Rules Reference where the prototype diverged.
+First written for the MS529 Julia prototype, then corrected against the Rules
+Reference where the prototype diverged.
 
 Core intent: win the game, not merely end it. Reaching Year Zero (§11.1a)
 immediately ends the game, but a traveler standing on Year Zero sits on the
@@ -39,31 +39,32 @@ from engine.constants import (
 from engine.matrix import place, send_to_escape_valve
 from engine.dice import count_faces
 from engine.cards import Card
-from engine.market import MarketAction, BuyAction, DeclareAction, PassAction
+from engine.market import (
+    MarketAction, BuyAction, DeclareAction, PassAction, SECRET_MARKET_RENEW_COST,
+)
+from engine.timeline import in_older_era, same_era
 from simulation.strategies.base import Strategy
-from simulation.strategies.util import safe_travel_cap
+from simulation.strategies.util import (
+    astrolabe_destination, century_farthest_from_rivals, refrigerator_choice,
+    safe_travel_cap,
+)
 
-# Cards that directly help reach Year Zero faster
+# Cards that help the rush toward Year Zero
 _TRAVEL_CARDS = {
-    "Mapa de Geradus Mercator",          # active: travel 3 toward past
-    "Bússola de Navegação",              # passive: bonus free travel at hour-end
-    "Colar de Cavalo",                   # passive: +1 energy per travel module
-    "Motor de Corrente Alternada de Tesla", # passive: +1 energy on boom gain
-    "Astrolábio",                        # active: free in-era travel (recycles)
-    "Porcelana",                         # passive: market cards -1g
+    "Gerardus Mercator's Map",  # active: travel 3 toward past
+    "Navigation Compass",       # passive: bonus free travel at hour-end
+    "Horse Collar",             # passive: +1 energy per travel module
+    "Tesla's AC Motor",         # passive: +1 energy on boom gain
+    "Astrolabe",                # active: free in-era travel (recycles)
+    "Porcelain",                # passive: market cards -1g
 }
 
 _WEAPON_NAMES = {
-    "Rifle Fergunson", "Lança de Fogo", "Bandeira Vermelha da Ching Shih",
-    "Canhão de Vingança da Rainha Anne", "Arma de Laser", "Arma de Portais",
-    "Revolver de Pólvora", "Excalibur", "Espada do Carlos Magno",
-    "A Espada de Átila",
+    "Ferguson Rifle", "Fire Lance", "Ching Shih's Red Flag",
+    "Queen Anne's Revenge Cannon", "Laser Gun", "Portal Gun",
+    "Gunpowder Revolver", "Excalibur", "Charlemagne's Sword",
+    "Attila's Sword",
 }
-
-
-def _same_era(a: int, b: int) -> bool:
-    from engine.timeline import eras_for_century
-    return bool(set(eras_for_century(a)) & set(eras_for_century(b)))
 
 
 class AggressiveStrategy(Strategy):
@@ -101,8 +102,8 @@ class AggressiveStrategy(Strategy):
             # Spending to empty is only justified if Year Zero is actually
             # reachable this Hour: stepping onto it ends the game on our terms.
             # If our energy cannot carry us all the way to Year Zero, burning it
-            # to 0 mid-board is pure self-termination (§28.1) with no payoff, so
-            # fall back to a safe siege cap instead. (Fixes self-suicide travel.)
+            # to 0 mid-board is self-termination (§28.1) with no payoff, so fall
+            # back to a safe siege cap instead.
             burn_cap = safe_travel_cap(traveler, reserve=0)
             if burn_cap >= traveler.century:        # reaches Year Zero
                 cap = burn_cap
@@ -117,8 +118,8 @@ class AggressiveStrategy(Strategy):
                       safe_travel_cap(traveler, reserve=3))
             # Travel is still the Aggressive profile's identity: whenever there is
             # any room to move (cap > 0), overload Travel as the top priority and
-            # rush toward the pack / Year Zero, accepting the overload penalty as
-            # the price of speed. The caps above are the only restraint, they keep
+            # rush toward the pack and Year Zero, accepting the overload penalty
+            # as the price of speed. The caps above are the only restraint: they keep
             # us one space short of Year Zero (so we don't end a game we'd lose,
             # §32.4) and hold an energy reserve (so overdrive doesn't self-terminate
             # us, §28.1). With Travel capped, leftover dice recover energy (Recharge)
@@ -222,20 +223,20 @@ class AggressiveStrategy(Strategy):
         and travel-speed cards.
 
         Declaring (paying off the Wanted poster, §24.5) is only honoured at the
-        Merchant market; the Secret Market loop passes a sentinel ``renew_cost``
-        of 999 and skips Wanted travelers entirely, so we gate the Declare on the
-        Merchant context. We pay it off only once the Secret Market is open and
-        we can still afford it: clearing Wanted unlocks Secret Market buys next
-        phase (§33.3)."""
+        Merchant market; the Secret Market loop passes SECRET_MARKET_RENEW_COST
+        and skips Wanted travelers entirely, so the Declare only happens in the
+        Merchant context. It pays off the poster only once the Secret Market is
+        open and it can afford it: clearing Wanted unlocks Secret Market buys
+        next phase (§33.3)."""
         held_names = {c.name for c in traveler.hand}
 
         if (traveler.is_wanted
-                and renew_cost != 999
+                and renew_cost != SECRET_MARKET_RENEW_COST
                 and game.secret_market_open
                 and traveler.gold >= DECLARE_COST):
             return DeclareAction()
 
-        # Weapons first (terminate rivals → §11.1c), then travel-speed cards.
+        # Weapons first (terminate rivals, §11.1c), then travel-speed cards.
         for wishlist in (_WEAPON_NAMES, _TRAVEL_CARDS):
             for card in revealed:
                 if card.name not in wishlist:
@@ -261,7 +262,7 @@ class AggressiveStrategy(Strategy):
                         and t.century == traveler.century]
         era_enemies = [t for t in game.travelers
                        if t is not traveler and not t.awaiting_respawn
-                       and _same_era(traveler.century, t.century)]
+                       and same_era(traveler.century, t.century)]
         weakest_sync = min(sync_enemies, key=lambda t: t.energy, default=None)
         weakest_era = min(era_enemies, key=lambda t: t.energy, default=None)
 
@@ -269,43 +270,37 @@ class AggressiveStrategy(Strategy):
             name = card.name
             ctx: object = None
 
-            if name == "Mapa de Geradus Mercator":
+            if name == "Gerardus Mercator's Map":
                 if traveler.century <= 3:
                     continue
                 ctx = (3, -1)
 
-            elif name == "Astrolábio":
-                from engine.timeline import eras_for_century
-                from engine.constants import ERAS
-                eras = eras_for_century(traveler.century)
-                if not eras:
+            elif name == "Astrolabe":
+                ctx = astrolabe_destination(traveler)
+                if ctx is None:
                     continue
-                era_start = min(ERAS[e][0] for e in eras)
-                if era_start >= traveler.century:
-                    continue
-                ctx = era_start
 
-            elif name == "Canhão de Vingança da Rainha Anne":
+            elif name == "Queen Anne's Revenge Cannon":
                 if not era_enemies:
                     continue
                 ctx = None
 
-            elif name in ("Arma de Laser", "Lança de Fogo"):
+            elif name in ("Laser Gun", "Fire Lance"):
                 if not weakest_sync:
                     continue
                 ctx = weakest_sync
 
-            elif name == "Bandeira Vermelha da Ching Shih":
+            elif name == "Ching Shih's Red Flag":
                 if not era_enemies:
                     continue
                 ctx = max(era_enemies, key=lambda t: t.gold, default=weakest_era)
 
-            elif name == "Rifle Fergunson":
+            elif name == "Ferguson Rifle":
                 if not era_enemies:
                     continue
                 ctx = weakest_era
 
-            elif name == "Revolver de Pólvora":
+            elif name == "Gunpowder Revolver":
                 if not sync_enemies:
                     continue
                 ctx = max(sync_enemies, key=lambda t: len(t.hand))
@@ -317,43 +312,27 @@ class AggressiveStrategy(Strategy):
                     continue
                 ctx = None
 
-            elif name == "Espada do Carlos Magno":
+            elif name == "Charlemagne's Sword":
                 if not weakest_sync or traveler.gold == 0:
                     continue
                 ctx = weakest_sync
 
-            elif name == "A Espada de Átila":
-                from engine.timeline import eras_for_century
-                from engine.constants import ERAS
-                order = list(ERAS.keys())
-                my_eras = eras_for_century(traveler.century)
-                my_oldest = min(order.index(e) for e in my_eras) if my_eras else 0
-                older = [t for t in game.travelers
-                         if not t.awaiting_respawn and t is not traveler
-                         and eras_for_century(t.century)
-                         and max(order.index(e) for e in eras_for_century(t.century)) < my_oldest]
-                if not older:
+            elif name == "Attila's Sword":
+                if not any(not t.awaiting_respawn and t is not traveler
+                           and in_older_era(t.century, traveler.century)
+                           for t in game.travelers):
                     continue
                 ctx = None
 
-            elif name == "Arma de Portais":
+            elif name == "Portal Gun":
                 if not era_enemies:
                     continue
                 ctx = weakest_era
 
-            elif name == "Geladeira":
-                from simulation.strategies.util import geladeira_context
-                receptor_actives = [c for c in getattr(traveler, "receptor_cards", [])
-                                    if c.ability_type in ("active", "atemporal_active")
-                                    and c.active_effect is not None]
-                chosen = next(
-                    ((rc, sub) for rc in receptor_actives
-                     for ok, sub in [geladeira_context(rc, traveler, game)] if ok),
-                    None,
-                )
-                if chosen is None:
+            elif name == "Refrigerator":
+                ctx = refrigerator_choice(traveler, game)
+                if ctx is None:
                     continue
-                ctx = (chosen[0], chosen[1])
 
             else:
                 continue
@@ -373,7 +352,6 @@ class AggressiveStrategy(Strategy):
 
     def choose_chaos_destroy_target(self, traveler, game, candidates):
         """Destroy the most expensive equipped card from a rival, or cheapest market card."""
-        from engine.cards import Card
         equipped = [c for t in game.travelers
                     if t is not traveler and not t.awaiting_respawn
                     for c in t.hand
@@ -383,19 +361,8 @@ class AggressiveStrategy(Strategy):
         return min(candidates, key=lambda c: c.gold_cost)
 
     def choose_chaos_merchant_century(self, traveler, game):
-        """Push Merchant far from all other travelers to block their market access."""
-        from engine.constants import CENTURY_MAX
-        others = [t for t in game.travelers if t is not traveler and not t.awaiting_respawn]
-        if not others:
-            return CENTURY_MAX
-        # Choose the century maximally far from all rivals
-        best, best_dist = 1, -1
-        for c in range(1, CENTURY_MAX + 1):
-            min_dist = min(abs(c - t.century) for t in others)
-            if min_dist > best_dist:
-                best_dist = min_dist
-                best = c
-        return best
+        """Push the Merchant far from every rival to block their market access."""
+        return century_farthest_from_rivals(traveler, game)
 
     def choose_resource_steal_target(self, traveler, game, revealed):
         """Steal the most valuable affordable card."""
@@ -403,7 +370,7 @@ class AggressiveStrategy(Strategy):
         return max(affordable, key=lambda c: c.gold_cost) if affordable else None
 
     def choose_matrix_buff_module(self, traveler, game):
-        """Buff travel modules first (modules 7, 8, 9 = indices 6, 7, 8)."""
+        """Buff the travel modules first (modules 8, 9, 7 are indices 7, 8, 6)."""
         already = set(traveler.matrix_buffs.keys())
         for m in [7, 8, 6, 0, 1, 2, 3, 4, 5]:
             if m not in already:

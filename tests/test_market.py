@@ -1,8 +1,7 @@
 """Tests for engine/market.py: Merchant movement, Market phase, and Delivery."""
 
 import random
-import pytest
-from engine.state import GameState, TravelerState
+from engine.state import GameState
 from engine.market import (
     MerchantDeck,
     merchant_target,
@@ -10,12 +9,11 @@ from engine.market import (
     check_merchant_upgrades,
     resolve_deliveries,
     check_temporal_receptor_win,
-    BuyAction, RenewAction, PassAction, UseCardAction,
+    BuyAction, PassAction, UseCardAction,
 )
 from engine.cards import (
-    sismografico, escudo_viking, maquina_de_alan_turing,
-    mapa_de_geradus_mercator, toalha, bussola_de_navegacao,
-    maquina_de_venda_automatica,
+    seismograph, viking_shield, alan_turings_machine,
+    towel, vending_machine,
 )
 
 
@@ -153,19 +151,19 @@ def test_no_upgrade_without_milestone():
 
 def test_delivery_at_matching_century_scores_cp():
     game = GameState.create(["T0"])
-    game.travelers[0].century = 2   # Sismográfico delivers at II
-    card = sismografico()
+    game.travelers[0].century = 2   # Seismograph delivers at II
+    card = seismograph()
     game.travelers[0].hand.append(card)
     resolve_deliveries(game)
     assert game.travelers[0].contract_points == 1
-    assert "Sismográfico" in game.travelers[0].temporal_receptor
+    assert "Seismograph" in game.travelers[0].temporal_receptor
     assert len(game.travelers[0].hand) == 0
 
 
 def test_delivery_rejected_at_wrong_century():
     game = GameState.create(["T0"])
-    game.travelers[0].century = 5   # wrong century for Sismográfico (delivers at 2)
-    card = sismografico()
+    game.travelers[0].century = 5   # wrong century for Seismograph (delivers at 2)
+    card = seismograph()
     game.travelers[0].hand.append(card)
     resolve_deliveries(game)
     assert game.travelers[0].contract_points == 0
@@ -174,8 +172,8 @@ def test_delivery_rejected_at_wrong_century():
 
 def test_delivery_fills_periods():
     game = GameState.create(["T0"])
-    game.travelers[0].century = 9   # Escudo Viking delivers at IX (Origins period)
-    card = escudo_viking()
+    game.travelers[0].century = 9   # Viking Shield delivers at IX (Origins period)
+    card = viking_shield()
     game.travelers[0].hand.append(card)
     resolve_deliveries(game)
     assert "Origins" in game.travelers[0].delivered_periods
@@ -192,7 +190,7 @@ def test_delivery_strategy_can_hold_card():
 
     game = GameState.create(["T0"])
     game.travelers[0].century = 2
-    game.travelers[0].hand.append(sismografico())
+    game.travelers[0].hand.append(seismograph())
     resolve_deliveries(game, strategies={"T0": HoldAllStrategy()})
     assert game.travelers[0].contract_points == 0
     assert len(game.travelers[0].hand) == 1
@@ -200,8 +198,8 @@ def test_delivery_strategy_can_hold_card():
 
 def test_no_delivery_at_wrong_century_even_with_card():
     game = GameState.create(["T0"])
-    game.travelers[0].century = 15  # Toalha delivers at I (century 1)
-    game.travelers[0].hand.append(toalha())
+    game.travelers[0].century = 15  # Towel delivers at I (century 1)
+    game.travelers[0].hand.append(towel())
     resolve_deliveries(game)
     assert game.travelers[0].contract_points == 0
 
@@ -255,7 +253,7 @@ def test_buy_action_adds_card_to_hand():
 
 
 def test_on_market_buy_other_hook_fires():
-    """Máquina de Venda Automática: observer gains 1 gold when another traveler buys."""
+    """Vending Machine: observer gains 1 gold when another traveler buys."""
     from simulation.strategies.base import Strategy
     from engine.state import Allocation
 
@@ -271,7 +269,7 @@ def test_on_market_buy_other_hook_fires():
     game.travelers[0].gold = 10  # Buyer
     game.travelers[0].century = 20
     game.travelers[1].century = 5   # Observer elsewhere
-    game.travelers[1].hand.append(maquina_de_venda_automatica())
+    game.travelers[1].hand.append(vending_machine())
     game.merchant_century = 20
     deck = MerchantDeck(rng=random.Random(42))
     strategies = {"Buyer": BuyFirstStrategy(), "Observer": BuyFirstStrategy()}
@@ -298,7 +296,7 @@ def test_use_card_action_activates_effect():
     class TuringStrategy(Strategy):
         def choose_allocation(self, t, g, d): return Allocation.empty(), -1
         def choose_market_action(self, t, g, revealed, renew_cost):
-            turing = next((c for c in t.hand if c.name == "A Máquina de Alan Turing"), None)
+            turing = next((c for c in t.hand if c.name == "Alan Turing's Machine"), None)
             if turing and turing.active_effect and not used:
                 used.append(True)
                 return UseCardAction(turing, context=None)
@@ -308,8 +306,8 @@ def test_use_card_action_activates_effect():
     game.travelers[0].century = 20
     game.merchant_century = 20
     deck = MerchantDeck(rng=random.Random(0))
-    game.travelers[0].hand.append(maquina_de_alan_turing())
+    game.travelers[0].hand.append(alan_turings_machine())
     strategies = {"T0": TuringStrategy()}
     resolve_market_phase(game, deck, strategies, random.Random(0))
     # After Alan Turing, market was cleared and refilled; card is still in hand (not recycles_on_use)
-    assert any(c.name == "A Máquina de Alan Turing" for c in game.travelers[0].hand)
+    assert any(c.name == "Alan Turing's Machine" for c in game.travelers[0].hand)

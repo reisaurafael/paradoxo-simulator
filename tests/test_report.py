@@ -38,6 +38,6 @@ def test_report_renders_self_contained_html():
 
 def test_generate_report_writes_file(tmp_path):
     out = tmp_path / "r.html"
-    path = generate_report(str(out), seed=7)
+    assert generate_report(str(out), seed=7) == str(out)
     assert out.exists() and out.stat().st_size > 5000
-    assert "Paradoxo" in out.read_text(encoding="utf-8")
+    assert "Paradox: Match Report" in out.read_text(encoding="utf-8")

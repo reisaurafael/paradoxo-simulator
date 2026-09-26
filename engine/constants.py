@@ -1,11 +1,12 @@
 """
 engine/constants.py
 ===================
-All numeric and structural constants for Paradoxo.
+Every numeric and structural constant of Paradox, in one place.
 
-Every value here is derived directly from the Rules Reference.
-Section references (§N) point to the official Rules Reference document.
-No value in this file is invented or estimated.
+Each value comes straight from the Rules Reference, and the § numbers point to
+the section it was taken from. Nothing here is estimated. The one exception is
+the overdrive rule at the bottom, a playtesting experiment of mine that is not
+in the printed rules yet.
 """
 
 # ---------------------------------------------------------------------------
@@ -70,19 +71,6 @@ FUNCTION_NAMES: dict[int, str] = {
     FUNCTION_TRAVEL:   "Travel",
 }
 
-# Module semantic labels (row, col) → description
-MODULE_LABELS: dict[tuple[int, int], str] = {
-    (0, 0): "energy",
-    (0, 1): "gold",
-    (0, 2): "energy+gold",
-    (1, 0): "future paradox",
-    (1, 1): "present paradox",
-    (1, 2): "past paradox",
-    (2, 0): "heating",
-    (2, 1): "travel",
-    (2, 2): "double travel",
-}
-
 # ---------------------------------------------------------------------------
 # Generators (§4.2, §10)
 # ---------------------------------------------------------------------------
@@ -108,10 +96,8 @@ EXPLOSION_BOOM_RESET: int = 12      # 12 booms are discarded on explosion (§15.
 # Travel (§14)
 # ---------------------------------------------------------------------------
 
-# Traveling to the past costs 1 energy per century (§14.2)
+# Traveling to the past costs 1 energy per century; the future is free (§14.2)
 PAST_TRAVEL_ENERGY_COST_PER_CENTURY: int = 1
-# Traveling to the future costs 0 energy (§14.2)
-FUTURE_TRAVEL_ENERGY_COST_PER_CENTURY: int = 0
 
 # Double travel module multiplier (module 9 counts twice) (§14.1)
 DOUBLE_TRAVEL_MULTIPLIER: int = 2
@@ -181,9 +167,9 @@ EQUIPMENT_SLOTS: int = 2   # Each traveler has 2 equipment slots (§22.1)
 LARGE_ITEM_SLOTS: int = 2  # A large item fills both slots (§22.1)
 
 # ---------------------------------------------------------------------------
-# Overdrive: experimental playtesting rule (2026-06-26), not in the printed reference
+# Overdrive: experimental playtesting rule (June 2026), not in the printed rules
 # ---------------------------------------------------------------------------
-# After century X travelers traveling to the past lose 2 energy per century
-# instead of the normal 1. Activates for every century traveled at position ≤ X.
-OVERDRIVE_THRESHOLD_CENTURY: int = 10    # X, overdrive zone is century ≤ this
+# Past travel below century X costs 2 energy per century instead of 1. Every
+# step taken from a position at or below X pays the higher price.
+OVERDRIVE_THRESHOLD_CENTURY: int = 10    # X; the overdrive zone is century <= this
 OVERDRIVE_ENERGY_COST_PER_CENTURY: int = 2  # Energy cost per century in overdrive

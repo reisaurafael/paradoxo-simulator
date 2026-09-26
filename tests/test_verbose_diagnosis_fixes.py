@@ -4,24 +4,24 @@ tests/test_verbose_diagnosis_fixes.py
 Regression tests for the batch of fixes that came out of a verbose single-game
 diagnosis:
 
-  * Porcelana market discount floors at 1 gold (never free), and the public
+  * Porcelain market discount floors at 1 gold (never free), and the public
     ``effective_card_cost`` helper reflects the charge the engine actually makes.
   * Aggressive never travels itself to termination when it cannot reach Year Zero.
   * Collector buys the easiest-to-deliver reachable card (a nearby weapon beats a
-    distant non-weapon) and prices cards with the Porcelana discount.
+    distant non-weapon) and prices cards with the Porcelain discount.
   * Conservative does not commit its dominant dice to a Travel that would only
     explode (booms already near the limit).
 """
 
 import random
 
-from engine.state import GameState, Allocation
+from engine.state import GameState
 from engine.constants import (
-    FUNCTION_TRAVEL, FUNCTION_RECHARGE, BOOM_LIMIT, CENTURY_MIN,
+    FUNCTION_TRAVEL, FUNCTION_RECHARGE, BOOM_LIMIT,
 )
 from engine.market import effective_card_cost
 from engine.cards import (
-    porcelana, rifle_fergunson, espada_de_laser, maquina_voadora_da_vinci,
+    porcelain, ferguson_rifle, laser_sword, da_vincis_flying_machine,
 )
 from simulation.strategies.aggressive import AggressiveStrategy
 from simulation.strategies.collector import CollectorStrategy
@@ -29,24 +29,24 @@ from simulation.strategies.conservative import ConservativeStrategy
 
 
 # ---------------------------------------------------------------------------
-# Porcelana discount / effective_card_cost
+# Porcelain discount / effective_card_cost
 # ---------------------------------------------------------------------------
 
-def test_porcelana_discount_floors_at_one_gold():
+def test_porcelain_discount_floors_at_one_gold():
     g = GameState.create(["T0"])
     t = g.travelers[0]
-    t.hand = [porcelana()]
-    rifle = rifle_fergunson()          # base 3g → 2g with Porcelana
-    cheap = porcelana()                # base 1g → stays 1g (never free)
+    t.hand = [porcelain()]
+    rifle = ferguson_rifle()          # base 3g → 2g with Porcelain
+    cheap = porcelain()                # base 1g → stays 1g (never free)
     assert effective_card_cost(rifle, t) == rifle.gold_cost - 1
     assert effective_card_cost(cheap, t) == 1
 
 
-def test_no_discount_without_porcelana():
+def test_no_discount_without_porcelain():
     g = GameState.create(["T0"])
     t = g.travelers[0]
     t.hand = []
-    rifle = rifle_fergunson()
+    rifle = ferguson_rifle()
     assert effective_card_cost(rifle, t) == rifle.gold_cost
 
 
@@ -80,21 +80,21 @@ def test_collector_prefers_nearby_deliverable_weapon():
     k.century, k.gold, k.energy = 27, 6, 15
     k.hand = []
 
-    rifle = rifle_fergunson()             # delivery_century 18 → 9 steps
-    sword = espada_de_laser()             # delivery_century 24 → 3 steps
-    maquina = maquina_voadora_da_vinci()  # delivery_century 15 → 12 steps
-    revealed = [maquina, rifle, sword]
+    rifle = ferguson_rifle()             # delivery_century 18 → 9 steps
+    sword = laser_sword()             # delivery_century 24 → 3 steps
+    flying_machine = da_vincis_flying_machine()  # delivery_century 15 → 12 steps
+    revealed = [flying_machine, rifle, sword]
 
     action = CollectorStrategy().choose_market_action(k, g, revealed, renew_cost=1)
     assert getattr(action, "card", None) is sword
 
 
-def test_collector_buys_card_affordable_only_after_porcelana_discount():
+def test_collector_buys_card_affordable_only_after_porcelain_discount():
     g = GameState.create(["K"])
     k = g.travelers[0]
     k.century, k.gold, k.energy = 27, 2, 15
-    rifle = rifle_fergunson()             # base 3g, 2g with Porcelana
-    k.hand = [porcelana()]
+    rifle = ferguson_rifle()             # base 3g, 2g with Porcelain
+    k.hand = [porcelain()]
     # With only 2 gold the base-cost check would reject the 3g card; the
     # discounted 2g cost makes it affordable, so the Collector should buy it
     # rather than fall through to a pointless renew.

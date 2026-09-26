@@ -6,7 +6,6 @@ Tests for engine/timeline.py: board geometry, distance, era/period lookups.
 Each test references the rule section it validates.
 """
 
-import pytest
 from engine.timeline import (
     is_valid_position, distance, clamp_to_board,
     eras_for_century, period_for_era, periods_for_century,
