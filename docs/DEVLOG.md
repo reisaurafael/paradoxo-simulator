@@ -10,7 +10,7 @@ For a raw list of every code change, see `CHANGELOG.md` at the repo root.
 ### Context
 
 The repository is public and the people reading it read English, so the cards now use their
-official English names, the ones the V1 client already shows. The rules engine identifies a
+official English names, the ones the game client already shows. The rules engine identifies a
 card by its name, so this touched every strategy wish-list, every combat modifier and most of
 the tests.
 

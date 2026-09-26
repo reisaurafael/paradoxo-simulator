@@ -1,4 +1,4 @@
-# Paradox: Timeline Incursion
+# Paradox: The Last Timeline
 
 **A competitive time travel board game, and the platform I built to balance it.**
 
@@ -10,6 +10,9 @@ Paradox is an original board game I designed: two to six travelers race along a
 timeline of thirty centuries, allocate four generators across a three by three time
 machine every Hour, and throw paradoxes at each other while trying to reach Year Zero.
 Fifty two cards, four ways to win.
+
+After the Incursion shattered time, one last timeline is left, and it is sacred. The travellers of the
+C.R.O.N.O.S. return each relic to the century it was torn from, and whoever mends it the most wins.
 
 This repository is not the game. It is the rules engine and the analysis platform I
 wrote around it, so that balance questions get answered with thousands of games instead
@@ -23,7 +26,7 @@ of one afternoon at the table.
 
 <p align="center"><img src="docs/portfolio/img/mesa.jpg" alt="A Paradox match in the web client: board, map and traveler inventory" width="900"></p>
 
-Paradox V1 is a complete digital board game: rules engine, web client, server, and bots
+Paradox is a complete digital board game: rules engine, web client, server, and bots
 that sit at the same table as human players. It plays start to finish with no missing rules,
 online between computers on the same network or across houses through a private network.
 
@@ -172,18 +175,17 @@ well under a minute.
 
 | | |
 |---|---|
-| **The game** | Finished. V1 is a complete playable digital board game: engine, web client, server and bots. Source available on request |
+| **The game** | Finished. A complete playable digital board game: engine, web client, server and bots. Source available on request |
 | **This platform** | In use. It is how card changes and rule changes get tested before they reach the table |
 | **Playtesting** | Around twenty people at the table, plus the Tabletopia prototype |
 | **Next on the game** | An always-on server, so friends join a match by code from anywhere |
 | **Next on the platform** | Card impact testing and parameter sweeps, to find lines that dominate regardless of seating |
-| **In the workshop** | A second version of Paradox, redesigned from the ground up. Not public yet |
 
 ## License and intellectual property
 
 Copyright © 2026 Rafael Reis Garcia. All rights reserved. See [LICENSE](LICENSE).
 
-The names **Paradox: Timeline Incursion** and **Paradoxo** (its Portuguese name), the brand **Corporação C.R.O.N.O.S.**, the rules, the card names,
+The names **Paradox: The Last Timeline** and **Paradoxo** (its Portuguese name), the brand **Corporação C.R.O.N.O.S.**, the rules, the card names,
 the card text, the artwork and the thematic material are mine and are not licensed for
 reuse, redistribution or commercial use. The simulation framework is proprietary as well.
 A public repository grants no rights over the game.

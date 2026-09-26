@@ -427,7 +427,7 @@ conditions, `safe_travel_cap` behavior, and per-profile cap assertions.
 ## [2026-09-26] REFACTOR: English card names and a cleanup pass
 
 **Cards in English.** All 52 cards now carry their official English names (the same names
-the V1 client shows), and every card factory is named after them: `haralds_bluetooth()`,
+the game client shows), and every card factory is named after them: `haralds_bluetooth()`,
 `gerardus_mercators_map()`, `agnes_cauldron()`, and so on. Comments, docstrings, tests and
 docs follow. The engine's card identity is still the name, so strategies, receptor lookups
 and combat modifiers match on the English name now.
