@@ -1,4 +1,4 @@
-# Paradoxo
+# Paradox: Timeline Incursion
 
 **A competitive time travel board game, and the platform I built to balance it.**
 
@@ -6,7 +6,7 @@
 ![python](https://img.shields.io/badge/python-3.11%2B-blue?style=flat-square)
 ![license](https://img.shields.io/badge/license-proprietary-red?style=flat-square)
 
-Paradoxo is an original board game I designed: four to six travelers race along a
+Paradox is an original board game I designed: four to six travelers race along a
 timeline of thirty centuries, allocate four generators across a three by three time
 machine every Hour, and throw paradoxes at each other while trying to reach Year Zero.
 Fifty two cards, four ways to win.
@@ -21,9 +21,9 @@ of one afternoon at the table.
 
 ## The game is finished and playable
 
-<p align="center"><img src="docs/portfolio/img/mesa.jpg" alt="A Paradoxo match in the web client: board, map and traveler inventory" width="900"></p>
+<p align="center"><img src="docs/portfolio/img/mesa.jpg" alt="A Paradox match in the web client: board, map and traveler inventory" width="900"></p>
 
-Paradoxo V1 is a complete digital board game: rules engine, web client, server, and bots
+Paradox V1 is a complete digital board game: rules engine, web client, server, and bots
 that sit at the same table as human players. It runs on a local machine, start to finish,
 with no missing rules.
 
@@ -35,7 +35,7 @@ The physical prototype is also up as a [Tabletopia table](https://tabletopia.com
 ## Why build a simulator for a board game
 
 Board game balance is usually tested at the table, which is slow and gives very little
-data. Around twenty people have played Paradoxo with me, and the feedback that mattered
+data. Around twenty people have played Paradox with me, and the feedback that mattered
 most, that some strategies repeat themselves, is exactly the kind of thing a table test
 takes months to confirm.
 
@@ -176,13 +176,13 @@ games per minute, so a 1,000 game batch takes roughly two minutes.
 | **Playtesting** | Around twenty people at the table, plus the Tabletopia prototype |
 | **Next on the game** | Matches between separate computers over the internet |
 | **Next on the platform** | Card impact testing and parameter sweeps, to find lines that dominate regardless of seating |
-| **In the workshop** | A second version of Paradoxo, redesigned from the ground up. Not public yet |
+| **In the workshop** | A second version of Paradox, redesigned from the ground up. Not public yet |
 
 ## License and intellectual property
 
 Copyright © 2026 Rafael Reis Garcia. All rights reserved. See [LICENSE](LICENSE).
 
-The name **Paradoxo**, the brand **Corporação C.R.O.N.O.S.**, the rules, the card names,
+The names **Paradox: Timeline Incursion** and **Paradoxo** (its Portuguese name), the brand **Corporação C.R.O.N.O.S.**, the rules, the card names,
 the card text, the artwork and the thematic material are mine and are not licensed for
 reuse, redistribution or commercial use. The simulation framework is proprietary as well.
 A public repository grants no rights over the game.
