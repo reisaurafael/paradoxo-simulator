@@ -104,7 +104,7 @@ A single helper, `util.paradox_can_terminate(traveler, game, dice)`, encodes the
 
 ### Strategy-by-strategy changes
 
-**Conservative** now buys delivery cards for missing Temporal Receptor periods as its top market priority, followed by cheap survival cards (Towel, Viking Shield, etc.), market-access helpers (Porcelain, Harald's Bluetooth, The First Smartphone), and travel cards. It also pays off its Wanted poster (DeclareAction at the Merchant) to restore Secret Market access. The allocation order is Travel → Recharge → Paradox(1) in normal mode, and Recharge → Paradox(2) → Travel in kill mode.
+**Conservative** now buys delivery cards for missing Temporal Receptor periods as its top market priority, followed by cheap survival cards (Towel, Viking Shield, etc.), market-access helpers (Porcelain, Harald's Blue Tooth, The First Smartphone), and travel cards. It also pays off its Wanted poster (DeclareAction at the Merchant) to restore Secret Market access. The allocation order is Travel → Recharge → Paradox(1) in normal mode, and Recharge → Paradox(2) → Travel in kill mode.
 
 **Collector** keeps its delivery-first logic unchanged but adds a DeclareAction for the Wanted poster and cheap market helpers at the top of the buying queue. Energy cards are only bought at the critical threshold (energy < 3) so survival purchases do not crowd out deliveries. The Paradox column count is tied to the kill flag.
 
@@ -396,7 +396,7 @@ whatever engine structure was required so effects actually fire during play.
 ### Known gaps at this milestone
 - Termination respawn (BUG-001) deferred: flagged in CHANGELOG.
 - Wanted on termination (BUG-002) deferred: flagged in CHANGELOG.
-- Agreements (§4) are not simulated. `Harald's Bluetooth` passive is a no-op.
+- Agreements (§4) are not simulated. `Harald's Blue Tooth` passive is a no-op.
 - The recycling pile has two representations: deck discard (Eyeglasses can rescue from it)
   and `combat.recycle_card` (in-resolution recycles). These should be unified.
 

@@ -92,7 +92,7 @@ Known gaps at this milestone (BUG-001 to BUG-003 were fixed in later entries):
 - Termination respawn (BUG-001).
 - Wanted status on termination (BUG-002).
 - Millennium CP timing (BUG-003).
-- Agreements (§4): `Harald's Bluetooth` is a passive no-op; agreements unsimulated.
+- Agreements (§4): `Harald's Blue Tooth` is a passive no-op; agreements unsimulated.
 - Recycling pile has two separate representations (deck discard vs. `combat.recycle_card`);
   these need to be unified in a future cleanup.
 
@@ -335,7 +335,7 @@ root, each with a regression test in `tests/test_termination.py`.
   Recharge → Paradox(2) → Travel.
 - **Card preferences**: expanded from a narrow "safety" list to three tiers, survival
   cards (Holy Grail, Viking Shield, Towel, etc.), market-access helpers (Porcelain,
-  Harald's Bluetooth, The First Smartphone), and travel/speed cards. Delivery cards for missing
+  Harald's Blue Tooth, The First Smartphone), and travel/speed cards. Delivery cards for missing
   Temporal Receptor periods added as the top buy priority.
 - **Market**: DeclareAction clears the Wanted poster at the Merchant (enables Secret Market
   next phase); Renew cycles the market when nothing useful is visible.
@@ -354,7 +354,7 @@ root, each with a regression test in `tests/test_termination.py`.
   termination. `_recharge_first` and `_avoid_heating` updated to the same discipline.
 - **Card preferences**: extended to include Prince Dracula's Chalice (+2 energy per
   paradox hit), Joan of Arc's Armor (−1 per energy loss), Quantum Computer
-  (inherits receptor passives), Porcelain, Harald's Bluetooth, and The First Smartphone.
+  (inherits receptor passives), Porcelain, Harald's Blue Tooth, and The First Smartphone.
 - **Market**: DeclareAction for Wanted; cheap market helpers (≤ 2g) bought opportunistically
   before delivery cards; Renew up to cost 2.
 
@@ -427,7 +427,7 @@ conditions, `safe_travel_cap` behavior, and per-profile cap assertions.
 ## [2026-09-26] REFACTOR: English card names and a cleanup pass
 
 **Cards in English.** All 52 cards now carry their official English names (the same names
-the game client shows), and every card factory is named after them: `haralds_bluetooth()`,
+the game client shows), and every card factory is named after them: `haralds_blue_tooth()`,
 `gerardus_mercators_map()`, `agnes_cauldron()`, and so on. Comments, docstrings, tests and
 docs follow. The engine's card identity is still the name, so strategies, receptor lookups
 and combat modifiers match on the English name now.

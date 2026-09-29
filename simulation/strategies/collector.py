@@ -77,7 +77,7 @@ _ENERGY_CARDS = {
 # Market helpers that make buying delivery cards cheaper/easier.
 _MARKET_HELPERS = {
     "Porcelain",             # 1g: market cards cost 1 less
-    "Harald's Bluetooth",    # 1g: atemporal market access
+    "Harald's Blue Tooth",    # 1g: atemporal market access
     "The First Smartphone",  # 1g: atemporal market access
 }
 

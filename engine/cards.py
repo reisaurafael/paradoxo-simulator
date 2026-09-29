@@ -212,7 +212,7 @@ def laser_gun() -> Card:
                 recycle_value=3, ability_type="active", active_effect=effect)
 
 
-def portal_gun() -> Card:
+def wormhole_pistol() -> Card:
     """Active: a traveler in your era is transported to your century."""
     def effect(traveler, game, context) -> None:
         target = context
@@ -221,7 +221,7 @@ def portal_gun() -> Card:
         if not same_era(traveler.century, target.century):
             return
         target.century = traveler.century
-    return Card(name="Portal Gun", gold_cost=3, delivery_century=30,
+    return Card(name="Wormhole Pistol", gold_cost=3, delivery_century=30,
                 recycle_value=3, ability_type="active", active_effect=effect)
 
 
@@ -458,9 +458,9 @@ def refrigerator() -> Card:
                 recycle_value=1, ability_type="active", active_effect=effect)
 
 
-def haralds_bluetooth() -> Card:
+def haralds_blue_tooth() -> Card:
     """Atemporal Passive: you may make agreements with non-synchronic travelers (§4.4)."""
-    return Card(name="Harald's Bluetooth", gold_cost=1, delivery_century=10,
+    return Card(name="Harald's Blue Tooth", gold_cost=1, delivery_century=10,
                 recycle_value=2, ability_type="atemporal_passive")
 
 
@@ -530,9 +530,9 @@ def automobile() -> Card:
                 recycle_value=3, ability_type="passive", is_large_item=True)
 
 
-def relative_dimensions_operative() -> Card:
+def pocket_dimension_shed() -> Card:
     """Passive: you may carry 2 additional cards (TravelerState.equipment_capacity)."""
-    return Card(name="Relative Dimensions Operative", gold_cost=4, delivery_century=29,
+    return Card(name="Pocket Dimension Shed", gold_cost=4, delivery_century=29,
                 recycle_value=4, ability_type="passive")
 
 
@@ -816,7 +816,7 @@ def card_by_name(name: str) -> Card:
 ALL_CARDS: list[Callable[[], Card]] = [
     # Page 1
     ferguson_rifle, fire_lance, ching_shihs_red_flag,
-    queen_annes_revenge_cannon, laser_gun, portal_gun,
+    queen_annes_revenge_cannon, laser_gun, wormhole_pistol,
     gunpowder_revolver, excalibur, laser_sword,
     # Page 2
     navigation_compass, mechanical_clock, galileos_telescope,
@@ -825,11 +825,11 @@ ALL_CARDS: list[Callable[[], Card]] = [
     # Page 3
     astrolabe, towel, al_jazaris_automaton,
     horse_collar, viking_shield, seismograph,
-    holy_grail, refrigerator, haralds_bluetooth,
+    holy_grail, refrigerator, haralds_blue_tooth,
     # Page 4
     agnes_cauldron, object_teleporter, prince_draculas_chalice,
     joan_of_arcs_armor, quantum_computer, automobile,
-    relative_dimensions_operative, window_of_time, porcelain,
+    pocket_dimension_shed, window_of_time, porcelain,
     # Page 5
     book_of_mysteries_of_alexandria, eyeglasses, movable_type_press,
     fishing_reel, mona_lisa, reality_simulator,
@@ -854,15 +854,15 @@ def build_all_cards() -> list[Card]:
 # Keeping the order explicit keeps every published benchmark reproducible.
 TIEBREAK_ORDER: tuple[str, ...] = (
     "Attila's Sword", "Thomas Edison's Lamp", "Alan Turing's Machine", "Laser Gun",
-    "Portal Gun", "Joan of Arc's Armor", "Astrolabe", "Al-Jazari's Automaton",
+    "Wormhole Pistol", "Joan of Arc's Armor", "Astrolabe", "Al-Jazari's Automaton",
     "Ching Shih's Red Flag", "Navigation Compass", "Agnes's Cauldron",
     "Queen Anne's Revenge Cannon", "Fishing Reel", "Automobile", "Horse Collar",
-    "Quantum Computer", "Prince Dracula's Chalice", "Harald's Bluetooth",
+    "Quantum Computer", "Prince Dracula's Chalice", "Harald's Blue Tooth",
     "Viking Shield", "Laser Sword", "Charlemagne's Sword", "Excalibur", "Refrigerator",
     "Niépce's Heliograph", "Window of Time", "Fire Lance", "Spear of Destiny",
     "Book of Mysteries of Alexandria", "Gerardus Mercator's Map", "Mona Lisa",
     "Tesla's AC Motor", "da Vinci's Flying Machine", "James Watt's Steam Engine",
-    "Vending Machine", "Relative Dimensions Operative", "Porcelain",
+    "Vending Machine", "Pocket Dimension Shed", "Porcelain",
     "Movable-Type Press", "The First Time Machine", "The First Smartphone",
     "Gunpowder", "Mechanical Clock", "Gunpowder Revolver", "Ferguson Rifle",
     "Holy Grail", "Reality Simulator", "Seismograph", "Super Motor",

@@ -42,7 +42,7 @@ _TARGET_TRAVELER_CARDS = {
     "Fire Lance",
     "Ching Shih's Red Flag",
     "Laser Gun",
-    "Portal Gun",
+    "Wormhole Pistol",
     "Gunpowder Revolver",
     "Charlemagne's Sword",
 }

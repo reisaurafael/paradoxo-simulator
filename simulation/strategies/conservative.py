@@ -57,7 +57,7 @@ _SURVIVAL_CARDS = {
 # Tier 2: market efficiency; cheap discounts and access.
 _MARKET_CARDS = {
     "Porcelain",             # 1g: cards cost 1g less
-    "Harald's Bluetooth",    # 1g: atemporal market access
+    "Harald's Blue Tooth",    # 1g: atemporal market access
     "The First Smartphone",  # 1g: atemporal market access
     "Vending Machine",       # 2g: +1 gold when others buy
     "Window of Time",        # 4g: always synchronic
@@ -306,7 +306,7 @@ class ConservativeStrategy(Strategy):
                     continue
                 ctx = weakest_era
 
-            elif name == "Portal Gun":
+            elif name == "Wormhole Pistol":
                 if not use_weapons or weakest_era is None:
                     continue
                 ctx = weakest_era

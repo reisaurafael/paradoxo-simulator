@@ -62,7 +62,7 @@ _TRAVEL_CARDS = {
 
 _WEAPON_NAMES = {
     "Ferguson Rifle", "Fire Lance", "Ching Shih's Red Flag",
-    "Queen Anne's Revenge Cannon", "Laser Gun", "Portal Gun",
+    "Queen Anne's Revenge Cannon", "Laser Gun", "Wormhole Pistol",
     "Gunpowder Revolver", "Excalibur", "Charlemagne's Sword",
     "Attila's Sword",
 }
@@ -334,7 +334,7 @@ class AggressiveStrategy(Strategy):
                     continue
                 ctx = None
 
-            elif name == "Portal Gun":
+            elif name == "Wormhole Pistol":
                 if not era_enemies:
                     continue
                 ctx = weakest_era

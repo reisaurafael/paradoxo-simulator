@@ -163,14 +163,14 @@ class TravelerState:
 
     @property
     def equipment_capacity(self) -> int:
-        """Max equipment slots; +2 if Relative Dimensions Operative is held."""
+        """Max equipment slots; +2 if Pocket Dimension Shed is held."""
         base = EQUIPMENT_SLOTS
         # Read through passive_source_cards like every passive: an Operative copied by
         # Movable-Type Press (revealed in the Market) or Quantum Computer (receptor)
         # gives its slots too (it read the hand only, and a Press beside a revealed
         # Operative blocked every purchase, 28/09).
         from engine.cards import passive_source_cards
-        if any(c.name == "Relative Dimensions Operative"
+        if any(c.name == "Pocket Dimension Shed"
                for c in passive_source_cards(self, getattr(self, "_game", None))):
             base += 2
         return base

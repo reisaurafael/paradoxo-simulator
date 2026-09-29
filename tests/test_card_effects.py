@@ -13,7 +13,7 @@ from engine.constants import FUNCTION_RECHARGE, FUNCTION_PARADOX
 from engine import combat
 from engine.cards import (
     ALL_CARDS, ferguson_rifle, ching_shihs_red_flag, gunpowder_revolver,
-    portal_gun, laser_gun, charlemagnes_sword, excalibur,
+    wormhole_pistol, laser_gun, charlemagnes_sword, excalibur,
     gunpowder, prince_draculas_chalice, laser_sword, viking_shield,
     joan_of_arcs_armor, automobile, galileos_telescope,
     quantum_computer, seismograph, refrigerator, agnes_cauldron,
@@ -174,10 +174,10 @@ def test_revolver_scales_with_equipped_items():
     assert tgt.energy == 10 - 6  # 3 * 2
 
 
-def test_portal_gun_teleports_target():
+def test_wormhole_pistol_teleports_target():
     g = _game(3, 5)  # same era Antiquity
     src, tgt = g.travelers
-    portal_gun().active_effect(src, g, tgt)
+    wormhole_pistol().active_effect(src, g, tgt)
     assert tgt.century == 3
 
 

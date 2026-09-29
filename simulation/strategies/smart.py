@@ -81,7 +81,7 @@ class SmartStrategy(Strategy):
     # Tier B: market efficiency / access.
     _MARKET_CARDS = {
         "Porcelain",             # 1g: market cards cost 1 less
-        "Harald's Bluetooth",    # 1g: atemporal market access
+        "Harald's Blue Tooth",    # 1g: atemporal market access
         "The First Smartphone",  # 1g: atemporal market access
         "Vending Machine",       # 2g: +1 gold when others buy
         "Quantum Computer",      # 2g: inherits receptor passives
@@ -513,7 +513,7 @@ class SmartStrategy(Strategy):
                     continue
                 ctx = None
 
-            elif name == "Portal Gun":
+            elif name == "Wormhole Pistol":
                 if not use_weapons or weakest_era is None:
                     continue
                 ctx = weakest_era
