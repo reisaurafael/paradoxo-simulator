@@ -43,6 +43,7 @@ from engine.market import (
 from engine.timeline import in_older_era, periods_for_century, same_era
 from simulation.strategies.base import Strategy
 from simulation.strategies.util import (
+    past_overload_value, past_overload_allocation, special_activations, special_buy,
     astrolabe_destination, paradox_can_terminate, refrigerator_choice, safe_travel_cap,
 )
 
@@ -115,6 +116,14 @@ class SmartStrategy(Strategy):
         counts = count_faces(dice)
         remaining = list(dice)
         direction = -1
+
+        # The overloaded Paradox hits the Past for DOUBLE (28/09): Smart reads the
+        # board, so besides a kill it bleeds the race leader standing behind when the
+        # doubled strike is worth it and its own energy can afford the pause.
+        v3 = past_overload_value(traveler, game, dice,
+                                 bleed_leader=traveler.energy >= self.ENERGY_CRITICAL)
+        if v3 is not None:
+            return past_overload_allocation(traveler, dice, v3), direction, 0
 
         # Park to deliver next Phase 1.
         if self._should_stay_to_deliver(traveler):
@@ -331,6 +340,10 @@ class SmartStrategy(Strategy):
         revealed: list[Card],
         renew_cost: int,
     ) -> MarketAction:
+        # The two special cards under the Secret Market's twelve (28/09).
+        _special = special_buy(traveler, revealed, trinity=True)
+        if _special is not None:
+            return BuyAction(_special)
         held_names = {c.name for c in traveler.hand}
         missing_periods = {"Origins", "Ascension", "Singularity"} - traveler.delivered_periods
 
@@ -515,7 +528,7 @@ class SmartStrategy(Strategy):
 
             activations.append((card, ctx))
 
-        return activations
+        return activations + special_activations(traveler, game)
 
     # ------------------------------------------------------------------
     # Reward sub-choices

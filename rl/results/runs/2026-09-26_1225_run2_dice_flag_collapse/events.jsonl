@@ -1,0 +1,2 @@
+{"time": "2026-09-26T12:25", "kind": "note", "text": "Partial record, reconstructed from the evaluations reported while it ran; the full log was overwritten by run 3."}
+{"time": "2026-09-26T12:40", "kind": "setback", "text": "Entropy fell to 0.007: the network learned the 'heuristic's move' flag instead of the game and reinforcement changed nothing. Stopped at iteration 90; the flag was removed."}

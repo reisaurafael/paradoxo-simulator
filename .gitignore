@@ -56,3 +56,9 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+
+# RL training checkpoints stay local
+rl/results/runs/*/checkpoints/
+rl/results/*.log
+rl/results/*.out
+rl/results/runs/*/raw/*.out

@@ -1,4 +1,4 @@
-# Paradoxo: Development Log
+# Paradox: The Last Timeline, Development Log
 
 Decisions, discoveries, and design rationale in reverse chronological order.
 For a raw list of every code change, see `CHANGELOG.md` at the repo root.
@@ -92,7 +92,7 @@ reveal whether the new mechanic is changing where travelers spend their time.
 
 ### Context
 
-After Phase 1 fixed the Aggressive profile's blind Year Zero rush, the baseline agents still had two structural weaknesses: (1) their allocation logic did not distinguish between Paradox-as-pressure and Paradox-as-kill-shot, leading to either too much or too little paradox investment, and (2) their card-buying lists were narrow and did not cover important market-efficiency cards like Porcelain or atemporal-access cards. The request for Phase 2 was to make all non-Aggressive profiles prioritize Energy/Gold over Paradox, but only in the normal case; escalate Paradox investment when it can actually terminate a rival.
+After Phase 1 fixed the Aggressive profile's blind Year Zero rush, the baseline profiles still had two structural weaknesses: (1) their allocation logic did not distinguish between Paradox-as-pressure and Paradox-as-kill-shot, leading to either too much or too little paradox investment, and (2) their card-buying lists were narrow and did not cover important market-efficiency cards like Porcelain or atemporal-access cards. The request for Phase 2 was to make all non-Aggressive profiles prioritize Energy/Gold over Paradox, but only in the normal case; escalate Paradox investment when it can actually terminate a rival.
 
 ### The dice-sequencing constraint
 
@@ -170,7 +170,7 @@ were previously being guillotined. Regression tests pin the new decision logic i
 ### Context
 
 After the initial six bugs were fixed and a comprehensive second audit produced nine new
-findings (BUG-007 through BUG-015), this session fixed all nine. The changes span the
+findings (BUG-007 through BUG-015), this round fixed all nine. The changes span the
 combat pipeline, the reward system, the market phase, and three individual card effects.
 
 ### BUG-007: Wanted bounty
@@ -250,7 +250,7 @@ the behaviour.
 
 ### BUG-015: Fishing Reel and Niépce's Heliograph steal without Wanted
 
-Ruling (open point D2, now closed): stealing a Merchant card via
+Ruling (open rules question D2, since settled): stealing a Merchant card via
 Fishing Reel or Niépce's Heliograph sets the acting traveler Wanted (§26.4 / §3.4).
 Neither card effect called `traveler.is_wanted = True`. One line was added after the
 `deck.take` call in each effect function.
@@ -271,7 +271,7 @@ to XXX with `12 + Σ recycle value` energy, keep their gold and booms, sit out t
 the current Hour, and then play normally, they can still acquire objects, deliver, and
 even win. So "terminated" is a transient state, not a death.
 
-We modelled it that way. `check_termination()` performs the immediate consequences
+I modelled it that way. `check_termination()` performs the immediate consequences
 (recycle equipment, bank respawn energy, drop Wanted, attribute the kill) and leaves the
 traveler flagged as terminated for the remainder of the Hour, during which they are not a
 valid paradox target and take no actions, matching §28.1. The actual return to play
@@ -330,12 +330,12 @@ a terminated traveler still winning on CP. Full suite: 185 passing.
 
 ### Context
 The first complete simulation run (100 games, 4 travelers) showed complete aggressive
-strategy dominance. Before tuning strategies, we audited the engine against the Rules
+strategy dominance. Before tuning strategies, I audited the engine against the Rules
 Reference to find out how much of that result is a rules bug vs. a strategy problem.
 
 ### Bugs found
 
-The full list is in `CHANGELOG.md` (Unreleased section). Summary:
+The full list is in `CHANGELOG.md`. Summary:
 
 | ID | Severity | Rule | Description |
 |----|----------|------|-------------|
@@ -360,8 +360,8 @@ BUG-006 is a tiebreaker edge case and can be fixed opportunistically.
 
 ### Open rules questions (unchanged from §D in Rules Reference)
 - **D1 (Year Zero CP):** Does reaching Year Zero grant a milestone +1 CP in addition
-  to the stabilisation bonus? Current code uses `CP_YEAR_ZERO_TOTAL` constant; we should
-  settle the ruling and set the constant accordingly.
+  to the stabilisation bonus? Current code uses `CP_YEAR_ZERO_TOTAL` constant, to be
+  set once the ruling is settled.
 - **D2 (Wanted scope):** Does Resource II "steal from Merchant" make the traveler Wanted?
   Current code comments this as an open question. The Wanted flag is not set.
 - **D3 (Priority duel re-rolls):** Assumed yes; not confirmed.
@@ -396,7 +396,7 @@ whatever engine structure was required so effects actually fire during play.
 ### Known gaps at this milestone
 - Termination respawn (BUG-001) deferred: flagged in CHANGELOG.
 - Wanted on termination (BUG-002) deferred: flagged in CHANGELOG.
-- Agreements (§4) are not simulated. `Bluetooth of Harald` passive is a no-op.
+- Agreements (§4) are not simulated. `Harald's Bluetooth` passive is a no-op.
 - The recycling pile has two representations: deck discard (Eyeglasses can rescue from it)
   and `combat.recycle_card` (in-resolution recycles). These should be unified.
 
@@ -411,7 +411,7 @@ Added `tests/test_card_effects.py` (30 cases). Full suite: 173 passing.
 Migrated from MS529 course-project structure to a standalone game-analysis platform.
 
 ### Source of truth
-The official Rules Reference (Corporação C.R.O.N.O.S.) is the only authoritative
+The official Rules Reference is the only authoritative
 source for engine behaviour. All legacy Julia code is reference-only.
 
 ### Legacy divergences catalogued
@@ -425,6 +425,6 @@ source for engine behaviour. All legacy Julia code is reference-only.
 | Win conditions | Year Zero only | four conditions (§11.1) |
 | Setup energy | hardcoded 12 | 4 × n_travelers (§10.2) |
 
-### Modules written this session
+### Modules written
 `constants.py`, `state.py`, `dice.py`, `matrix.py`, `resolve.py`, `paradox.py`,
 `timeline.py`, `market.py`, `runner.py`, all four strategy stubs.

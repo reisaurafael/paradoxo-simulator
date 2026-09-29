@@ -1,0 +1,14 @@
+{
+  "base": "Aggressive",
+  "imitation": 80,
+  "imitation_lr": 0.003,
+  "lr": 0.0003,
+  "entropy": 0.01,
+  "batch": 384,
+  "eval_games": 2000,
+  "run_id": "2026-09-26_1225_run2_dice_flag_collapse",
+  "note": "Dice only. Imitation 80 iterations at lr 3e-3 with a feature flagging the heuristic's move. Stopped: collapsed to copying.",
+  "legacy": true,
+  "finished": true,
+  "legacy_format": "dice only, 4 player benchmark table; mean_edge here is 4 x the 4 player win rate"
+}

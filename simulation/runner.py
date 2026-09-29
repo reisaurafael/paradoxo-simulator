@@ -20,6 +20,7 @@ from __future__ import annotations
 import random
 from engine.state import GameState, Allocation, GameResult, HourSnapshot, TravelerState
 from engine.dice import roll_generators
+from engine.cards import holder_dice
 from engine.resolve import (
     resolve_hour, advance_overload, priority_order,
     apply_escape_valve, resolve_module_1, resolve_module_2, resolve_module_3,
@@ -148,7 +149,7 @@ def resolve_solo_phases(
             continue
 
         # Solo Phase 3: roll, allocate, and resolve all 9 modules for this traveler.
-        dice = roll_generators(rng=rng_used)
+        dice = holder_dice(traveler, roll_generators(rng=rng_used), game)   # The Divine Comedy
         alloc, direction, cap = unpack_allocation(strategy.choose_allocation(traveler, game, dice))
 
         apply_escape_valve(traveler, alloc, game)
@@ -358,7 +359,7 @@ def simulate_game(
         travel_caps: dict[str, int | None] = {}
 
         for t in [t for t in game.travelers if not t.awaiting_respawn]:
-            dice = roll_generators(rng=rng)
+            dice = holder_dice(t, roll_generators(rng=rng), game)   # The Divine Comedy: all 3s
             strategy = strategies[t.name]
             alloc, direction, cap = unpack_allocation(strategy.choose_allocation(t, game, dice))
 

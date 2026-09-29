@@ -1,0 +1,24 @@
+{
+ "learned_dice_only": {
+  "games": 4000,
+  "win_rate": 0.3972,
+  "ci95": [
+   0.3821,
+   0.4124
+  ],
+  "mean_hours": 24.49,
+  "mean_cp": 2.87,
+  "mean_cp_margin": -0.842
+ },
+ "aggressive": {
+  "games": 4000,
+  "win_rate": 0.3812,
+  "ci95": [
+   0.3662,
+   0.3963
+  ],
+  "mean_hours": 23.92,
+  "mean_cp": 2.565,
+  "mean_cp_margin": -1.275
+ }
+}

@@ -102,6 +102,17 @@ PAST_TRAVEL_ENERGY_COST_PER_CENTURY: int = 1
 # Double travel module multiplier (module 9 counts twice) (§14.1)
 DOUBLE_TRAVEL_MULTIPLIER: int = 2
 
+# The overloaded Paradox strikes the past twice as hard:
+# module 6 (PAST) only takes a die when the Paradox row holds three dice, which is
+# an overload, and that die deals double its value, like module 9's double travel.
+# The function is still shut for the next Hour. Future and Present are unchanged.
+PARADOX_PAST_MULTIPLIER: int = 2
+
+# Terminated travelers lose the Paradox PAST module: a die
+# there still overloads the row but deals nothing. "ever" = terminated at least once
+# (the Terminated condition), "grace" = only during the Atemporal grace, "off".
+TERMINATED_PAST_MODE: str = "ever"
+
 # ---------------------------------------------------------------------------
 # Scoring (§25, §32)
 # ---------------------------------------------------------------------------
@@ -120,6 +131,10 @@ CP_STABILISATION_BONUS: int = 1     # §32.2 (awarded in addition to contract CP
 MERCHANT_REVEALED_CARDS: int = 4    # Merchant always shows 4 revealed cards (§17.1)
 SECRET_MARKET_CENTURY: int = 11     # Secret Market is fixed on XI (§19.1)
 SECRET_MARKET_CARD_COUNT: int = 12  # 12 cards set aside in setup (§7.2)
+# The two special cards sit UNDER the Secret
+# Market's twelve, in a fixed order: The Divine Comedy 13th, Oppenheimer's Trinity
+# always last. TOTAL_CARDS below counts the 52 shuffled cards.
+SECRET_MARKET_SPECIAL_COUNT: int = 2
 TOTAL_CARDS: int = 52               # Total card count (§4.4)
 MERCHANT_START_CENTURY: int = 20    # Merchant placed on XX at setup (§7.2)
 MERCHANT_STARTING_CARDS: int = 40   # Merchant holds 40 of 52 cards (§7.2)

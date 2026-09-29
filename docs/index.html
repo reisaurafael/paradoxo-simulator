@@ -9,7 +9,7 @@
 <meta property="og:url" content="https://reisaurafael.github.io/paradoxo-simulator/">
 <meta property="og:title" content="Paradox: The Last Timeline">
 <meta property="og:description" content="One timeline is left, and it is sacred. A competitive time-travel board game with a complete digital version: rules engine, online server, interface and AI opponents.">
-<meta property="og:image" content="https://reisaurafael.github.io/paradoxo-simulator/portfolio/img/mesa-hora17.jpg">
+<meta property="og:image" content="https://reisaurafael.github.io/paradoxo-simulator/portfolio/img/table-hour17.jpg">
 <meta property="og:image:width" content="2000">
 <meta property="og:image:height" content="1250">
 <meta name="twitter:card" content="summary_large_image">
@@ -17,7 +17,7 @@
   :root{
     --ground:#13100C; --panel:#1C1711; --panel-2:#241D16; --line:#34291F;
     --paper:#EFE6D0; --ink:#BCB09A; --ink-dim:#8A806E;
-    --brass:#C9A227; --hud:#4FD6C0; --hud-dim:#2E8577; --sangue:#8C3242;
+    --brass:#C9A227; --hud:#4FD6C0; --hud-dim:#2E8577; --blood:#8C3242;
     --mono:ui-monospace,"Cascadia Mono","SF Mono",Menlo,Consolas,monospace;
     --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
     --pad:clamp(1.25rem,4vw,4rem);
@@ -29,7 +29,7 @@
   a{color:var(--hud)}
   .wrap{max-width:1240px;margin-inline:auto;padding-inline:var(--pad)}
 
-  /* ── cabeçalho ─────────────────────────────────────────────────────── */
+  /* ── header ────────────────────────────────────────────────────────── */
   .hero{position:relative;isolation:isolate;border-bottom:1px solid var(--line)}
   .hero img{width:100%;height:clamp(340px,72vh,760px);object-fit:cover;object-position:50% 42%}
   .hero::after{content:"";position:absolute;inset:0;z-index:1;
@@ -42,85 +42,85 @@
           font-size:clamp(1.1rem,1rem + .5vw,1.4rem);text-shadow:0 1px 18px rgba(0,0,0,.9)}
   .hero p.sub{margin:.9rem 0 0;font-family:var(--serif);color:var(--brass);letter-spacing:.34em;text-transform:uppercase;
           font-size:clamp(1rem,.85rem + .9vw,1.6rem);text-shadow:0 1px 18px rgba(0,0,0,.95),0 0 4px rgba(0,0,0,.9)}
-  .selo{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  .seal{font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
         color:var(--hud-dim);margin:0 0 1rem}
 
-  /* ── grade editorial: rótulo à esquerda, conteúdo à direita ────────── */
+  /* ── editorial grid: label on the left, content on the right ────────── */
   section{border-top:1px solid var(--line);padding-block:clamp(2.5rem,6vw,4.5rem)}
-  .bloco{display:grid;gap:clamp(1.25rem,3vw,3rem);grid-template-columns:1fr}
-  @media(min-width:900px){.bloco{grid-template-columns:minmax(140px,.7fr) minmax(0,4fr)}}
-  .rotulo{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+  .block{display:grid;gap:clamp(1.25rem,3vw,3rem);grid-template-columns:1fr}
+  @media(min-width:900px){.block{grid-template-columns:minmax(140px,.7fr) minmax(0,4fr)}}
+  .label{font-family:var(--mono);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
           color:var(--hud);align-self:start;position:sticky;top:1.5rem}
-  .rotulo b{display:block;color:var(--ink-dim);font-weight:400;letter-spacing:.08em;
+  .label b{display:block;color:var(--ink-dim);font-weight:400;letter-spacing:.08em;
             text-transform:none;font-family:var(--serif);font-size:.92rem;margin-top:.5rem;line-height:1.4}
   h2{font-family:var(--mono);color:var(--paper);font-weight:600;
      font-size:clamp(1.3rem,1.05rem + .9vw,1.85rem);margin:0 0 1rem;line-height:1.2}
   p{margin:0} p + p{margin-top:.9rem}
-  .bloco > div > p{max-width:72ch}
-  .destaque{color:var(--paper)}
+  .block > div > p{max-width:72ch}
+  .highlight{color:var(--paper)}
   em{color:var(--brass);font-style:normal}
 
-  /* ── colunas, cartões, tabelas ─────────────────────────────────────── */
-  .tres{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
-  @media(min-width:760px){.tres{grid-template-columns:repeat(3,1fr)}}
-  .tres > div{background:var(--panel);padding:1.3rem}
-  .tres h3{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
+  /* ── columns, cards, tables ───────────────────────────────────────── */
+  .three{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
+  @media(min-width:760px){.three{grid-template-columns:repeat(3,1fr)}}
+  .three > div{background:var(--panel);padding:1.3rem}
+  .three h3{font-family:var(--mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
            color:var(--hud);margin:0 0 .7rem}
 
-  .matriz{display:grid;grid-template-columns:auto repeat(3,1fr);gap:1px;background:var(--line);
+  .matrix{display:grid;grid-template-columns:auto repeat(3,1fr);gap:1px;background:var(--line);
           border:1px solid var(--line);font-family:var(--mono);font-size:.78rem;margin-top:.5rem}
-  .matriz > *{background:var(--panel);padding:.7rem .8rem}
-  .matriz .fn{color:var(--hud);letter-spacing:.1em;text-transform:uppercase;font-size:.68rem;
+  .matrix > *{background:var(--panel);padding:.7rem .8rem}
+  .matrix .fn{color:var(--hud);letter-spacing:.1em;text-transform:uppercase;font-size:.68rem;
               display:flex;align-items:center}
-  .matriz .mod{color:var(--paper)}
-  .matriz .mod b{color:var(--brass);margin-right:.5rem;font-variant-numeric:tabular-nums}
+  .matrix .mod{color:var(--paper)}
+  .matrix .mod b{color:var(--brass);margin-right:.5rem;font-variant-numeric:tabular-nums}
 
-  .leis{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;gap:1px;
+  .laws{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;gap:1px;
         background:var(--line);border:1px solid var(--line)}
-  @media(min-width:760px){.leis{grid-template-columns:repeat(2,1fr)}}
-  .leis li{background:var(--panel);padding:1.1rem 1.2rem}
-  .leis code{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--brass);
+  @media(min-width:760px){.laws{grid-template-columns:repeat(2,1fr)}}
+  .laws li{background:var(--panel);padding:1.1rem 1.2rem}
+  .laws code{font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;color:var(--brass);
              display:block;margin-bottom:.45rem}
 
-  .cartas{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
-  @media(min-width:620px){.cartas{grid-template-columns:repeat(2,1fr)}}
-  @media(min-width:1000px){.cartas{grid-template-columns:repeat(3,1fr)}}
-  .carta{background:var(--panel);padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:.55rem}
-  .carta .nome{font-family:var(--mono);color:var(--paper);font-size:.86rem;letter-spacing:.02em}
-  .carta .efeito{font-size:.95rem;line-height:1.45}
-  .carta .meta{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--ink-dim);
+  .cards{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
+  @media(min-width:620px){.cards{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1000px){.cards{grid-template-columns:repeat(3,1fr)}}
+  .card{background:var(--panel);padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:.55rem}
+  .card .name{font-family:var(--mono);color:var(--paper);font-size:.86rem;letter-spacing:.02em}
+  .card .effect{font-size:.95rem;line-height:1.45}
+  .card .meta{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;color:var(--ink-dim);
                display:flex;gap:.9rem;flex-wrap:wrap;margin-top:auto;padding-top:.5rem;
                border-top:1px solid var(--line)}
-  .carta .meta b{color:var(--brass);font-weight:400}
-  .carta .tag-sec{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
-                  color:var(--sangue);border:1px solid var(--sangue);padding:.1rem .35rem;margin-left:.4rem;
+  .card .meta b{color:var(--brass);font-weight:400}
+  .card .tag-sec{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+                  color:var(--blood);border:1px solid var(--blood);padding:.1rem .35rem;margin-left:.4rem;
                   white-space:nowrap;vertical-align:2px}
 
-  .fim{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;gap:1px;background:var(--line);
+  .endings{list-style:none;padding:0;margin:1.5rem 0 0;display:grid;gap:1px;background:var(--line);
        border:1px solid var(--line)}
-  @media(min-width:900px){.fim{grid-template-columns:repeat(4,1fr)}}
-  .fim li{background:var(--panel);padding:1.1rem 1.2rem}
-  .fim code{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--brass);
+  @media(min-width:900px){.endings{grid-template-columns:repeat(4,1fr)}}
+  .endings li{background:var(--panel);padding:1.1rem 1.2rem}
+  .endings code{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;color:var(--brass);
             display:block;margin-bottom:.45rem}
 
-  /* ── imagens ───────────────────────────────────────────────────────── */
+  /* ── images ────────────────────────────────────────────────────────── */
   figure{margin:1.5rem 0 0}
   figure img{width:100%;border:1px solid var(--line)}
   figcaption{font-family:var(--mono);font-size:.72rem;line-height:1.5;color:var(--ink-dim);margin-top:.7rem}
-  .par{display:grid;gap:1.25rem;margin-top:1.5rem}
-  @media(min-width:820px){.par{grid-template-columns:1fr 1fr}}
-  .par figure{margin:0}
+  .pair{display:grid;gap:1.25rem;margin-top:1.5rem}
+  @media(min-width:820px){.pair{grid-template-columns:1fr 1fr}}
+  .pair figure{margin:0}
 
   .trio{display:grid;gap:1.25rem;margin-top:1.5rem}
   @media(min-width:820px){.trio{grid-template-columns:repeat(3,1fr)}}
   .trio figure{margin:0}
 
-  /* ── números e acesso ──────────────────────────────────────────────── */
-  .numeros{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
-  @media(min-width:700px){.numeros{grid-template-columns:repeat(3,1fr)}}
-  .numeros div{background:var(--panel);padding:1.1rem 1.2rem}
-  .numeros .n{font-family:var(--mono);color:var(--brass);font-size:1.5rem;display:block;margin-bottom:.3rem}
-  .numeros span.leg{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--ink-dim)}
+  /* ── numbers and access ─────────────────────────────────────────────── */
+  .numbers{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:1.5rem}
+  @media(min-width:700px){.numbers{grid-template-columns:repeat(3,1fr)}}
+  .numbers div{background:var(--panel);padding:1.1rem 1.2rem}
+  .numbers .n{font-family:var(--mono);color:var(--brass);font-size:1.5rem;display:block;margin-bottom:.3rem}
+  .numbers span.caption{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;color:var(--ink-dim)}
 
   .links{list-style:none;padding:0;margin:1.5rem 0 0;display:flex;flex-wrap:wrap;gap:.6rem}
   .links a{display:inline-block;font-family:var(--mono);font-size:.76rem;letter-spacing:.06em;
@@ -135,10 +135,10 @@
 <body>
 
 <header class="hero">
-  <img src="portfolio/img/mesa-hora17.jpg" alt="The Paradox table at Hour 17: the contract briefcase, the travellers' files, the wrist machine and the timeline map.">
+  <img src="portfolio/img/table-hour17.jpg" alt="The Paradox table at Hour 17: the contract briefcase, the travellers' files, the wrist machine and the timeline map.">
   <div class="hero-copy">
     <div class="wrap">
-      <p class="selo">C.R.O.N.O.S. · Temporal Operations Division</p>
+      <p class="seal">C.R.O.N.O.S. · Temporal Operations Division</p>
       <h1>PARA<span>DOX</span></h1>
       <p class="sub">The Last Timeline</p>
       <p class="tag"><a href="https://reisaurafael.github.io/paradox-play/" style="display:inline-block;margin:0 0 .9rem;font-family:var(--mono);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--ground);background:var(--hud);padding:.7rem 1.1rem">Play the demo</a><br>Thirty centuries on a single track. Going to the future is free. Going to the past costs energy, and energy is life.</p>
@@ -148,41 +148,41 @@
 
 <main>
 
-<section><div class="wrap bloco">
-  <div class="rotulo">The premise<b>why the game exists</b></div>
+<section><div class="wrap block">
+  <div class="label">The premise<b>why the game exists</b></div>
   <div>
     <h2>Return each object to the century it came from.</h2>
     <p>After the Incursion shattered time, one last timeline is left, and it is sacred. Its relics were torn out of their centuries and it is unravelling, so the travellers of the C.R.O.N.O.S. carry each one home to repair it: every return earns a contract point, and when time settles, whoever mended the most wins.</p>
-    <p class="destaque">Every card is an object that really existed and was torn out of the century it was born in. Returning it to that exact century is what scores.</p>
+    <p class="highlight">Every card is an object that really existed and was torn out of the century it was born in. Returning it to that exact century is what scores.</p>
     <p>There is a single track: from the 30th century, where the two to six travellers start, down to Year Zero, just below the 1st century. Going up is free. Going down drains energy, and energy is life.</p>
     <p>And the value is not all behind you. The most expensive pieces are spread along the whole line, from the Spear of Destiny in the 1st century to the First Time Machine in the 30th. So every trip is a trade: <em>how much life to spend on the road to a piece</em>, knowing that whoever steps on Year Zero ends the match for everyone.</p>
   </div>
 </div></section>
 
-<section><div class="wrap bloco">
-  <div class="rotulo">The board<b>three maps</b></div>
+<section><div class="wrap block">
+  <div class="label">The board<b>three maps</b></div>
   <div>
     <h2>The map changes with the era you are in.</h2>
     <p>The track never changes: thirty centuries and Year Zero. The drawing changes with the period your traveller is in. From the 1st to the 10th century you read a map of walled kingdoms; from the 11th to the 19th you sail the Paradox Sea, with islands and currents; from the 20th to the 30th you read a star chart, with the constellations and the dead sun of Year Zero. Every map marks the same danger, the deep past below the 10th century, where each century back costs two energy instead of one: the kingdoms draw it as a serpent, the sea as shark waters, the stars as a debris belt. The three images are the same match, at the same Hour 17, seen from three different seats.</p>
     <div class="trio">
-      <figure><img src="portfolio/img/mapa-reinos.jpg" alt="Map of the six walled kingdoms, the skin of the Origins period.">
+      <figure><img src="portfolio/img/map-kingdoms.jpg" alt="Map of the six walled kingdoms, the skin of the Origins period.">
         <figcaption>Origins, 1st to 10th century. The six walled kingdoms, and the serpent coiled around the deep past and Year Zero.</figcaption></figure>
-      <figure><img src="portfolio/img/mapa-mar.jpg" alt="The Paradox Sea, the skin of the Ascension period, with islands and a nautical chart legend.">
+      <figure><img src="portfolio/img/map-sea.jpg" alt="The Paradox Sea, the skin of the Ascension period, with islands and a nautical chart legend.">
         <figcaption>Ascension, 11th to 19th century. Every century is an island, every trip leaves a wake, and the legend is handwritten by the traveller.</figcaption></figure>
-      <figure><img src="portfolio/img/mapa-estrelas.jpg" alt="Star chart of the Singularity period, with constellations and Year Zero as a dead sun.">
+      <figure><img src="portfolio/img/map-stars.jpg" alt="Star chart of the Singularity period, with constellations and Year Zero as a dead sun.">
         <figcaption>Singularity, 20th to 30th century. The constellations of the Titan, the Compass and the Serpent, and the debris belt of the deep past, where every century back costs two energy.</figcaption></figure>
     </div>
   </div>
 </div></section>
 
-<section><div class="wrap bloco">
-  <div class="rotulo">The hour<b>the turn and the machine</b></div>
+<section><div class="wrap block">
+  <div class="label">The hour<b>the turn and the machine</b></div>
   <div>
     <h2>Everyone decides in secret, then everything resolves in order.</h2>
     <p>A turn is called an Hour and always runs in the same order: Delivery, Market, Generators, Activation. In the Generators phase everyone rolls four dice and secretly assigns them to a three-by-three grid. Only after everyone locks in are the grids revealed, and they resolve together, module by module, from 1 to 9.</p>
     <p>That is why a paradox thrown at the future always happens before one thrown at the past, even when both were decided in the same instant.</p>
 
-    <div class="matriz">
+    <div class="matrix">
       <div class="fn">Recharge</div>
       <div class="mod"><b>1</b>energy</div><div class="mod"><b>2</b>gold</div><div class="mod"><b>3</b>energy and gold</div>
       <div class="fn">Paradox</div>
@@ -191,7 +191,7 @@
       <div class="mod"><b>7</b>heat</div><div class="mod"><b>8</b>travel</div><div class="mod"><b>9</b>double travel</div>
     </div>
 
-    <ul class="leis">
+    <ul class="laws">
       <li><code>§29.7 · full load</code>All four generators must be assigned. There is no keeping a die and no blank Hour.</li>
       <li><code>§29.5 · one value per function</code>Generators in the same function must show the same value. A varied roll forces you to spread out.</li>
       <li><code>§29.4 · linear progression</code>Module N only takes a generator if module N-1 is occupied. To reach the good one, you pay for the weak ones first.</li>
@@ -199,17 +199,17 @@
     </ul>
 
     <figure>
-      <img src="portfolio/img/manopla.jpg" alt="The traveller's wrist machine, with the three functions, the four generators and the life thread.">
+      <img src="portfolio/img/wrist-machine.jpg" alt="The traveller's wrist machine, with the three functions, the four generators and the life thread.">
       <figcaption>The wrist machine. The three functions on the left, the four generators below, the life thread on the right. Every action goes through here.</figcaption>
     </figure>
   </div>
 </div></section>
 
-<section><div class="wrap bloco">
-  <div class="rotulo">Three rules<b>what shapes every match</b></div>
+<section><div class="wrap block">
+  <div class="label">Three rules<b>what shapes every match</b></div>
   <div>
     <h2>Three rules that shape every match.</h2>
-    <div class="tres">
+    <div class="three">
       <div>
         <h3>Death does not eliminate</h3>
         <p>Dropping to zero energy means being Terminated: your objects are recycled and you return to the 30th century with twelve energy plus whatever you recycled, your gold untouched. You come back immune while you stay in the Timeless Period, and the immunity is spent for good the moment you set foot in the Contemporary again. In the end, dying costs <em>exactly one point</em>.</p>
@@ -224,78 +224,78 @@
       </div>
     </div>
     <figure>
-      <img src="portfolio/img/dossie-herald.jpg" alt="A rival traveller's file open on the table, with the Wanted stamp and the Temporal Herald editions stapled to it.">
+      <img src="portfolio/img/rival-dossier.jpg" alt="A rival traveller's file open on the table, with the Wanted stamp and the Temporal Herald editions stapled to it.">
       <figcaption>A rival's file, open on the table: energy, gold, boiler heat, what he carries equipped, and the Temporal Herald editions stapled in the corner. The latest one puts a bounty on his head.</figcaption>
     </figure>
-    <div class="par">
+    <div class="pair">
       <figure>
-        <img src="portfolio/img/maleta.jpg" alt="The traveller's briefcase open, with contracts, vouchers, the gold reserve and the equipped objects.">
+        <img src="portfolio/img/briefcase.jpg" alt="The traveller's briefcase open, with contracts, vouchers, the gold reserve and the equipped objects.">
         <figcaption>The briefcase. Fulfilled contracts on the left, vouchers beside them, the gold reserve below and the equipped objects in the middle.</figcaption>
       </figure>
       <figure>
-        <img src="portfolio/img/contratos.jpg" alt="The contract cabinet, with the three kinds of commission.">
+        <img src="portfolio/img/contracts.jpg" alt="The contract cabinet, with the three kinds of commission.">
         <figcaption>The contract cabinet. Chaos, Time and Resource, each kind asking for a different way to play the same match.</figcaption>
       </figure>
     </div>
     <figure>
-      <img src="portfolio/img/arquivos.jpg" alt="The filing drawers of the three periods, the open briefcase, and the cabin cat on the table.">
+      <img src="portfolio/img/archives.jpg" alt="The filing drawers of the three periods, the open briefcase, and the cabin cat on the table.">
       <figcaption>The filing drawers of the three periods, and the cabin cat. It walks across the table during the match and lies down when you pet it. It has no effect on the rules.</figcaption>
     </figure>
   </div>
 </div></section>
 
-<section><div class="wrap bloco">
-  <div class="rotulo">The catalogue<b>52 cards</b></div>
+<section><div class="wrap block">
+  <div class="label">The catalogue<b>52 cards</b></div>
   <div>
     <h2>Engineering, myth and crime on the same shelf.</h2>
     <p>The deck has no hierarchy. Excalibur costs two gold and Turing's machine costs one, and every card keeps the exact century it came from: there, and only there, can it be returned. Forty cards stay with the Merchant and twelve, drawn at random each match, wait in the Secret Market, fixed in the 11th century.</p>
 
-    <div class="cartas">
-      <div class="carta">
-        <div class="nome">Excalibur</div>
-        <div class="efeito">Roll a common generator and cause a paradox to the future equal to the result.</div>
+    <div class="cards">
+      <div class="card">
+        <div class="name">Excalibur</div>
+        <div class="effect">Roll a common generator and cause a paradox to the future equal to the result.</div>
         <div class="meta"><span><b>2</b> gold</span><span>delivery <b>VI</b></span><span>recycle <b>2</b></span></div>
       </div>
-      <div class="carta">
-        <div class="nome">Alan Turing's Machine</div>
-        <div class="efeito">Destroys every revealed card in the Market.</div>
+      <div class="card">
+        <div class="name">Alan Turing's Machine</div>
+        <div class="effect">Destroys every revealed card in the Market.</div>
         <div class="meta"><span><b>1</b> gold</span><span>delivery <b>XX</b></span><span>recycle <b>1</b></span></div>
       </div>
-      <div class="carta">
-        <div class="nome">Ching Shih's Red Flag</div>
-        <div class="efeito">A traveller in your era loses 3 energy and you steal 1 gold from them.</div>
+      <div class="card">
+        <div class="name">Ching Shih's Red Flag</div>
+        <div class="effect">A traveller in your era loses 3 energy and you steal 1 gold from them.</div>
         <div class="meta"><span><b>3</b> gold</span><span>delivery <b>XIX</b></span><span>recycle <b>3</b></span></div>
       </div>
-      <div class="carta">
-        <div class="nome">Joan of Arc's Armor</div>
-        <div class="efeito">Whenever you would lose energy, lose 1 less, never below 1.</div>
+      <div class="card">
+        <div class="name">Joan of Arc's Armor</div>
+        <div class="effect">Whenever you would lose energy, lose 1 less, never below 1.</div>
         <div class="meta"><span><b>4</b> gold</span><span>delivery <b>XV</b></span><span>recycle <b>3</b></span></div>
       </div>
-      <div class="carta">
-        <div class="nome">Harald's Bluetooth</div>
-        <div class="efeito">The Merchant rolls one additional movement die.</div>
+      <div class="card">
+        <div class="name">Harald's Bluetooth</div>
+        <div class="effect">The Merchant rolls one additional movement die.</div>
         <div class="meta"><span><b>1</b> gold</span><span>delivery <b>X</b></span><span>recycle <b>2</b></span></div>
       </div>
-      <div class="carta">
-        <div class="nome">Al-Jazari's Automaton</div>
-        <div class="efeito">Whenever you overload a function, discard 5 booms.</div>
+      <div class="card">
+        <div class="name">Al-Jazari's Automaton</div>
+        <div class="effect">Whenever you overload a function, discard 5 booms.</div>
         <div class="meta"><span><b>1</b> gold</span><span>delivery <b>XII</b></span><span>recycle <b>2</b></span></div>
       </div>
     </div>
 
     <figure>
-      <img src="portfolio/img/mercado.jpg" alt="The merchant's window, with the revealed cards and one card open on screen.">
+      <img src="portfolio/img/market.jpg" alt="The merchant's window, with the revealed cards and one card open on screen.">
       <figcaption>The merchant's window, with four objects revealed: gold price, delivery century and recycle value on every card. What is there now will not be there once he moves, at the end of the phase.</figcaption>
     </figure>
   </div>
 </div></section>
 
-<section><div class="wrap bloco">
-  <div class="rotulo">The end<b>four ways</b></div>
+<section><div class="wrap block">
+  <div class="label">The end<b>four ways</b></div>
   <div>
     <h2>The match does not end by counting rounds.</h2>
     <p>It ends the instant the first of these four things happens, and all four are always within reach of whoever wants to force them. Whoever holds the most Contract Points when time settles is crowned Monarch of Time.</p>
-    <ul class="fim">
+    <ul class="endings">
       <li><code>§11.1 a · Year Zero</code>A traveller reaches the last space of the track and ends the game on their own time, not everyone else's.</li>
       <li><code>§11.1 b · full receiver</code>A traveller delivers in all three periods. The methodical collector's win against the runner.</li>
       <li><code>§11.1 c · last one standing</code>Only one traveller is not Terminated. Wearing the table down to death is a strategy, not an accident.</li>
@@ -304,22 +304,22 @@
   </div>
 </div></section>
 
-<section><div class="wrap bloco">
-  <div class="rotulo">From the table to the rules<b>what the players changed</b></div>
+<section><div class="wrap block">
+  <div class="label">From the table to the rules<b>what the players changed</b></div>
   <div>
     <h2>What playtesting changed.</h2>
     <p>About twenty people played with me. The feedback that kept coming back was repetitive strategy, and the fixed market was to blame: whoever memorised the window always played the same way. Replacing the standing shop with a merchant who moves every Hour fixed it, and on top of that created the gold pendulum.</p>
     <p>Since then, every rule change goes through a batch of a thousand matches with a fixed seed before it enters the game. The simulator that runs this measurement is public, with the engine, the four player profiles and the tests.</p>
-    <div class="numeros">
-      <div><span class="n">52</span><span class="leg">cards implemented and tested one by one</span></div>
-      <div><span class="n">1,000</span><span class="leg">matches per batch, fixed seed, reproducible result</span></div>
-      <div><span class="n">245</span><span class="leg">regression tests in the analysis engine</span></div>
+    <div class="numbers">
+      <div><span class="n">52</span><span class="caption">cards implemented and tested one by one</span></div>
+      <div><span class="n">1,000</span><span class="caption">matches per batch, fixed seed, reproducible result</span></div>
+      <div><span class="n">245</span><span class="caption">regression tests in the analysis engine</span></div>
     </div>
   </div>
 </div></section>
 
-<section><div class="wrap bloco">
-  <div class="rotulo">Access<b>you can play it</b></div>
+<section><div class="wrap block">
+  <div class="label">Access<b>you can play it</b></div>
   <div>
     <h2>The game is finished and it runs.</h2>
     <p>Paradox is a complete board game in a digital version: rules engine, server, interface and bots that sit at the table with you. It plays from start to finish, online with friends on the same network or from different houses through a private network, as a desktop app for Windows and Linux, and up to four people can share one screen with controllers. A demo runs right in the browser, solo against the AI opponents, with nothing to install. The game's code is not public. The next step is an always-on server, so anyone can join a match by code.</p>

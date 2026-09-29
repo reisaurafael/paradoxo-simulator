@@ -20,6 +20,7 @@ from engine.constants import (
     MERCHANT_START_CENTURY,
     MERCHANT_STARTING_CARDS,
     SECRET_MARKET_CARD_COUNT,
+    SECRET_MARKET_SPECIAL_COUNT,
 )
 
 if TYPE_CHECKING:
@@ -164,7 +165,13 @@ class TravelerState:
     def equipment_capacity(self) -> int:
         """Max equipment slots; +2 if Relative Dimensions Operative is held."""
         base = EQUIPMENT_SLOTS
-        if any(c.name == "Relative Dimensions Operative" for c in self.hand):
+        # Read through passive_source_cards like every passive: an Operative copied by
+        # Movable-Type Press (revealed in the Market) or Quantum Computer (receptor)
+        # gives its slots too (it read the hand only, and a Press beside a revealed
+        # Operative blocked every purchase, 28/09).
+        from engine.cards import passive_source_cards
+        if any(c.name == "Relative Dimensions Operative"
+               for c in passive_source_cards(self, getattr(self, "_game", None))):
             base += 2
         return base
 
@@ -231,7 +238,7 @@ class GameState:
 
     # Secret Market (§19)
     secret_market_open: bool = False        # Opens when a traveler ends an Hour on XI (§19.1)
-    secret_market_card_count: int = SECRET_MARKET_CARD_COUNT
+    secret_market_card_count: int = SECRET_MARKET_CARD_COUNT + SECRET_MARKET_SPECIAL_COUNT
 
     # The Merchant cards currently revealed, refreshed by the market phase, so
     # a passive that resolves later (Movable-Type Press) can see them without
@@ -254,7 +261,7 @@ class GameState:
 
     # Time III item voucher: the traveler whose voucher is active during their
     # Phase 4 window. No card effect reads it yet, so the voucher is spent
-    # without changing who counts as synchronic (open point).
+    # without changing who counts as synchronic.
     item_voucher_active_for: str | None = None
 
     # Item event log, filled by the market, combat, and resolve modules
@@ -274,6 +281,11 @@ class GameState:
         n = len(traveler_names)
         travelers = [TravelerState.create(name, n) for name in traveler_names]
         return cls(travelers=travelers)
+
+    def __post_init__(self) -> None:
+        # a plain back-reference (not a field) so table-reading passives reach capacity
+        for t in self.travelers:
+            object.__setattr__(t, "_game", self)
 
     def traveler(self, name: str) -> TravelerState:
         """Look up a traveler by name. Raises KeyError if not found."""

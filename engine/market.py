@@ -18,7 +18,7 @@ from __future__ import annotations
 import random
 from dataclasses import dataclass
 from engine.state import GameState, TravelerState, ItemEvent
-from engine.cards import Card, build_all_cards, passive_source_cards
+from engine.cards import Card, build_all_cards, passive_source_cards, build_special_cards
 from engine.timeline import periods_for_century
 from engine.constants import (
     MERCHANT_UPGRADE_1_CENTURY,
@@ -134,7 +134,10 @@ class MerchantDeck:
         all_cards: list[Card] = build_all_cards()
         self._rng.shuffle(all_cards)
         # The first 12 after the shuffle go to the Secret Market, the rest to the Merchant.
-        secret_cards = all_cards[:SECRET_MARKET_CARD_COUNT]
+        # ...and under them the two special cards, never shuffled: The Divine Comedy
+        # 13th, Oppenheimer's Trinity always last. No random number is
+        # drawn for them, so every seeded game deals as before.
+        secret_cards = all_cards[:SECRET_MARKET_CARD_COUNT] + build_special_cards()
         self._draw: list[Card] = all_cards[SECRET_MARKET_CARD_COUNT:]
         self._discard: list[Card] = []
         self._revealed: list[Card] = []

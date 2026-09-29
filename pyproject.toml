@@ -3,15 +3,21 @@ requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "paradoxo"
+name = "paradox-simulator"
 version = "0.1.0"
-description = "Strategy simulation and balance-analysis platform for Paradoxo"
+description = "Rules engine and balance simulator for the board game Paradox: The Last Timeline"
+authors = [{ name = "Rafael Reis Garcia" }]
+readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "numpy>=1.26",
     "pandas>=2.2",
     "matplotlib>=3.8",
 ]
+
+[project.urls]
+Homepage = "https://reisaurafael.github.io/paradoxo-simulator/"
+Repository = "https://github.com/reisaurafael/paradoxo-simulator"
 
 [project.optional-dependencies]
 dev = [

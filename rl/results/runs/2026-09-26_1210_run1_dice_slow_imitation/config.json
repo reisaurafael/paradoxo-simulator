@@ -1,0 +1,14 @@
+{
+  "base": "Aggressive",
+  "imitation": 30,
+  "imitation_lr": 0.0003,
+  "lr": 0.0003,
+  "entropy": 0.01,
+  "batch": 384,
+  "eval_games": 2000,
+  "run_id": "2026-09-26_1210_run1_dice_slow_imitation",
+  "note": "Dice only. Imitation 30 iterations at lr 3e-4, then REINFORCE. Stopped: sampled play near random.",
+  "legacy": true,
+  "finished": true,
+  "legacy_format": "dice only, 4 player benchmark table; mean_edge here is 4 x the 4 player win rate"
+}

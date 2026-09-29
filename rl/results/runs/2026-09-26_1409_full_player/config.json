@@ -1,0 +1,172 @@
+{
+  "name": "full_player",
+  "note": "All three heads (dice, market, reward), 2 to 6 players, random heuristic opponents plus a self-play league, entropy 0.01.",
+  "base": "Aggressive",
+  "hidden": 64,
+  "imitation": 60,
+  "imitation_entropy": 0.6,
+  "iterations": 5000,
+  "batch": 384,
+  "workers": 12,
+  "lr": 0.0003,
+  "imitation_lr": 0.003,
+  "value_lr": 0.001,
+  "entropy": 0.01,
+  "self_play": 0.3,
+  "league_every": 50,
+  "league_size": 6,
+  "min_players": 2,
+  "max_players": 6,
+  "eval_every": 40,
+  "eval_games": 600,
+  "eval_seed": 20000000,
+  "results": "rl/results",
+  "seed": 1,
+  "run_id": "2026-09-26_1409_full_player",
+  "started": "2026-09-26_1409",
+  "code": {
+    "commit": "d53a1cc",
+    "rl_sources_sha256": "823fc41c5af6b02a"
+  },
+  "resumes": [
+    {
+      "at": "2026-09-26_1451",
+      "code": {
+        "commit": "d53a1cc",
+        "rl_sources_sha256": "63a5c2f9046f8b78"
+      },
+      "settings": {
+        "name": "run",
+        "note": "",
+        "base": "Aggressive",
+        "hidden": 64,
+        "imitation": 60,
+        "imitation_entropy": 0.6,
+        "iterations": 4472,
+        "batch": 384,
+        "workers": 12,
+        "lr": 0.0003,
+        "imitation_lr": 0.003,
+        "value_lr": 0.001,
+        "entropy": 0.01,
+        "self_play": 0.3,
+        "league_every": 50,
+        "league_size": 6,
+        "min_players": 2,
+        "max_players": 6,
+        "eval_every": 40,
+        "eval_games": 600,
+        "eval_seed": 20000000,
+        "results": "rl/results",
+        "seed": 1,
+        "resume": "rl/results/runs/2026-09-26_1409_full_player"
+      }
+    },
+    {
+      "at": "2026-09-26_1650",
+      "code": {
+        "commit": "d53a1cc",
+        "rl_sources_sha256": "6fcb4b762617befd"
+      },
+      "settings": {
+        "name": "run",
+        "note": "",
+        "base": "Aggressive",
+        "hidden": 64,
+        "imitation": 60,
+        "imitation_entropy": 0.6,
+        "iterations": 700,
+        "batch": 384,
+        "workers": 12,
+        "lr": 0.0003,
+        "imitation_lr": 0.003,
+        "value_lr": 0.001,
+        "entropy": 0.01,
+        "self_play": 0.3,
+        "league_every": 50,
+        "league_size": 6,
+        "min_players": 2,
+        "max_players": 6,
+        "eval_every": 40,
+        "eval_games": 600,
+        "eval_seed": 20000000,
+        "results": "rl/results",
+        "seed": 1,
+        "resume": "rl/results/runs/2026-09-26_1409_full_player"
+      }
+    },
+    {
+      "at": "2026-09-26_1703",
+      "code": {
+        "commit": "d53a1cc",
+        "rl_sources_sha256": "093db1b6e0faf345"
+      },
+      "settings": {
+        "name": "run",
+        "note": "",
+        "base": "Aggressive",
+        "hidden": 64,
+        "imitation": 60,
+        "imitation_entropy": 0.6,
+        "iterations": 4472,
+        "batch": 384,
+        "workers": 12,
+        "lr": 0.0003,
+        "imitation_lr": 0.003,
+        "value_lr": 0.001,
+        "entropy": 0.01,
+        "self_play": 0.3,
+        "league_every": 50,
+        "league_size": 6,
+        "min_players": 2,
+        "max_players": 6,
+        "eval_every": 40,
+        "eval_games": 600,
+        "eval_seed": 20000000,
+        "results": "rl/results",
+        "seed": 1,
+        "resume": "rl/results/runs/2026-09-26_1409_full_player"
+      }
+    },
+    {
+      "at": "2026-09-26_1704",
+      "code": {
+        "commit": "d53a1cc",
+        "rl_sources_sha256": "093db1b6e0faf345"
+      },
+      "settings": {
+        "name": "run",
+        "note": "",
+        "base": "Aggressive",
+        "hidden": 64,
+        "imitation": 60,
+        "imitation_entropy": 0.6,
+        "iterations": 712,
+        "batch": 384,
+        "workers": 12,
+        "lr": 0.0003,
+        "imitation_lr": 0.003,
+        "value_lr": 0.001,
+        "entropy": 0.01,
+        "self_play": 0.3,
+        "league_every": 50,
+        "league_size": 6,
+        "min_players": 2,
+        "max_players": 6,
+        "eval_every": 40,
+        "eval_games": 600,
+        "eval_seed": 20000000,
+        "results": "rl/results",
+        "seed": 1,
+        "resume": "rl/results/runs/2026-09-26_1409_full_player"
+      }
+    }
+  ],
+  "finished": "2026-09-26_1724",
+  "summary": {
+    "iterations": 5032,
+    "matches": 1932288,
+    "best_mean_edge": 3.113,
+    "minutes": 19.7
+  }
+}

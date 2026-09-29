@@ -1,0 +1,9 @@
+{"iteration": 10, "matches": 3840, "mean_edge": 1.46, "by_size": {"4": {"win_rate": 0.365, "ci95": [0.344, 0.386], "edge": 1.46, "games": 2000}}}
+{"iteration": 20, "matches": 7680, "mean_edge": 1.458, "by_size": {"4": {"win_rate": 0.3645, "ci95": [0.3435, 0.3855], "edge": 1.458, "games": 2000}}}
+{"iteration": 30, "matches": 11520, "mean_edge": 1.458, "by_size": {"4": {"win_rate": 0.3645, "ci95": [0.3435, 0.3855], "edge": 1.458, "games": 2000}}}
+{"iteration": 40, "matches": 15360, "mean_edge": 1.458, "by_size": {"4": {"win_rate": 0.3645, "ci95": [0.3435, 0.3855], "edge": 1.458, "games": 2000}}}
+{"iteration": 50, "matches": 19200, "mean_edge": 1.458, "by_size": {"4": {"win_rate": 0.3645, "ci95": [0.3435, 0.3855], "edge": 1.458, "games": 2000}}}
+{"iteration": 60, "matches": 23040, "mean_edge": 1.458, "by_size": {"4": {"win_rate": 0.3645, "ci95": [0.3435, 0.3855], "edge": 1.458, "games": 2000}}}
+{"iteration": 70, "matches": 26880, "mean_edge": 1.458, "by_size": {"4": {"win_rate": 0.3645, "ci95": [0.3435, 0.3855], "edge": 1.458, "games": 2000}}}
+{"iteration": 80, "matches": 30720, "mean_edge": 1.458, "by_size": {"4": {"win_rate": 0.3645, "ci95": [0.3435, 0.3855], "edge": 1.458, "games": 2000}}}
+{"iteration": 90, "matches": 34560, "mean_edge": 1.458, "by_size": {"4": {"win_rate": 0.3645, "ci95": [0.3435, 0.3855], "edge": 1.458, "games": 2000}}}

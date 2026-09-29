@@ -45,6 +45,7 @@ from engine.market import (
 from engine.timeline import in_older_era, same_era
 from simulation.strategies.base import Strategy
 from simulation.strategies.util import (
+    past_overload_value, past_overload_allocation, special_activations, special_buy,
     astrolabe_destination, century_farthest_from_rivals, refrigerator_choice,
     safe_travel_cap,
 )
@@ -112,6 +113,11 @@ class AggressiveStrategy(Strategy):
             else:
                 rush = False
         if not rush:
+            # The overloaded Paradox hits the Past for DOUBLE (28/09): three equal
+            # dice that terminate a rival standing behind are a kill, take it.
+            v3 = past_overload_value(traveler, game, dice)
+            if v3 is not None:
+                return past_overload_allocation(traveler, dice, v3), direction, 0
             # Max steps that keep us at or above century I (never onto Year Zero).
             # Also cap by energy so overdrive doesn't kill us en route.
             cap = min(max(0, traveler.century - CENTURY_MIN),
@@ -228,6 +234,10 @@ class AggressiveStrategy(Strategy):
         Merchant context. It pays off the poster only once the Secret Market is
         open and it can afford it: clearing Wanted unlocks Secret Market buys
         next phase (§33.3)."""
+        # The two special cards under the Secret Market's twelve (28/09).
+        _special = special_buy(traveler, revealed, trinity=True)
+        if _special is not None:
+            return BuyAction(_special)
         held_names = {c.name for c in traveler.hand}
 
         if (traveler.is_wanted
@@ -339,7 +349,7 @@ class AggressiveStrategy(Strategy):
 
             activations.append((card, ctx))
 
-        return activations
+        return activations + special_activations(traveler, game)
 
     def choose_cards_to_deliver(
         self,

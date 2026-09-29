@@ -57,6 +57,7 @@ from engine.market import (
 from engine.timeline import periods_for_century
 from simulation.strategies.base import Strategy
 from simulation.strategies.util import (
+    past_overload_value, past_overload_allocation, special_activations, special_buy,
     paradox_can_terminate, refrigerator_choice, safe_travel_cap,
 )
 
@@ -107,6 +108,12 @@ class CollectorStrategy(Strategy):
         dice: list[int],
     ) -> tuple:
         unavailable = traveler.overloaded_functions
+
+        # The overloaded Paradox hits the Past for DOUBLE (28/09): a kill it makes
+        # is a kill shot like any other (it never travels, so a parking plan keeps).
+        v3 = past_overload_value(traveler, game, dice)
+        if v3 is not None:
+            return past_overload_allocation(traveler, dice, v3), -1, 0
 
         # Priority 1: already on a delivery century, park and deliver next Phase 1.
         if self._should_stay_to_deliver(traveler):
@@ -214,6 +221,10 @@ class CollectorStrategy(Strategy):
         revealed: list[Card],
         renew_cost: int,
     ) -> MarketAction:
+        # The two special cards under the Secret Market's twelve (28/09).
+        _special = special_buy(traveler, revealed, trinity=False)
+        if _special is not None:
+            return BuyAction(_special)
         held_names = {c.name for c in traveler.hand}
         missing_periods = {"Origins", "Ascension", "Singularity"} - traveler.delivered_periods
 
@@ -318,7 +329,7 @@ class CollectorStrategy(Strategy):
                 if chosen is not None:
                     activations.append((card, chosen))
 
-        return activations
+        return activations + special_activations(traveler, game)
 
     # ------------------------------------------------------------------
     # Reward sub-choices

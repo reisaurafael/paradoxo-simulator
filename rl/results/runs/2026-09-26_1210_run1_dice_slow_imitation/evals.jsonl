@@ -1,0 +1,4 @@
+{"iteration": 10, "matches": 3840, "mean_edge": 0.284, "by_size": {"4": {"win_rate": 0.071, "ci95": [0.05, 0.092], "edge": 0.284, "games": 2000}}}
+{"iteration": 20, "matches": 7680, "mean_edge": 1.29, "by_size": {"4": {"win_rate": 0.3225, "ci95": [0.3015, 0.3435], "edge": 1.29, "games": 2000}}}
+{"iteration": 30, "matches": 11520, "mean_edge": 1.382, "by_size": {"4": {"win_rate": 0.3455, "ci95": [0.3245, 0.3665], "edge": 1.382, "games": 2000}}}
+{"iteration": 40, "matches": 15360, "mean_edge": 1.4, "by_size": {"4": {"win_rate": 0.35, "ci95": [0.329, 0.371], "edge": 1.4, "games": 2000}}}

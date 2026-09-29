@@ -38,9 +38,11 @@ def test_merchant_deck_has_40_cards():
     assert len(merchant) == 40
 
 
-def test_secret_market_has_12_cards():
-    _, secret = _split(0)
-    assert len(secret) == 12
+def test_secret_market_has_12_cards_and_the_two_specials_under_them():
+    deck = MerchantDeck(rng=random.Random(0))
+    names = [c.name for c in deck.secret_market._hidden]
+    assert len(names) == 14
+    assert names[12:] == ["The Divine Comedy", "Oppenheimer's Trinity"]
 
 
 def test_merchant_and_secret_market_are_disjoint():
@@ -50,7 +52,8 @@ def test_merchant_and_secret_market_are_disjoint():
 
 def test_merchant_plus_secret_equals_all():
     merchant, secret = _split(0)
-    assert merchant | secret == {c.name for c in build_all_cards()}
+    specials = {"The Divine Comedy", "Oppenheimer's Trinity"}
+    assert merchant | (secret - specials) == {c.name for c in build_all_cards()}
 
 
 def test_secret_market_split_is_random_per_game():

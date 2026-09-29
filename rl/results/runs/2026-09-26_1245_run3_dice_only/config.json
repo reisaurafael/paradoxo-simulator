@@ -1,0 +1,39 @@
+{
+  "base": "Aggressive",
+  "imitation": 60,
+  "imitation_entropy": 0.6,
+  "imitation_lr": 0.003,
+  "lr": 0.0003,
+  "entropy": 0.02,
+  "batch": 384,
+  "eval_games": 2000,
+  "run_id": "2026-09-26_1245_run3_dice_only",
+  "note": "Dice only, no heuristic flag, imitation to entropy 0.6, then REINFORCE. Best 40.05% at iteration 280.",
+  "legacy": true,
+  "finished": true,
+  "legacy_format": "dice only, 4 player benchmark table; mean_edge here is 4 x the 4 player win rate",
+  "final_benchmark": {
+    "learned_dice_only": {
+      "games": 4000,
+      "win_rate": 0.3972,
+      "ci95": [
+        0.3821,
+        0.4124
+      ],
+      "mean_hours": 24.49,
+      "mean_cp": 2.87,
+      "mean_cp_margin": -0.842
+    },
+    "aggressive": {
+      "games": 4000,
+      "win_rate": 0.3812,
+      "ci95": [
+        0.3662,
+        0.3963
+      ],
+      "mean_hours": 23.92,
+      "mean_cp": 2.565,
+      "mean_cp_margin": -1.275
+    }
+  }
+}

@@ -239,10 +239,31 @@ def gunpowder_revolver() -> Card:
                 recycle_value=1, ability_type="active", active_effect=effect)
 
 
+DIVINE_COMEDY = "The Divine Comedy"
+
+
+def rolls_threes(traveler, game=None) -> bool:
+    """The Divine Comedy: every die its holder rolls, or gets from an
+    item, shows 3 (read through passive_source_cards, so a copy counts too)."""
+    return traveler is not None and any(
+        c.name == DIVINE_COMEDY for c in passive_source_cards(traveler, game))
+
+
+def holder_dice(traveler, dice: list[int], game=None) -> list[int]:
+    """The dice as they land for ``traveler``: all 3s under The Divine Comedy. The
+    real roll is still made first, so every other seat's dice stay the same."""
+    return [3] * len(dice) if rolls_threes(traveler, game) else list(dice)
+
+
+def _holder_roll(traveler, game) -> int:
+    """One generator rolled by ``traveler`` for a card effect."""
+    return holder_dice(traveler, [_rng_of(game).randint(1, 3)], game)[0]
+
+
 def excalibur() -> Card:
     """Active: roll a common generator, cause a future paradox equal to the result."""
     def effect(traveler, game, context) -> None:
-        roll = _rng_of(game).randint(1, 3)
+        roll = _holder_roll(traveler, game)
         targets = [t for t in game.travelers
                    if not t.awaiting_respawn and t.century > traveler.century]
         combat.deal_energy(game, traveler, targets, roll, kind="paradox")
@@ -264,7 +285,7 @@ def navigation_compass() -> Card:
     """Passive: at the end of the travel phase, roll a generator and travel that
     many centuries toward Year Zero without spending energy."""
     def on_hour_end(traveler, game) -> None:
-        roll = _rng_of(game).randint(1, 3)
+        roll = _holder_roll(traveler, game)
         traveler.century = clamp_to_board(traveler.century - roll)
     return Card(name="Navigation Compass", gold_cost=3, delivery_century=11,
                 recycle_value=2, ability_type="passive", on_hour_end=on_hour_end)
@@ -574,7 +595,7 @@ def fishing_reel() -> Card:
         deck = context
         if deck is None:
             return
-        roll = _rng_of(game).randint(1, 3)
+        roll = _holder_roll(traveler, game)
         affordable = [c for c in deck.revealed if c.gold_cost <= roll and traveler.can_hold(c)]
         if affordable:
             card = min(affordable, key=lambda c: c.gold_cost)
@@ -728,6 +749,64 @@ def attilas_sword() -> Card:
                 recycle_value=3, ability_type="active", active_effect=effect)
 
 
+
+# ── The two special cards ─────────
+# Not shuffled with the 52: they lie UNDER the Secret Market's twelve,
+# The Divine Comedy 13th and Oppenheimer's Trinity always the very last.
+
+def trinity() -> Card:
+    """Active (Large Item, recycle): "Choose an era. Every traveler in it loses 20
+    energy and takes 5 boom tokens. Recycle this card." Every traveler in the era,
+    the user too (self-inflicted, credits nobody); the others through the damage
+    pipeline (a kill credits the user); +5 booms each with the explosion at 12."""
+    def effect(traveler, game, context) -> None:
+        from engine.constants import ERAS
+        from engine.timeline import eras_for_century
+        era = context
+        if era not in ERAS:
+            return
+        hit = [t for t in game.travelers
+               if not t.awaiting_respawn and era in eras_for_century(t.century)]
+        others = [t for t in hit if t is not traveler]
+        if others:
+            combat.deal_energy(game, traveler, others, 20, kind="weapon")
+        if traveler in hit:
+            combat.lose_energy(game, traveler, 20, source=None, kind="trinity")
+            if traveler.energy <= 0:
+                traveler.eliminated_by.clear()
+        # Every traveler hit takes the 5 booms (a terminated one keeps them into his
+        # respawn, §28.2); the explosion at 12 is checked at once for those still
+        # standing, a terminated motor is not "exploding" onto a kill it did not make.
+        from engine.resolve import _apply_boom_hooks, check_explosion
+        for t in hit:
+            t.booms += _apply_boom_hooks(t, 5, game)
+            if t.energy > 0:
+                check_explosion(t, game)
+    return Card(name="Oppenheimer's Trinity", gold_cost=4, delivery_century=20,
+                recycle_value=1, ability_type="active", is_large_item=True,
+                recycles_on_use=True, active_effect=effect)
+
+
+def divine_comedy() -> Card:
+    """Passive: "Your dice always roll 3." Every die its holder rolls or gets from an
+    item (generators, solo phases, the Reward die, his cards' dice); not the Merchant's."""
+    return Card(name=DIVINE_COMEDY, gold_cost=3, delivery_century=14,
+                recycle_value=3, ability_type="passive")
+
+
+SPECIAL_CARDS: list[Callable[[], Card]] = [divine_comedy, trinity]   # 13th, 14th
+
+
+def build_special_cards() -> list[Card]:
+    """The two special cards, in their Secret Market order (Comedy, Trinity last)."""
+    return [f() for f in SPECIAL_CARDS]
+
+
+def card_by_name(name: str) -> Card:
+    """A fresh instance of any card, the 52 and the two specials."""
+    return next(f() for f in ALL_CARDS + SPECIAL_CARDS if f().name == name)
+
+
 # ---------------------------------------------------------------------------
 # Catalogue
 # ---------------------------------------------------------------------------
@@ -789,7 +868,9 @@ TIEBREAK_ORDER: tuple[str, ...] = (
     "Holy Grail", "Reality Simulator", "Seismograph", "Super Motor",
     "Galileo's Telescope", "Object Teleporter", "Towel", "Woodblock Print",
     "Eyeglasses",
+    # the two special cards (28/09), after the 52 so no older rank moves
+    "The Divine Comedy", "Oppenheimer's Trinity",
 )
 TIEBREAK_RANK: dict[str, int] = {name: i for i, name in enumerate(TIEBREAK_ORDER)}
 
-assert set(TIEBREAK_ORDER) == {f().name for f in ALL_CARDS}
+assert set(TIEBREAK_ORDER) == {f().name for f in ALL_CARDS + SPECIAL_CARDS}

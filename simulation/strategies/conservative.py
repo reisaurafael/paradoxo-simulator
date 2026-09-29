@@ -32,6 +32,7 @@ from engine.market import (
 from engine.timeline import periods_for_century, same_era
 from simulation.strategies.base import Strategy
 from simulation.strategies.util import (
+    past_overload_value, past_overload_allocation, special_activations, special_buy,
     astrolabe_destination, century_farthest_from_rivals, paradox_can_terminate,
     refrigerator_choice, safe_travel_cap,
 )
@@ -107,6 +108,12 @@ class ConservativeStrategy(Strategy):
                 and traveler.gold >= 1):
             return self._park_alloc(dice, unavailable), direction, 0
 
+        # The overloaded Paradox hits the Past for DOUBLE (28/09): a kill it makes
+        # is a kill shot like any other.
+        v3 = past_overload_value(traveler, game, dice)
+        if v3 is not None:
+            return past_overload_allocation(traveler, dice, v3), direction, 0
+
         kill_threat = paradox_can_terminate(traveler, game, dice)
         energy_ok   = traveler.energy >= self.ENERGY_SAFETY
         # Heating to travel (module 7) adds booms; if it would tip us over
@@ -177,6 +184,10 @@ class ConservativeStrategy(Strategy):
         revealed: list[Card],
         renew_cost: int,
     ) -> MarketAction:
+        # The two special cards under the Secret Market's twelve (28/09).
+        _special = special_buy(traveler, revealed, trinity=False)
+        if _special is not None:
+            return BuyAction(_special)
         held_names = {c.name for c in traveler.hand}
         missing_periods = {"Origins", "Ascension", "Singularity"} - traveler.delivered_periods
 
@@ -305,7 +316,7 @@ class ConservativeStrategy(Strategy):
 
             activations.append((card, ctx))
 
-        return activations
+        return activations + special_activations(traveler, game)
 
     # ------------------------------------------------------------------
     # Delivery

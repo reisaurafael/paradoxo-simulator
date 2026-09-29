@@ -1,0 +1,2 @@
+{"time": "2026-09-26T12:10", "kind": "note", "text": "Partial record, reconstructed from the evaluations reported while it ran; the full log was overwritten by run 2."}
+{"time": "2026-09-26T12:20", "kind": "setback", "text": "In reinforcement the sampled policy won 0.8% of its matches (entropy 2.36 nats): rewards almost all 0, nothing to learn. Stopped at iteration 40."}

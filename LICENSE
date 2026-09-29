@@ -8,13 +8,15 @@ without explicit written permission from the copyright holder.
 GAME INTELLECTUAL PROPERTY
 ────────────────────────────────────────────────────────────────────────────
 
-"Paradoxo" is an original game designed by Rafael Reis Garcia.
+"Paradox: The Last Timeline" (also published as "Paradoxo") is an original
+game designed by Rafael Reis Garcia.
 
 The following are proprietary to Rafael Reis Garcia and are NOT licensed
 for any use, commercial or otherwise, without his explicit written
 permission:
 
-  • The game name "Paradoxo" and the brand "Corporação C.R.O.N.O.S."
+  • The game names "Paradox: The Last Timeline" and "Paradoxo", and the
+    brand "C.R.O.N.O.S."
   • All game rules, mechanics, and their written expression
   • All card names, card text, and card abilities
   • The game board, era/period structure, and all related thematic material
@@ -34,7 +36,7 @@ This repository also contains an original simulation and balance-analysis
 framework authored by Rafael Reis Garcia, including:
 
   • The rules engine and all supporting modules under engine/
-  • The simulation layer, strategy agents, and analytics tools under
+  • The simulation layer, strategy profiles, and analytics tools under
     simulation/
   • Any generalised or adapted versions of the above framework intended
     to support other rulesets or game systems

@@ -22,7 +22,7 @@ import platform
 from dataclasses import asdict
 from pathlib import Path
 
-# Force UTF-8 output so Portuguese card names render on every platform.
+# Force UTF-8 output so accented card names (Niépce's Heliograph) render on every platform.
 if __name__ == "__main__" and hasattr(sys.stdout, "buffer"):
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 

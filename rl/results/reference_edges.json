@@ -1,0 +1,284 @@
+{
+  "600_20000000": {
+    "Smart": {
+      "by_size": {
+        "2": {
+          "players": 2,
+          "games": 600,
+          "win_rate": 0.51,
+          "ci95": [
+            0.47,
+            0.55
+          ],
+          "edge": 1.02,
+          "mean_hours": 21.81,
+          "mean_cp": 3.512,
+          "mean_cp_margin": 0.692
+        },
+        "3": {
+          "players": 3,
+          "games": 600,
+          "win_rate": 0.27,
+          "ci95": [
+            0.2345,
+            0.3055
+          ],
+          "edge": 0.81,
+          "mean_hours": 20.77,
+          "mean_cp": 2.452,
+          "mean_cp_margin": -1.277
+        },
+        "4": {
+          "players": 4,
+          "games": 600,
+          "win_rate": 0.2033,
+          "ci95": [
+            0.1711,
+            0.2355
+          ],
+          "edge": 0.813,
+          "mean_hours": 23.72,
+          "mean_cp": 2.242,
+          "mean_cp_margin": -2.235
+        },
+        "5": {
+          "players": 5,
+          "games": 600,
+          "win_rate": 0.1983,
+          "ci95": [
+            0.1664,
+            0.2302
+          ],
+          "edge": 0.992,
+          "mean_hours": 21.36,
+          "mean_cp": 2.115,
+          "mean_cp_margin": -2.32
+        },
+        "6": {
+          "players": 6,
+          "games": 600,
+          "win_rate": 0.13,
+          "ci95": [
+            0.1031,
+            0.1569
+          ],
+          "edge": 0.78,
+          "mean_hours": 19.66,
+          "mean_cp": 1.612,
+          "mean_cp_margin": -2.797
+        }
+      },
+      "mean_edge": 0.883
+    },
+    "Aggressive": {
+      "by_size": {
+        "2": {
+          "players": 2,
+          "games": 600,
+          "win_rate": 0.5067,
+          "ci95": [
+            0.4667,
+            0.5467
+          ],
+          "edge": 1.013,
+          "mean_hours": 17.53,
+          "mean_cp": 2.405,
+          "mean_cp_margin": -0.062
+        },
+        "3": {
+          "players": 3,
+          "games": 600,
+          "win_rate": 0.4167,
+          "ci95": [
+            0.3772,
+            0.4561
+          ],
+          "edge": 1.25,
+          "mean_hours": 20.93,
+          "mean_cp": 2.472,
+          "mean_cp_margin": -0.775
+        },
+        "4": {
+          "players": 4,
+          "games": 600,
+          "win_rate": 0.3667,
+          "ci95": [
+            0.3281,
+            0.4052
+          ],
+          "edge": 1.467,
+          "mean_hours": 24.88,
+          "mean_cp": 2.545,
+          "mean_cp_margin": -1.33
+        },
+        "5": {
+          "players": 5,
+          "games": 600,
+          "win_rate": 0.3367,
+          "ci95": [
+            0.2989,
+            0.3745
+          ],
+          "edge": 1.683,
+          "mean_hours": 20.65,
+          "mean_cp": 2.42,
+          "mean_cp_margin": -1.607
+        },
+        "6": {
+          "players": 6,
+          "games": 600,
+          "win_rate": 0.2667,
+          "ci95": [
+            0.2313,
+            0.3021
+          ],
+          "edge": 1.6,
+          "mean_hours": 18.26,
+          "mean_cp": 2.172,
+          "mean_cp_margin": -1.945
+        }
+      },
+      "mean_edge": 1.403
+    },
+    "Conservative": {
+      "by_size": {
+        "2": {
+          "players": 2,
+          "games": 600,
+          "win_rate": 0.3867,
+          "ci95": [
+            0.3477,
+            0.4256
+          ],
+          "edge": 0.773,
+          "mean_hours": 20.27,
+          "mean_cp": 2.903,
+          "mean_cp_margin": -0.145
+        },
+        "3": {
+          "players": 3,
+          "games": 600,
+          "win_rate": 0.215,
+          "ci95": [
+            0.1821,
+            0.2479
+          ],
+          "edge": 0.645,
+          "mean_hours": 20.87,
+          "mean_cp": 2.143,
+          "mean_cp_margin": -1.687
+        },
+        "4": {
+          "players": 4,
+          "games": 600,
+          "win_rate": 0.17,
+          "ci95": [
+            0.1399,
+            0.2001
+          ],
+          "edge": 0.68,
+          "mean_hours": 24.1,
+          "mean_cp": 2.207,
+          "mean_cp_margin": -2.145
+        },
+        "5": {
+          "players": 5,
+          "games": 600,
+          "win_rate": 0.15,
+          "ci95": [
+            0.1214,
+            0.1786
+          ],
+          "edge": 0.75,
+          "mean_hours": 22.33,
+          "mean_cp": 2.065,
+          "mean_cp_margin": -2.5
+        },
+        "6": {
+          "players": 6,
+          "games": 600,
+          "win_rate": 0.1133,
+          "ci95": [
+            0.088,
+            0.1387
+          ],
+          "edge": 0.68,
+          "mean_hours": 19.28,
+          "mean_cp": 1.775,
+          "mean_cp_margin": -2.597
+        }
+      },
+      "mean_edge": 0.706
+    },
+    "Collector": {
+      "by_size": {
+        "2": {
+          "players": 2,
+          "games": 600,
+          "win_rate": 0.435,
+          "ci95": [
+            0.3953,
+            0.4747
+          ],
+          "edge": 0.87,
+          "mean_hours": 49.12,
+          "mean_cp": 4.377,
+          "mean_cp_margin": 1.535
+        },
+        "3": {
+          "players": 3,
+          "games": 600,
+          "win_rate": 0.265,
+          "ci95": [
+            0.2297,
+            0.3003
+          ],
+          "edge": 0.795,
+          "mean_hours": 26.79,
+          "mean_cp": 3.065,
+          "mean_cp_margin": -1.0
+        },
+        "4": {
+          "players": 4,
+          "games": 600,
+          "win_rate": 0.1683,
+          "ci95": [
+            0.1384,
+            0.1983
+          ],
+          "edge": 0.673,
+          "mean_hours": 27.5,
+          "mean_cp": 2.555,
+          "mean_cp_margin": -2.243
+        },
+        "5": {
+          "players": 5,
+          "games": 600,
+          "win_rate": 0.1317,
+          "ci95": [
+            0.1046,
+            0.1587
+          ],
+          "edge": 0.658,
+          "mean_hours": 22.88,
+          "mean_cp": 2.027,
+          "mean_cp_margin": -2.8
+        },
+        "6": {
+          "players": 6,
+          "games": 600,
+          "win_rate": 0.0883,
+          "ci95": [
+            0.0656,
+            0.111
+          ],
+          "edge": 0.53,
+          "mean_hours": 20.41,
+          "mean_cp": 1.573,
+          "mean_cp_margin": -3.142
+        }
+      },
+      "mean_edge": 0.705
+    }
+  }
+}

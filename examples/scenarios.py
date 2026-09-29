@@ -11,7 +11,7 @@ Usage:
 import io
 import sys
 
-# Force UTF-8 output so the bar charts and Portuguese card names render on
+# Force UTF-8 output so the bar charts and accented card names render on
 # consoles that default to a legacy code page (Windows cp1252, for one).
 if hasattr(sys.stdout, "buffer"):
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")

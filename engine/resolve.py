@@ -175,31 +175,43 @@ def resolve_module_7(traveler: TravelerState, allocation: Allocation,
     v = combat.effective_generator(traveler, allocation, FUNCTION_TRAVEL, 0)
     if not v:
         return
+    gain_booms(traveler, v, game)
 
-    booms_gained = _apply_boom_hooks(traveler, v, game)
-    traveler.booms += booms_gained
 
-    if traveler.booms >= BOOM_LIMIT:
-        # A card may prevent the explosion (Super Motor)
-        prevented = False
-        for card in list(traveler.hand):
-            if card.on_explosion_check:
-                if card.on_explosion_check(traveler, game):
-                    prevented = True
-                    if card.recycles_on_use:
-                        traveler.hand.remove(card)
-                    break
-        if not prevented:
-            traveler.booms -= EXPLOSION_BOOM_RESET
-            actual = min(traveler.energy, EXPLOSION_ENERGY_LOSS)
-            traveler.energy = max(0, traveler.energy - EXPLOSION_ENERGY_LOSS)
-            traveler.exploded_this_hour = True
-            combat.register_loss(game, traveler, actual)
-            # §28.1 + §18: a motor explosion is self-inflicted. If it lands the
-            # killing blow, no other traveler is responsible: drop any stale
-            # Paradox attribution from earlier this Hour.
-            if traveler.energy <= 0:
-                traveler.eliminated_by.clear()
+def gain_booms(traveler: TravelerState, booms: int,
+               game: GameState | None = None) -> bool:
+    """Add booms (after the on_boom_gain hooks) and apply §5.2: reaching 12 explodes
+    the motor at once. Used by module 7 and by Oppenheimer's Trinity. True if it exploded."""
+    traveler.booms += _apply_boom_hooks(traveler, booms, game)
+    return check_explosion(traveler, game)
+
+
+def check_explosion(traveler: TravelerState, game: GameState | None = None) -> bool:
+    """§5.2: a motor at 12 booms or more explodes unless a card prevents it."""
+    if traveler.booms < BOOM_LIMIT:
+        return False
+    # A card may prevent the explosion (Super Motor)
+    prevented = False
+    for card in list(traveler.hand):
+        if card.on_explosion_check:
+            if card.on_explosion_check(traveler, game):
+                prevented = True
+                if card.recycles_on_use:
+                    traveler.hand.remove(card)
+                break
+    if prevented:
+        return False
+    traveler.booms -= EXPLOSION_BOOM_RESET
+    actual = min(traveler.energy, EXPLOSION_ENERGY_LOSS)
+    traveler.energy = max(0, traveler.energy - EXPLOSION_ENERGY_LOSS)
+    traveler.exploded_this_hour = True
+    combat.register_loss(game, traveler, actual)
+    # §28.1 + §18: a motor explosion is self-inflicted. If it lands the
+    # killing blow, no other traveler is responsible: drop any stale
+    # Paradox attribution from earlier this Hour.
+    if traveler.energy <= 0:
+        traveler.eliminated_by.clear()
+    return True
 
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,2426 @@
+{
+ "args": {
+  "base": "Aggressive",
+  "imitation": 60,
+  "imitation_entropy": 0.6,
+  "iterations": 400,
+  "batch": 384,
+  "workers": 12,
+  "lr": 0.0003,
+  "imitation_lr": 0.003,
+  "value_lr": 0.001,
+  "entropy": 0.02,
+  "eval_every": 10,
+  "eval_games": 2000,
+  "out": "rl/results",
+  "seed": 1
+ },
+ "log": [
+  {
+   "iteration": 1,
+   "phase": "imitation",
+   "matches": 384,
+   "train_win_rate": 0.3932,
+   "entropy": 2.3778,
+   "minutes": 0.04
+  },
+  {
+   "iteration": 2,
+   "phase": "imitation",
+   "matches": 768,
+   "train_win_rate": 0.375,
+   "entropy": 2.376,
+   "minutes": 0.08
+  },
+  {
+   "iteration": 3,
+   "phase": "imitation",
+   "matches": 1152,
+   "train_win_rate": 0.3542,
+   "entropy": 2.366,
+   "minutes": 0.12
+  },
+  {
+   "iteration": 4,
+   "phase": "imitation",
+   "matches": 1536,
+   "train_win_rate": 0.375,
+   "entropy": 2.3731,
+   "minutes": 0.18
+  },
+  {
+   "iteration": 5,
+   "phase": "imitation",
+   "matches": 1920,
+   "train_win_rate": 0.3958,
+   "entropy": 2.371,
+   "minutes": 0.22
+  },
+  {
+   "iteration": 6,
+   "phase": "imitation",
+   "matches": 2304,
+   "train_win_rate": 0.3776,
+   "entropy": 2.3771,
+   "minutes": 0.26
+  },
+  {
+   "iteration": 7,
+   "phase": "imitation",
+   "matches": 2688,
+   "train_win_rate": 0.3958,
+   "entropy": 2.3677,
+   "minutes": 0.3
+  },
+  {
+   "iteration": 8,
+   "phase": "imitation",
+   "matches": 3072,
+   "train_win_rate": 0.388,
+   "entropy": 2.3678,
+   "minutes": 0.34
+  },
+  {
+   "iteration": 9,
+   "phase": "imitation",
+   "matches": 3456,
+   "train_win_rate": 0.3438,
+   "entropy": 2.3569,
+   "minutes": 0.38
+  },
+  {
+   "iteration": 10,
+   "phase": "imitation",
+   "matches": 3840,
+   "train_win_rate": 0.4115,
+   "entropy": 2.3451,
+   "minutes": 0.4,
+   "eval_win_rate": 0.183,
+   "saved": true
+  },
+  {
+   "iteration": 11,
+   "phase": "imitation",
+   "matches": 4224,
+   "train_win_rate": 0.3906,
+   "entropy": 2.3343,
+   "minutes": 0.56
+  },
+  {
+   "iteration": 12,
+   "phase": "imitation",
+   "matches": 4608,
+   "train_win_rate": 0.3177,
+   "entropy": 2.3153,
+   "minutes": 0.59
+  },
+  {
+   "iteration": 13,
+   "phase": "imitation",
+   "matches": 4992,
+   "train_win_rate": 0.3464,
+   "entropy": 2.2966,
+   "minutes": 0.62
+  },
+  {
+   "iteration": 14,
+   "phase": "imitation",
+   "matches": 5376,
+   "train_win_rate": 0.3854,
+   "entropy": 2.267,
+   "minutes": 0.65
+  },
+  {
+   "iteration": 15,
+   "phase": "imitation",
+   "matches": 5760,
+   "train_win_rate": 0.3958,
+   "entropy": 2.2228,
+   "minutes": 0.67
+  },
+  {
+   "iteration": 16,
+   "phase": "imitation",
+   "matches": 6144,
+   "train_win_rate": 0.3932,
+   "entropy": 2.186,
+   "minutes": 0.71
+  },
+  {
+   "iteration": 17,
+   "phase": "imitation",
+   "matches": 6528,
+   "train_win_rate": 0.3594,
+   "entropy": 2.142,
+   "minutes": 0.75
+  },
+  {
+   "iteration": 18,
+   "phase": "imitation",
+   "matches": 6912,
+   "train_win_rate": 0.3802,
+   "entropy": 2.0828,
+   "minutes": 0.78
+  },
+  {
+   "iteration": 19,
+   "phase": "imitation",
+   "matches": 7296,
+   "train_win_rate": 0.3854,
+   "entropy": 2.0136,
+   "minutes": 0.83
+  },
+  {
+   "iteration": 20,
+   "phase": "imitation",
+   "matches": 7680,
+   "train_win_rate": 0.3568,
+   "entropy": 1.9554,
+   "minutes": 0.87,
+   "eval_win_rate": 0.177
+  },
+  {
+   "iteration": 21,
+   "phase": "imitation",
+   "matches": 8064,
+   "train_win_rate": 0.4531,
+   "entropy": 1.8959,
+   "minutes": 1.05
+  },
+  {
+   "iteration": 22,
+   "phase": "imitation",
+   "matches": 8448,
+   "train_win_rate": 0.3594,
+   "entropy": 1.8537,
+   "minutes": 1.09
+  },
+  {
+   "iteration": 23,
+   "phase": "imitation",
+   "matches": 8832,
+   "train_win_rate": 0.3854,
+   "entropy": 1.7941,
+   "minutes": 1.13
+  },
+  {
+   "iteration": 24,
+   "phase": "imitation",
+   "matches": 9216,
+   "train_win_rate": 0.4062,
+   "entropy": 1.7371,
+   "minutes": 1.17
+  },
+  {
+   "iteration": 25,
+   "phase": "imitation",
+   "matches": 9600,
+   "train_win_rate": 0.4193,
+   "entropy": 1.6845,
+   "minutes": 1.21
+  },
+  {
+   "iteration": 26,
+   "phase": "imitation",
+   "matches": 9984,
+   "train_win_rate": 0.3646,
+   "entropy": 1.6764,
+   "minutes": 1.27
+  },
+  {
+   "iteration": 27,
+   "phase": "imitation",
+   "matches": 10368,
+   "train_win_rate": 0.3906,
+   "entropy": 1.6287,
+   "minutes": 1.31
+  },
+  {
+   "iteration": 28,
+   "phase": "imitation",
+   "matches": 10752,
+   "train_win_rate": 0.3672,
+   "entropy": 1.5956,
+   "minutes": 1.35
+  },
+  {
+   "iteration": 29,
+   "phase": "imitation",
+   "matches": 11136,
+   "train_win_rate": 0.3854,
+   "entropy": 1.563,
+   "minutes": 1.39
+  },
+  {
+   "iteration": 30,
+   "phase": "imitation",
+   "matches": 11520,
+   "train_win_rate": 0.3672,
+   "entropy": 1.5513,
+   "minutes": 1.43,
+   "eval_win_rate": 0.321,
+   "saved": true
+  },
+  {
+   "iteration": 31,
+   "phase": "imitation",
+   "matches": 11904,
+   "train_win_rate": 0.388,
+   "entropy": 1.5195,
+   "minutes": 1.58
+  },
+  {
+   "iteration": 32,
+   "phase": "imitation",
+   "matches": 12288,
+   "train_win_rate": 0.3099,
+   "entropy": 1.5171,
+   "minutes": 1.6
+  },
+  {
+   "iteration": 33,
+   "phase": "imitation",
+   "matches": 12672,
+   "train_win_rate": 0.349,
+   "entropy": 1.5007,
+   "minutes": 1.63
+  },
+  {
+   "iteration": 34,
+   "phase": "imitation",
+   "matches": 13056,
+   "train_win_rate": 0.4115,
+   "entropy": 1.4847,
+   "minutes": 1.65
+  },
+  {
+   "iteration": 35,
+   "phase": "imitation",
+   "matches": 13440,
+   "train_win_rate": 0.4271,
+   "entropy": 1.4804,
+   "minutes": 1.67
+  },
+  {
+   "iteration": 36,
+   "phase": "imitation",
+   "matches": 13824,
+   "train_win_rate": 0.3672,
+   "entropy": 1.463,
+   "minutes": 1.69
+  },
+  {
+   "iteration": 37,
+   "phase": "imitation",
+   "matches": 14208,
+   "train_win_rate": 0.3672,
+   "entropy": 1.4681,
+   "minutes": 1.71
+  },
+  {
+   "iteration": 38,
+   "phase": "imitation",
+   "matches": 14592,
+   "train_win_rate": 0.362,
+   "entropy": 1.4617,
+   "minutes": 1.74
+  },
+  {
+   "iteration": 39,
+   "phase": "imitation",
+   "matches": 14976,
+   "train_win_rate": 0.3672,
+   "entropy": 1.4657,
+   "minutes": 1.76
+  },
+  {
+   "iteration": 40,
+   "phase": "imitation",
+   "matches": 15360,
+   "train_win_rate": 0.388,
+   "entropy": 1.4498,
+   "minutes": 1.79,
+   "eval_win_rate": 0.2815
+  },
+  {
+   "iteration": 41,
+   "phase": "imitation",
+   "matches": 15744,
+   "train_win_rate": 0.3464,
+   "entropy": 1.4577,
+   "minutes": 1.93
+  },
+  {
+   "iteration": 42,
+   "phase": "imitation",
+   "matches": 16128,
+   "train_win_rate": 0.4089,
+   "entropy": 1.4458,
+   "minutes": 1.95
+  },
+  {
+   "iteration": 43,
+   "phase": "imitation",
+   "matches": 16512,
+   "train_win_rate": 0.3802,
+   "entropy": 1.4429,
+   "minutes": 1.97
+  },
+  {
+   "iteration": 44,
+   "phase": "imitation",
+   "matches": 16896,
+   "train_win_rate": 0.3698,
+   "entropy": 1.4525,
+   "minutes": 2.0
+  },
+  {
+   "iteration": 45,
+   "phase": "imitation",
+   "matches": 17280,
+   "train_win_rate": 0.3411,
+   "entropy": 1.4176,
+   "minutes": 2.03
+  },
+  {
+   "iteration": 46,
+   "phase": "imitation",
+   "matches": 17664,
+   "train_win_rate": 0.3906,
+   "entropy": 1.412,
+   "minutes": 2.06
+  },
+  {
+   "iteration": 47,
+   "phase": "imitation",
+   "matches": 18048,
+   "train_win_rate": 0.362,
+   "entropy": 1.4042,
+   "minutes": 2.08
+  },
+  {
+   "iteration": 48,
+   "phase": "imitation",
+   "matches": 18432,
+   "train_win_rate": 0.3646,
+   "entropy": 1.3621,
+   "minutes": 2.11
+  },
+  {
+   "iteration": 49,
+   "phase": "imitation",
+   "matches": 18816,
+   "train_win_rate": 0.388,
+   "entropy": 1.3514,
+   "minutes": 2.13
+  },
+  {
+   "iteration": 50,
+   "phase": "imitation",
+   "matches": 19200,
+   "train_win_rate": 0.4036,
+   "entropy": 1.3466,
+   "minutes": 2.16,
+   "eval_win_rate": 0.293
+  },
+  {
+   "iteration": 51,
+   "phase": "imitation",
+   "matches": 19584,
+   "train_win_rate": 0.3828,
+   "entropy": 1.3371,
+   "minutes": 2.31
+  },
+  {
+   "iteration": 52,
+   "phase": "imitation",
+   "matches": 19968,
+   "train_win_rate": 0.3776,
+   "entropy": 1.3398,
+   "minutes": 2.33
+  },
+  {
+   "iteration": 53,
+   "phase": "imitation",
+   "matches": 20352,
+   "train_win_rate": 0.4297,
+   "entropy": 1.3371,
+   "minutes": 2.36
+  },
+  {
+   "iteration": 54,
+   "phase": "imitation",
+   "matches": 20736,
+   "train_win_rate": 0.3724,
+   "entropy": 1.3242,
+   "minutes": 2.39
+  },
+  {
+   "iteration": 55,
+   "phase": "imitation",
+   "matches": 21120,
+   "train_win_rate": 0.4062,
+   "entropy": 1.3036,
+   "minutes": 2.41
+  },
+  {
+   "iteration": 56,
+   "phase": "imitation",
+   "matches": 21504,
+   "train_win_rate": 0.375,
+   "entropy": 1.2977,
+   "minutes": 2.44
+  },
+  {
+   "iteration": 57,
+   "phase": "imitation",
+   "matches": 21888,
+   "train_win_rate": 0.4193,
+   "entropy": 1.2814,
+   "minutes": 2.47
+  },
+  {
+   "iteration": 58,
+   "phase": "imitation",
+   "matches": 22272,
+   "train_win_rate": 0.3177,
+   "entropy": 1.2759,
+   "minutes": 2.5
+  },
+  {
+   "iteration": 59,
+   "phase": "imitation",
+   "matches": 22656,
+   "train_win_rate": 0.3802,
+   "entropy": 1.2515,
+   "minutes": 2.54
+  },
+  {
+   "iteration": 60,
+   "phase": "imitation",
+   "matches": 23040,
+   "train_win_rate": 0.3854,
+   "entropy": 1.261,
+   "minutes": 2.57,
+   "imitation_done": true,
+   "eval_win_rate": 0.3155
+  },
+  {
+   "iteration": 61,
+   "phase": "reinforce",
+   "matches": 23424,
+   "train_win_rate": 0.2786,
+   "entropy": 1.2568,
+   "minutes": 2.72
+  },
+  {
+   "iteration": 62,
+   "phase": "reinforce",
+   "matches": 23808,
+   "train_win_rate": 0.237,
+   "entropy": 1.2696,
+   "minutes": 2.75
+  },
+  {
+   "iteration": 63,
+   "phase": "reinforce",
+   "matches": 24192,
+   "train_win_rate": 0.3255,
+   "entropy": 1.2641,
+   "minutes": 2.78
+  },
+  {
+   "iteration": 64,
+   "phase": "reinforce",
+   "matches": 24576,
+   "train_win_rate": 0.276,
+   "entropy": 1.2569,
+   "minutes": 2.81
+  },
+  {
+   "iteration": 65,
+   "phase": "reinforce",
+   "matches": 24960,
+   "train_win_rate": 0.2474,
+   "entropy": 1.2377,
+   "minutes": 2.83
+  },
+  {
+   "iteration": 66,
+   "phase": "reinforce",
+   "matches": 25344,
+   "train_win_rate": 0.237,
+   "entropy": 1.2623,
+   "minutes": 2.86
+  },
+  {
+   "iteration": 67,
+   "phase": "reinforce",
+   "matches": 25728,
+   "train_win_rate": 0.2214,
+   "entropy": 1.261,
+   "minutes": 2.89
+  },
+  {
+   "iteration": 68,
+   "phase": "reinforce",
+   "matches": 26112,
+   "train_win_rate": 0.2396,
+   "entropy": 1.2591,
+   "minutes": 2.92
+  },
+  {
+   "iteration": 69,
+   "phase": "reinforce",
+   "matches": 26496,
+   "train_win_rate": 0.2135,
+   "entropy": 1.2598,
+   "minutes": 2.96
+  },
+  {
+   "iteration": 70,
+   "phase": "reinforce",
+   "matches": 26880,
+   "train_win_rate": 0.263,
+   "entropy": 1.2495,
+   "minutes": 2.99,
+   "eval_win_rate": 0.317
+  },
+  {
+   "iteration": 71,
+   "phase": "reinforce",
+   "matches": 27264,
+   "train_win_rate": 0.224,
+   "entropy": 1.2536,
+   "minutes": 3.16
+  },
+  {
+   "iteration": 72,
+   "phase": "reinforce",
+   "matches": 27648,
+   "train_win_rate": 0.2266,
+   "entropy": 1.2585,
+   "minutes": 3.19
+  },
+  {
+   "iteration": 73,
+   "phase": "reinforce",
+   "matches": 28032,
+   "train_win_rate": 0.2734,
+   "entropy": 1.2648,
+   "minutes": 3.23
+  },
+  {
+   "iteration": 74,
+   "phase": "reinforce",
+   "matches": 28416,
+   "train_win_rate": 0.224,
+   "entropy": 1.2465,
+   "minutes": 3.27
+  },
+  {
+   "iteration": 75,
+   "phase": "reinforce",
+   "matches": 28800,
+   "train_win_rate": 0.2474,
+   "entropy": 1.2569,
+   "minutes": 3.31
+  },
+  {
+   "iteration": 76,
+   "phase": "reinforce",
+   "matches": 29184,
+   "train_win_rate": 0.2682,
+   "entropy": 1.2702,
+   "minutes": 3.34
+  },
+  {
+   "iteration": 77,
+   "phase": "reinforce",
+   "matches": 29568,
+   "train_win_rate": 0.25,
+   "entropy": 1.2689,
+   "minutes": 3.37
+  },
+  {
+   "iteration": 78,
+   "phase": "reinforce",
+   "matches": 29952,
+   "train_win_rate": 0.263,
+   "entropy": 1.2692,
+   "minutes": 3.41
+  },
+  {
+   "iteration": 79,
+   "phase": "reinforce",
+   "matches": 30336,
+   "train_win_rate": 0.224,
+   "entropy": 1.2758,
+   "minutes": 3.45
+  },
+  {
+   "iteration": 80,
+   "phase": "reinforce",
+   "matches": 30720,
+   "train_win_rate": 0.2552,
+   "entropy": 1.2721,
+   "minutes": 3.49,
+   "eval_win_rate": 0.324,
+   "saved": true
+  },
+  {
+   "iteration": 81,
+   "phase": "reinforce",
+   "matches": 31104,
+   "train_win_rate": 0.25,
+   "entropy": 1.2616,
+   "minutes": 3.67
+  },
+  {
+   "iteration": 82,
+   "phase": "reinforce",
+   "matches": 31488,
+   "train_win_rate": 0.2578,
+   "entropy": 1.2761,
+   "minutes": 3.71
+  },
+  {
+   "iteration": 83,
+   "phase": "reinforce",
+   "matches": 31872,
+   "train_win_rate": 0.2474,
+   "entropy": 1.2728,
+   "minutes": 3.74
+  },
+  {
+   "iteration": 84,
+   "phase": "reinforce",
+   "matches": 32256,
+   "train_win_rate": 0.2266,
+   "entropy": 1.2718,
+   "minutes": 3.78
+  },
+  {
+   "iteration": 85,
+   "phase": "reinforce",
+   "matches": 32640,
+   "train_win_rate": 0.25,
+   "entropy": 1.2812,
+   "minutes": 3.82
+  },
+  {
+   "iteration": 86,
+   "phase": "reinforce",
+   "matches": 33024,
+   "train_win_rate": 0.2708,
+   "entropy": 1.2856,
+   "minutes": 3.85
+  },
+  {
+   "iteration": 87,
+   "phase": "reinforce",
+   "matches": 33408,
+   "train_win_rate": 0.2682,
+   "entropy": 1.2808,
+   "minutes": 3.89
+  },
+  {
+   "iteration": 88,
+   "phase": "reinforce",
+   "matches": 33792,
+   "train_win_rate": 0.25,
+   "entropy": 1.2766,
+   "minutes": 3.92
+  },
+  {
+   "iteration": 89,
+   "phase": "reinforce",
+   "matches": 34176,
+   "train_win_rate": 0.2604,
+   "entropy": 1.285,
+   "minutes": 3.95
+  },
+  {
+   "iteration": 90,
+   "phase": "reinforce",
+   "matches": 34560,
+   "train_win_rate": 0.2656,
+   "entropy": 1.2953,
+   "minutes": 3.98,
+   "eval_win_rate": 0.331,
+   "saved": true
+  },
+  {
+   "iteration": 91,
+   "phase": "reinforce",
+   "matches": 34944,
+   "train_win_rate": 0.2734,
+   "entropy": 1.2879,
+   "minutes": 4.14
+  },
+  {
+   "iteration": 92,
+   "phase": "reinforce",
+   "matches": 35328,
+   "train_win_rate": 0.2812,
+   "entropy": 1.2959,
+   "minutes": 4.17
+  },
+  {
+   "iteration": 93,
+   "phase": "reinforce",
+   "matches": 35712,
+   "train_win_rate": 0.2474,
+   "entropy": 1.2939,
+   "minutes": 4.2
+  },
+  {
+   "iteration": 94,
+   "phase": "reinforce",
+   "matches": 36096,
+   "train_win_rate": 0.2786,
+   "entropy": 1.2991,
+   "minutes": 4.23
+  },
+  {
+   "iteration": 95,
+   "phase": "reinforce",
+   "matches": 36480,
+   "train_win_rate": 0.2083,
+   "entropy": 1.299,
+   "minutes": 4.26
+  },
+  {
+   "iteration": 96,
+   "phase": "reinforce",
+   "matches": 36864,
+   "train_win_rate": 0.2656,
+   "entropy": 1.3149,
+   "minutes": 4.29
+  },
+  {
+   "iteration": 97,
+   "phase": "reinforce",
+   "matches": 37248,
+   "train_win_rate": 0.3073,
+   "entropy": 1.3079,
+   "minutes": 4.32
+  },
+  {
+   "iteration": 98,
+   "phase": "reinforce",
+   "matches": 37632,
+   "train_win_rate": 0.2708,
+   "entropy": 1.3104,
+   "minutes": 4.36
+  },
+  {
+   "iteration": 99,
+   "phase": "reinforce",
+   "matches": 38016,
+   "train_win_rate": 0.2422,
+   "entropy": 1.3157,
+   "minutes": 4.41
+  },
+  {
+   "iteration": 100,
+   "phase": "reinforce",
+   "matches": 38400,
+   "train_win_rate": 0.2396,
+   "entropy": 1.3265,
+   "minutes": 4.48,
+   "eval_win_rate": 0.333,
+   "saved": true
+  },
+  {
+   "iteration": 101,
+   "phase": "reinforce",
+   "matches": 38784,
+   "train_win_rate": 0.2865,
+   "entropy": 1.3255,
+   "minutes": 4.62
+  },
+  {
+   "iteration": 102,
+   "phase": "reinforce",
+   "matches": 39168,
+   "train_win_rate": 0.2422,
+   "entropy": 1.3202,
+   "minutes": 4.65
+  },
+  {
+   "iteration": 103,
+   "phase": "reinforce",
+   "matches": 39552,
+   "train_win_rate": 0.2578,
+   "entropy": 1.3166,
+   "minutes": 4.68
+  },
+  {
+   "iteration": 104,
+   "phase": "reinforce",
+   "matches": 39936,
+   "train_win_rate": 0.2656,
+   "entropy": 1.3202,
+   "minutes": 4.71
+  },
+  {
+   "iteration": 105,
+   "phase": "reinforce",
+   "matches": 40320,
+   "train_win_rate": 0.2682,
+   "entropy": 1.3167,
+   "minutes": 4.74
+  },
+  {
+   "iteration": 106,
+   "phase": "reinforce",
+   "matches": 40704,
+   "train_win_rate": 0.2422,
+   "entropy": 1.3218,
+   "minutes": 4.76
+  },
+  {
+   "iteration": 107,
+   "phase": "reinforce",
+   "matches": 41088,
+   "train_win_rate": 0.2682,
+   "entropy": 1.3434,
+   "minutes": 4.79
+  },
+  {
+   "iteration": 108,
+   "phase": "reinforce",
+   "matches": 41472,
+   "train_win_rate": 0.2266,
+   "entropy": 1.3342,
+   "minutes": 4.83
+  },
+  {
+   "iteration": 109,
+   "phase": "reinforce",
+   "matches": 41856,
+   "train_win_rate": 0.2656,
+   "entropy": 1.343,
+   "minutes": 4.86
+  },
+  {
+   "iteration": 110,
+   "phase": "reinforce",
+   "matches": 42240,
+   "train_win_rate": 0.263,
+   "entropy": 1.3396,
+   "minutes": 4.89,
+   "eval_win_rate": 0.3385,
+   "saved": true
+  },
+  {
+   "iteration": 111,
+   "phase": "reinforce",
+   "matches": 42624,
+   "train_win_rate": 0.224,
+   "entropy": 1.3566,
+   "minutes": 5.09
+  },
+  {
+   "iteration": 112,
+   "phase": "reinforce",
+   "matches": 43008,
+   "train_win_rate": 0.2552,
+   "entropy": 1.3624,
+   "minutes": 5.12
+  },
+  {
+   "iteration": 113,
+   "phase": "reinforce",
+   "matches": 43392,
+   "train_win_rate": 0.2318,
+   "entropy": 1.3511,
+   "minutes": 5.16
+  },
+  {
+   "iteration": 114,
+   "phase": "reinforce",
+   "matches": 43776,
+   "train_win_rate": 0.25,
+   "entropy": 1.3493,
+   "minutes": 5.2
+  },
+  {
+   "iteration": 115,
+   "phase": "reinforce",
+   "matches": 44160,
+   "train_win_rate": 0.276,
+   "entropy": 1.3654,
+   "minutes": 5.24
+  },
+  {
+   "iteration": 116,
+   "phase": "reinforce",
+   "matches": 44544,
+   "train_win_rate": 0.2083,
+   "entropy": 1.3567,
+   "minutes": 5.27
+  },
+  {
+   "iteration": 117,
+   "phase": "reinforce",
+   "matches": 44928,
+   "train_win_rate": 0.2474,
+   "entropy": 1.3547,
+   "minutes": 5.3
+  },
+  {
+   "iteration": 118,
+   "phase": "reinforce",
+   "matches": 45312,
+   "train_win_rate": 0.2552,
+   "entropy": 1.3642,
+   "minutes": 5.33
+  },
+  {
+   "iteration": 119,
+   "phase": "reinforce",
+   "matches": 45696,
+   "train_win_rate": 0.2526,
+   "entropy": 1.3787,
+   "minutes": 5.36
+  },
+  {
+   "iteration": 120,
+   "phase": "reinforce",
+   "matches": 46080,
+   "train_win_rate": 0.2578,
+   "entropy": 1.3809,
+   "minutes": 5.4,
+   "eval_win_rate": 0.3455,
+   "saved": true
+  },
+  {
+   "iteration": 121,
+   "phase": "reinforce",
+   "matches": 46464,
+   "train_win_rate": 0.2786,
+   "entropy": 1.3843,
+   "minutes": 5.54
+  },
+  {
+   "iteration": 122,
+   "phase": "reinforce",
+   "matches": 46848,
+   "train_win_rate": 0.2682,
+   "entropy": 1.3771,
+   "minutes": 5.58
+  },
+  {
+   "iteration": 123,
+   "phase": "reinforce",
+   "matches": 47232,
+   "train_win_rate": 0.2396,
+   "entropy": 1.3748,
+   "minutes": 5.61
+  },
+  {
+   "iteration": 124,
+   "phase": "reinforce",
+   "matches": 47616,
+   "train_win_rate": 0.2292,
+   "entropy": 1.3842,
+   "minutes": 5.64
+  },
+  {
+   "iteration": 125,
+   "phase": "reinforce",
+   "matches": 48000,
+   "train_win_rate": 0.263,
+   "entropy": 1.3919,
+   "minutes": 5.67
+  },
+  {
+   "iteration": 126,
+   "phase": "reinforce",
+   "matches": 48384,
+   "train_win_rate": 0.2682,
+   "entropy": 1.3815,
+   "minutes": 5.7
+  },
+  {
+   "iteration": 127,
+   "phase": "reinforce",
+   "matches": 48768,
+   "train_win_rate": 0.2552,
+   "entropy": 1.3949,
+   "minutes": 5.73
+  },
+  {
+   "iteration": 128,
+   "phase": "reinforce",
+   "matches": 49152,
+   "train_win_rate": 0.2448,
+   "entropy": 1.3869,
+   "minutes": 5.76
+  },
+  {
+   "iteration": 129,
+   "phase": "reinforce",
+   "matches": 49536,
+   "train_win_rate": 0.263,
+   "entropy": 1.3949,
+   "minutes": 5.8
+  },
+  {
+   "iteration": 130,
+   "phase": "reinforce",
+   "matches": 49920,
+   "train_win_rate": 0.2526,
+   "entropy": 1.3984,
+   "minutes": 5.83,
+   "eval_win_rate": 0.348,
+   "saved": true
+  },
+  {
+   "iteration": 131,
+   "phase": "reinforce",
+   "matches": 50304,
+   "train_win_rate": 0.25,
+   "entropy": 1.4049,
+   "minutes": 5.98
+  },
+  {
+   "iteration": 132,
+   "phase": "reinforce",
+   "matches": 50688,
+   "train_win_rate": 0.2604,
+   "entropy": 1.398,
+   "minutes": 6.01
+  },
+  {
+   "iteration": 133,
+   "phase": "reinforce",
+   "matches": 51072,
+   "train_win_rate": 0.237,
+   "entropy": 1.4033,
+   "minutes": 6.04
+  },
+  {
+   "iteration": 134,
+   "phase": "reinforce",
+   "matches": 51456,
+   "train_win_rate": 0.25,
+   "entropy": 1.4029,
+   "minutes": 6.07
+  },
+  {
+   "iteration": 135,
+   "phase": "reinforce",
+   "matches": 51840,
+   "train_win_rate": 0.263,
+   "entropy": 1.4121,
+   "minutes": 6.1
+  },
+  {
+   "iteration": 136,
+   "phase": "reinforce",
+   "matches": 52224,
+   "train_win_rate": 0.2526,
+   "entropy": 1.4206,
+   "minutes": 6.13
+  },
+  {
+   "iteration": 137,
+   "phase": "reinforce",
+   "matches": 52608,
+   "train_win_rate": 0.2396,
+   "entropy": 1.4274,
+   "minutes": 6.16
+  },
+  {
+   "iteration": 138,
+   "phase": "reinforce",
+   "matches": 52992,
+   "train_win_rate": 0.2552,
+   "entropy": 1.4174,
+   "minutes": 6.19
+  },
+  {
+   "iteration": 139,
+   "phase": "reinforce",
+   "matches": 53376,
+   "train_win_rate": 0.2422,
+   "entropy": 1.4241,
+   "minutes": 6.22
+  },
+  {
+   "iteration": 140,
+   "phase": "reinforce",
+   "matches": 53760,
+   "train_win_rate": 0.237,
+   "entropy": 1.4294,
+   "minutes": 6.25,
+   "eval_win_rate": 0.3605,
+   "saved": true
+  },
+  {
+   "iteration": 141,
+   "phase": "reinforce",
+   "matches": 54144,
+   "train_win_rate": 0.2812,
+   "entropy": 1.4276,
+   "minutes": 6.42
+  },
+  {
+   "iteration": 142,
+   "phase": "reinforce",
+   "matches": 54528,
+   "train_win_rate": 0.2266,
+   "entropy": 1.4636,
+   "minutes": 6.45
+  },
+  {
+   "iteration": 143,
+   "phase": "reinforce",
+   "matches": 54912,
+   "train_win_rate": 0.2604,
+   "entropy": 1.4456,
+   "minutes": 6.49
+  },
+  {
+   "iteration": 144,
+   "phase": "reinforce",
+   "matches": 55296,
+   "train_win_rate": 0.2292,
+   "entropy": 1.4591,
+   "minutes": 6.52
+  },
+  {
+   "iteration": 145,
+   "phase": "reinforce",
+   "matches": 55680,
+   "train_win_rate": 0.2422,
+   "entropy": 1.4728,
+   "minutes": 6.55
+  },
+  {
+   "iteration": 146,
+   "phase": "reinforce",
+   "matches": 56064,
+   "train_win_rate": 0.2552,
+   "entropy": 1.4481,
+   "minutes": 6.58
+  },
+  {
+   "iteration": 147,
+   "phase": "reinforce",
+   "matches": 56448,
+   "train_win_rate": 0.263,
+   "entropy": 1.4419,
+   "minutes": 6.61
+  },
+  {
+   "iteration": 148,
+   "phase": "reinforce",
+   "matches": 56832,
+   "train_win_rate": 0.2604,
+   "entropy": 1.4623,
+   "minutes": 6.63
+  },
+  {
+   "iteration": 149,
+   "phase": "reinforce",
+   "matches": 57216,
+   "train_win_rate": 0.237,
+   "entropy": 1.4824,
+   "minutes": 6.65
+  },
+  {
+   "iteration": 150,
+   "phase": "reinforce",
+   "matches": 57600,
+   "train_win_rate": 0.2734,
+   "entropy": 1.4786,
+   "minutes": 6.68,
+   "eval_win_rate": 0.3595
+  },
+  {
+   "iteration": 151,
+   "phase": "reinforce",
+   "matches": 57984,
+   "train_win_rate": 0.2839,
+   "entropy": 1.4806,
+   "minutes": 6.81
+  },
+  {
+   "iteration": 152,
+   "phase": "reinforce",
+   "matches": 58368,
+   "train_win_rate": 0.2526,
+   "entropy": 1.4935,
+   "minutes": 6.83
+  },
+  {
+   "iteration": 153,
+   "phase": "reinforce",
+   "matches": 58752,
+   "train_win_rate": 0.2083,
+   "entropy": 1.4954,
+   "minutes": 6.86
+  },
+  {
+   "iteration": 154,
+   "phase": "reinforce",
+   "matches": 59136,
+   "train_win_rate": 0.2474,
+   "entropy": 1.5113,
+   "minutes": 6.88
+  },
+  {
+   "iteration": 155,
+   "phase": "reinforce",
+   "matches": 59520,
+   "train_win_rate": 0.2292,
+   "entropy": 1.5055,
+   "minutes": 6.91
+  },
+  {
+   "iteration": 156,
+   "phase": "reinforce",
+   "matches": 59904,
+   "train_win_rate": 0.2708,
+   "entropy": 1.5305,
+   "minutes": 6.93
+  },
+  {
+   "iteration": 157,
+   "phase": "reinforce",
+   "matches": 60288,
+   "train_win_rate": 0.2604,
+   "entropy": 1.5173,
+   "minutes": 6.96
+  },
+  {
+   "iteration": 158,
+   "phase": "reinforce",
+   "matches": 60672,
+   "train_win_rate": 0.2422,
+   "entropy": 1.5116,
+   "minutes": 6.98
+  },
+  {
+   "iteration": 159,
+   "phase": "reinforce",
+   "matches": 61056,
+   "train_win_rate": 0.2005,
+   "entropy": 1.5442,
+   "minutes": 7.01
+  },
+  {
+   "iteration": 160,
+   "phase": "reinforce",
+   "matches": 61440,
+   "train_win_rate": 0.25,
+   "entropy": 1.5352,
+   "minutes": 7.04,
+   "eval_win_rate": 0.361,
+   "saved": true
+  },
+  {
+   "iteration": 161,
+   "phase": "reinforce",
+   "matches": 61824,
+   "train_win_rate": 0.2578,
+   "entropy": 1.5356,
+   "minutes": 7.17
+  },
+  {
+   "iteration": 162,
+   "phase": "reinforce",
+   "matches": 62208,
+   "train_win_rate": 0.2135,
+   "entropy": 1.5467,
+   "minutes": 7.2
+  },
+  {
+   "iteration": 163,
+   "phase": "reinforce",
+   "matches": 62592,
+   "train_win_rate": 0.263,
+   "entropy": 1.5547,
+   "minutes": 7.22
+  },
+  {
+   "iteration": 164,
+   "phase": "reinforce",
+   "matches": 62976,
+   "train_win_rate": 0.2422,
+   "entropy": 1.555,
+   "minutes": 7.25
+  },
+  {
+   "iteration": 165,
+   "phase": "reinforce",
+   "matches": 63360,
+   "train_win_rate": 0.2656,
+   "entropy": 1.5657,
+   "minutes": 7.27
+  },
+  {
+   "iteration": 166,
+   "phase": "reinforce",
+   "matches": 63744,
+   "train_win_rate": 0.25,
+   "entropy": 1.5902,
+   "minutes": 7.3
+  },
+  {
+   "iteration": 167,
+   "phase": "reinforce",
+   "matches": 64128,
+   "train_win_rate": 0.25,
+   "entropy": 1.563,
+   "minutes": 7.33
+  },
+  {
+   "iteration": 168,
+   "phase": "reinforce",
+   "matches": 64512,
+   "train_win_rate": 0.2578,
+   "entropy": 1.5994,
+   "minutes": 7.36
+  },
+  {
+   "iteration": 169,
+   "phase": "reinforce",
+   "matches": 64896,
+   "train_win_rate": 0.2292,
+   "entropy": 1.6015,
+   "minutes": 7.39
+  },
+  {
+   "iteration": 170,
+   "phase": "reinforce",
+   "matches": 65280,
+   "train_win_rate": 0.2318,
+   "entropy": 1.6343,
+   "minutes": 7.43,
+   "eval_win_rate": 0.37,
+   "saved": true
+  },
+  {
+   "iteration": 171,
+   "phase": "reinforce",
+   "matches": 65664,
+   "train_win_rate": 0.1875,
+   "entropy": 1.6095,
+   "minutes": 7.61
+  },
+  {
+   "iteration": 172,
+   "phase": "reinforce",
+   "matches": 66048,
+   "train_win_rate": 0.224,
+   "entropy": 1.6047,
+   "minutes": 7.64
+  },
+  {
+   "iteration": 173,
+   "phase": "reinforce",
+   "matches": 66432,
+   "train_win_rate": 0.2448,
+   "entropy": 1.6105,
+   "minutes": 7.67
+  },
+  {
+   "iteration": 174,
+   "phase": "reinforce",
+   "matches": 66816,
+   "train_win_rate": 0.2266,
+   "entropy": 1.6153,
+   "minutes": 7.7
+  },
+  {
+   "iteration": 175,
+   "phase": "reinforce",
+   "matches": 67200,
+   "train_win_rate": 0.2422,
+   "entropy": 1.6475,
+   "minutes": 7.73
+  },
+  {
+   "iteration": 176,
+   "phase": "reinforce",
+   "matches": 67584,
+   "train_win_rate": 0.2578,
+   "entropy": 1.6337,
+   "minutes": 7.77
+  },
+  {
+   "iteration": 177,
+   "phase": "reinforce",
+   "matches": 67968,
+   "train_win_rate": 0.2188,
+   "entropy": 1.6315,
+   "minutes": 7.8
+  },
+  {
+   "iteration": 178,
+   "phase": "reinforce",
+   "matches": 68352,
+   "train_win_rate": 0.224,
+   "entropy": 1.6472,
+   "minutes": 7.83
+  },
+  {
+   "iteration": 179,
+   "phase": "reinforce",
+   "matches": 68736,
+   "train_win_rate": 0.2109,
+   "entropy": 1.6701,
+   "minutes": 7.87
+  },
+  {
+   "iteration": 180,
+   "phase": "reinforce",
+   "matches": 69120,
+   "train_win_rate": 0.2344,
+   "entropy": 1.6612,
+   "minutes": 7.9,
+   "eval_win_rate": 0.3755,
+   "saved": true
+  },
+  {
+   "iteration": 181,
+   "phase": "reinforce",
+   "matches": 69504,
+   "train_win_rate": 0.2422,
+   "entropy": 1.6833,
+   "minutes": 8.08
+  },
+  {
+   "iteration": 182,
+   "phase": "reinforce",
+   "matches": 69888,
+   "train_win_rate": 0.2318,
+   "entropy": 1.6871,
+   "minutes": 8.11
+  },
+  {
+   "iteration": 183,
+   "phase": "reinforce",
+   "matches": 70272,
+   "train_win_rate": 0.224,
+   "entropy": 1.6907,
+   "minutes": 8.15
+  },
+  {
+   "iteration": 184,
+   "phase": "reinforce",
+   "matches": 70656,
+   "train_win_rate": 0.2474,
+   "entropy": 1.6786,
+   "minutes": 8.17
+  },
+  {
+   "iteration": 185,
+   "phase": "reinforce",
+   "matches": 71040,
+   "train_win_rate": 0.2135,
+   "entropy": 1.7028,
+   "minutes": 8.21
+  },
+  {
+   "iteration": 186,
+   "phase": "reinforce",
+   "matches": 71424,
+   "train_win_rate": 0.2161,
+   "entropy": 1.6911,
+   "minutes": 8.24
+  },
+  {
+   "iteration": 187,
+   "phase": "reinforce",
+   "matches": 71808,
+   "train_win_rate": 0.2214,
+   "entropy": 1.7141,
+   "minutes": 8.28
+  },
+  {
+   "iteration": 188,
+   "phase": "reinforce",
+   "matches": 72192,
+   "train_win_rate": 0.1719,
+   "entropy": 1.7189,
+   "minutes": 8.31
+  },
+  {
+   "iteration": 189,
+   "phase": "reinforce",
+   "matches": 72576,
+   "train_win_rate": 0.2083,
+   "entropy": 1.734,
+   "minutes": 8.35
+  },
+  {
+   "iteration": 190,
+   "phase": "reinforce",
+   "matches": 72960,
+   "train_win_rate": 0.2057,
+   "entropy": 1.7267,
+   "minutes": 8.37,
+   "eval_win_rate": 0.371
+  },
+  {
+   "iteration": 191,
+   "phase": "reinforce",
+   "matches": 73344,
+   "train_win_rate": 0.1849,
+   "entropy": 1.7275,
+   "minutes": 8.54
+  },
+  {
+   "iteration": 192,
+   "phase": "reinforce",
+   "matches": 73728,
+   "train_win_rate": 0.2109,
+   "entropy": 1.7609,
+   "minutes": 8.57
+  },
+  {
+   "iteration": 193,
+   "phase": "reinforce",
+   "matches": 74112,
+   "train_win_rate": 0.2214,
+   "entropy": 1.7292,
+   "minutes": 8.6
+  },
+  {
+   "iteration": 194,
+   "phase": "reinforce",
+   "matches": 74496,
+   "train_win_rate": 0.1953,
+   "entropy": 1.7555,
+   "minutes": 8.64
+  },
+  {
+   "iteration": 195,
+   "phase": "reinforce",
+   "matches": 74880,
+   "train_win_rate": 0.224,
+   "entropy": 1.7421,
+   "minutes": 8.66
+  },
+  {
+   "iteration": 196,
+   "phase": "reinforce",
+   "matches": 75264,
+   "train_win_rate": 0.224,
+   "entropy": 1.7828,
+   "minutes": 8.69
+  },
+  {
+   "iteration": 197,
+   "phase": "reinforce",
+   "matches": 75648,
+   "train_win_rate": 0.2161,
+   "entropy": 1.7437,
+   "minutes": 8.72
+  },
+  {
+   "iteration": 198,
+   "phase": "reinforce",
+   "matches": 76032,
+   "train_win_rate": 0.2396,
+   "entropy": 1.768,
+   "minutes": 8.76
+  },
+  {
+   "iteration": 199,
+   "phase": "reinforce",
+   "matches": 76416,
+   "train_win_rate": 0.2031,
+   "entropy": 1.746,
+   "minutes": 8.79
+  },
+  {
+   "iteration": 200,
+   "phase": "reinforce",
+   "matches": 76800,
+   "train_win_rate": 0.2083,
+   "entropy": 1.7773,
+   "minutes": 8.82,
+   "eval_win_rate": 0.3835,
+   "saved": true
+  },
+  {
+   "iteration": 201,
+   "phase": "reinforce",
+   "matches": 77184,
+   "train_win_rate": 0.2214,
+   "entropy": 1.7711,
+   "minutes": 8.98
+  },
+  {
+   "iteration": 202,
+   "phase": "reinforce",
+   "matches": 77568,
+   "train_win_rate": 0.1823,
+   "entropy": 1.7692,
+   "minutes": 9.01
+  },
+  {
+   "iteration": 203,
+   "phase": "reinforce",
+   "matches": 77952,
+   "train_win_rate": 0.2109,
+   "entropy": 1.8042,
+   "minutes": 9.05
+  },
+  {
+   "iteration": 204,
+   "phase": "reinforce",
+   "matches": 78336,
+   "train_win_rate": 0.2109,
+   "entropy": 1.7743,
+   "minutes": 9.09
+  },
+  {
+   "iteration": 205,
+   "phase": "reinforce",
+   "matches": 78720,
+   "train_win_rate": 0.1927,
+   "entropy": 1.8037,
+   "minutes": 9.13
+  },
+  {
+   "iteration": 206,
+   "phase": "reinforce",
+   "matches": 79104,
+   "train_win_rate": 0.1875,
+   "entropy": 1.7921,
+   "minutes": 9.17
+  },
+  {
+   "iteration": 207,
+   "phase": "reinforce",
+   "matches": 79488,
+   "train_win_rate": 0.1953,
+   "entropy": 1.8141,
+   "minutes": 9.21
+  },
+  {
+   "iteration": 208,
+   "phase": "reinforce",
+   "matches": 79872,
+   "train_win_rate": 0.1797,
+   "entropy": 1.8307,
+   "minutes": 9.24
+  },
+  {
+   "iteration": 209,
+   "phase": "reinforce",
+   "matches": 80256,
+   "train_win_rate": 0.1849,
+   "entropy": 1.8166,
+   "minutes": 9.28
+  },
+  {
+   "iteration": 210,
+   "phase": "reinforce",
+   "matches": 80640,
+   "train_win_rate": 0.1901,
+   "entropy": 1.8264,
+   "minutes": 9.32,
+   "eval_win_rate": 0.379
+  },
+  {
+   "iteration": 211,
+   "phase": "reinforce",
+   "matches": 81024,
+   "train_win_rate": 0.1927,
+   "entropy": 1.8522,
+   "minutes": 9.51
+  },
+  {
+   "iteration": 212,
+   "phase": "reinforce",
+   "matches": 81408,
+   "train_win_rate": 0.1797,
+   "entropy": 1.8337,
+   "minutes": 9.54
+  },
+  {
+   "iteration": 213,
+   "phase": "reinforce",
+   "matches": 81792,
+   "train_win_rate": 0.1979,
+   "entropy": 1.8462,
+   "minutes": 9.58
+  },
+  {
+   "iteration": 214,
+   "phase": "reinforce",
+   "matches": 82176,
+   "train_win_rate": 0.1849,
+   "entropy": 1.857,
+   "minutes": 9.61
+  },
+  {
+   "iteration": 215,
+   "phase": "reinforce",
+   "matches": 82560,
+   "train_win_rate": 0.1719,
+   "entropy": 1.8543,
+   "minutes": 9.64
+  },
+  {
+   "iteration": 216,
+   "phase": "reinforce",
+   "matches": 82944,
+   "train_win_rate": 0.1849,
+   "entropy": 1.8604,
+   "minutes": 9.67
+  },
+  {
+   "iteration": 217,
+   "phase": "reinforce",
+   "matches": 83328,
+   "train_win_rate": 0.1979,
+   "entropy": 1.8576,
+   "minutes": 9.7
+  },
+  {
+   "iteration": 218,
+   "phase": "reinforce",
+   "matches": 83712,
+   "train_win_rate": 0.1927,
+   "entropy": 1.8821,
+   "minutes": 9.73
+  },
+  {
+   "iteration": 219,
+   "phase": "reinforce",
+   "matches": 84096,
+   "train_win_rate": 0.1641,
+   "entropy": 1.8997,
+   "minutes": 9.77
+  },
+  {
+   "iteration": 220,
+   "phase": "reinforce",
+   "matches": 84480,
+   "train_win_rate": 0.1927,
+   "entropy": 1.9112,
+   "minutes": 9.8,
+   "eval_win_rate": 0.3845,
+   "saved": true
+  },
+  {
+   "iteration": 221,
+   "phase": "reinforce",
+   "matches": 84864,
+   "train_win_rate": 0.1536,
+   "entropy": 1.8958,
+   "minutes": 9.97
+  },
+  {
+   "iteration": 222,
+   "phase": "reinforce",
+   "matches": 85248,
+   "train_win_rate": 0.2083,
+   "entropy": 1.8921,
+   "minutes": 10.01
+  },
+  {
+   "iteration": 223,
+   "phase": "reinforce",
+   "matches": 85632,
+   "train_win_rate": 0.1615,
+   "entropy": 1.9102,
+   "minutes": 10.05
+  },
+  {
+   "iteration": 224,
+   "phase": "reinforce",
+   "matches": 86016,
+   "train_win_rate": 0.2031,
+   "entropy": 1.9156,
+   "minutes": 10.08
+  },
+  {
+   "iteration": 225,
+   "phase": "reinforce",
+   "matches": 86400,
+   "train_win_rate": 0.2005,
+   "entropy": 1.8808,
+   "minutes": 10.12
+  },
+  {
+   "iteration": 226,
+   "phase": "reinforce",
+   "matches": 86784,
+   "train_win_rate": 0.1901,
+   "entropy": 1.9247,
+   "minutes": 10.16
+  },
+  {
+   "iteration": 227,
+   "phase": "reinforce",
+   "matches": 87168,
+   "train_win_rate": 0.1823,
+   "entropy": 1.9047,
+   "minutes": 10.19
+  },
+  {
+   "iteration": 228,
+   "phase": "reinforce",
+   "matches": 87552,
+   "train_win_rate": 0.1797,
+   "entropy": 1.9092,
+   "minutes": 10.22
+  },
+  {
+   "iteration": 229,
+   "phase": "reinforce",
+   "matches": 87936,
+   "train_win_rate": 0.1589,
+   "entropy": 1.9319,
+   "minutes": 10.27
+  },
+  {
+   "iteration": 230,
+   "phase": "reinforce",
+   "matches": 88320,
+   "train_win_rate": 0.1849,
+   "entropy": 1.9225,
+   "minutes": 10.3,
+   "eval_win_rate": 0.397,
+   "saved": true
+  },
+  {
+   "iteration": 231,
+   "phase": "reinforce",
+   "matches": 88704,
+   "train_win_rate": 0.1719,
+   "entropy": 1.9354,
+   "minutes": 10.48
+  },
+  {
+   "iteration": 232,
+   "phase": "reinforce",
+   "matches": 89088,
+   "train_win_rate": 0.1927,
+   "entropy": 1.9522,
+   "minutes": 10.52
+  },
+  {
+   "iteration": 233,
+   "phase": "reinforce",
+   "matches": 89472,
+   "train_win_rate": 0.1667,
+   "entropy": 1.9281,
+   "minutes": 10.55
+  },
+  {
+   "iteration": 234,
+   "phase": "reinforce",
+   "matches": 89856,
+   "train_win_rate": 0.1953,
+   "entropy": 1.9482,
+   "minutes": 10.59
+  },
+  {
+   "iteration": 235,
+   "phase": "reinforce",
+   "matches": 90240,
+   "train_win_rate": 0.1536,
+   "entropy": 1.936,
+   "minutes": 10.62
+  },
+  {
+   "iteration": 236,
+   "phase": "reinforce",
+   "matches": 90624,
+   "train_win_rate": 0.1797,
+   "entropy": 1.9484,
+   "minutes": 10.66
+  },
+  {
+   "iteration": 237,
+   "phase": "reinforce",
+   "matches": 91008,
+   "train_win_rate": 0.1901,
+   "entropy": 1.9429,
+   "minutes": 10.69
+  },
+  {
+   "iteration": 238,
+   "phase": "reinforce",
+   "matches": 91392,
+   "train_win_rate": 0.1432,
+   "entropy": 1.966,
+   "minutes": 10.72
+  },
+  {
+   "iteration": 239,
+   "phase": "reinforce",
+   "matches": 91776,
+   "train_win_rate": 0.1432,
+   "entropy": 1.9755,
+   "minutes": 10.74
+  },
+  {
+   "iteration": 240,
+   "phase": "reinforce",
+   "matches": 92160,
+   "train_win_rate": 0.1719,
+   "entropy": 1.9588,
+   "minutes": 10.76,
+   "eval_win_rate": 0.3955
+  },
+  {
+   "iteration": 241,
+   "phase": "reinforce",
+   "matches": 92544,
+   "train_win_rate": 0.1693,
+   "entropy": 1.9897,
+   "minutes": 10.9
+  },
+  {
+   "iteration": 242,
+   "phase": "reinforce",
+   "matches": 92928,
+   "train_win_rate": 0.1615,
+   "entropy": 1.972,
+   "minutes": 10.92
+  },
+  {
+   "iteration": 243,
+   "phase": "reinforce",
+   "matches": 93312,
+   "train_win_rate": 0.1797,
+   "entropy": 1.9707,
+   "minutes": 10.94
+  },
+  {
+   "iteration": 244,
+   "phase": "reinforce",
+   "matches": 93696,
+   "train_win_rate": 0.1693,
+   "entropy": 1.9719,
+   "minutes": 10.96
+  },
+  {
+   "iteration": 245,
+   "phase": "reinforce",
+   "matches": 94080,
+   "train_win_rate": 0.1667,
+   "entropy": 1.9763,
+   "minutes": 10.98
+  },
+  {
+   "iteration": 246,
+   "phase": "reinforce",
+   "matches": 94464,
+   "train_win_rate": 0.1875,
+   "entropy": 1.986,
+   "minutes": 11.01
+  },
+  {
+   "iteration": 247,
+   "phase": "reinforce",
+   "matches": 94848,
+   "train_win_rate": 0.1172,
+   "entropy": 1.9951,
+   "minutes": 11.03
+  },
+  {
+   "iteration": 248,
+   "phase": "reinforce",
+   "matches": 95232,
+   "train_win_rate": 0.2188,
+   "entropy": 2.0017,
+   "minutes": 11.06
+  },
+  {
+   "iteration": 249,
+   "phase": "reinforce",
+   "matches": 95616,
+   "train_win_rate": 0.151,
+   "entropy": 2.0003,
+   "minutes": 11.09
+  },
+  {
+   "iteration": 250,
+   "phase": "reinforce",
+   "matches": 96000,
+   "train_win_rate": 0.1745,
+   "entropy": 1.9826,
+   "minutes": 11.11,
+   "eval_win_rate": 0.386
+  },
+  {
+   "iteration": 251,
+   "phase": "reinforce",
+   "matches": 96384,
+   "train_win_rate": 0.1797,
+   "entropy": 1.9903,
+   "minutes": 11.33
+  },
+  {
+   "iteration": 252,
+   "phase": "reinforce",
+   "matches": 96768,
+   "train_win_rate": 0.2005,
+   "entropy": 2.0014,
+   "minutes": 11.39
+  },
+  {
+   "iteration": 253,
+   "phase": "reinforce",
+   "matches": 97152,
+   "train_win_rate": 0.1458,
+   "entropy": 2.0186,
+   "minutes": 11.45
+  },
+  {
+   "iteration": 254,
+   "phase": "reinforce",
+   "matches": 97536,
+   "train_win_rate": 0.1927,
+   "entropy": 2.0007,
+   "minutes": 11.5
+  },
+  {
+   "iteration": 255,
+   "phase": "reinforce",
+   "matches": 97920,
+   "train_win_rate": 0.1589,
+   "entropy": 2.0181,
+   "minutes": 11.55
+  },
+  {
+   "iteration": 256,
+   "phase": "reinforce",
+   "matches": 98304,
+   "train_win_rate": 0.2005,
+   "entropy": 2.0135,
+   "minutes": 11.61
+  },
+  {
+   "iteration": 257,
+   "phase": "reinforce",
+   "matches": 98688,
+   "train_win_rate": 0.1536,
+   "entropy": 1.9988,
+   "minutes": 11.65
+  },
+  {
+   "iteration": 258,
+   "phase": "reinforce",
+   "matches": 99072,
+   "train_win_rate": 0.1719,
+   "entropy": 2.0229,
+   "minutes": 11.7
+  },
+  {
+   "iteration": 259,
+   "phase": "reinforce",
+   "matches": 99456,
+   "train_win_rate": 0.1615,
+   "entropy": 2.0163,
+   "minutes": 11.75
+  },
+  {
+   "iteration": 260,
+   "phase": "reinforce",
+   "matches": 99840,
+   "train_win_rate": 0.1589,
+   "entropy": 2.0304,
+   "minutes": 11.79,
+   "eval_win_rate": 0.3905
+  },
+  {
+   "iteration": 261,
+   "phase": "reinforce",
+   "matches": 100224,
+   "train_win_rate": 0.1667,
+   "entropy": 2.0455,
+   "minutes": 12.04
+  },
+  {
+   "iteration": 262,
+   "phase": "reinforce",
+   "matches": 100608,
+   "train_win_rate": 0.1667,
+   "entropy": 2.0321,
+   "minutes": 12.08
+  },
+  {
+   "iteration": 263,
+   "phase": "reinforce",
+   "matches": 100992,
+   "train_win_rate": 0.1458,
+   "entropy": 2.0481,
+   "minutes": 12.13
+  },
+  {
+   "iteration": 264,
+   "phase": "reinforce",
+   "matches": 101376,
+   "train_win_rate": 0.1484,
+   "entropy": 2.035,
+   "minutes": 12.19
+  },
+  {
+   "iteration": 265,
+   "phase": "reinforce",
+   "matches": 101760,
+   "train_win_rate": 0.1536,
+   "entropy": 2.0257,
+   "minutes": 12.24
+  },
+  {
+   "iteration": 266,
+   "phase": "reinforce",
+   "matches": 102144,
+   "train_win_rate": 0.1615,
+   "entropy": 2.0207,
+   "minutes": 12.32
+  },
+  {
+   "iteration": 267,
+   "phase": "reinforce",
+   "matches": 102528,
+   "train_win_rate": 0.1641,
+   "entropy": 2.0337,
+   "minutes": 12.39
+  },
+  {
+   "iteration": 268,
+   "phase": "reinforce",
+   "matches": 102912,
+   "train_win_rate": 0.1745,
+   "entropy": 2.0426,
+   "minutes": 12.46
+  },
+  {
+   "iteration": 269,
+   "phase": "reinforce",
+   "matches": 103296,
+   "train_win_rate": 0.1458,
+   "entropy": 2.0533,
+   "minutes": 12.54
+  },
+  {
+   "iteration": 270,
+   "phase": "reinforce",
+   "matches": 103680,
+   "train_win_rate": 0.1589,
+   "entropy": 2.0378,
+   "minutes": 12.62,
+   "eval_win_rate": 0.388
+  },
+  {
+   "iteration": 271,
+   "phase": "reinforce",
+   "matches": 104064,
+   "train_win_rate": 0.1354,
+   "entropy": 2.0366,
+   "minutes": 12.95
+  },
+  {
+   "iteration": 272,
+   "phase": "reinforce",
+   "matches": 104448,
+   "train_win_rate": 0.1536,
+   "entropy": 2.0351,
+   "minutes": 13.05
+  },
+  {
+   "iteration": 273,
+   "phase": "reinforce",
+   "matches": 104832,
+   "train_win_rate": 0.1354,
+   "entropy": 2.0486,
+   "minutes": 13.15
+  },
+  {
+   "iteration": 274,
+   "phase": "reinforce",
+   "matches": 105216,
+   "train_win_rate": 0.1719,
+   "entropy": 2.0297,
+   "minutes": 13.24
+  },
+  {
+   "iteration": 275,
+   "phase": "reinforce",
+   "matches": 105600,
+   "train_win_rate": 0.1562,
+   "entropy": 2.0309,
+   "minutes": 13.33
+  },
+  {
+   "iteration": 276,
+   "phase": "reinforce",
+   "matches": 105984,
+   "train_win_rate": 0.151,
+   "entropy": 2.0636,
+   "minutes": 13.41
+  },
+  {
+   "iteration": 277,
+   "phase": "reinforce",
+   "matches": 106368,
+   "train_win_rate": 0.1432,
+   "entropy": 2.0464,
+   "minutes": 13.49
+  },
+  {
+   "iteration": 278,
+   "phase": "reinforce",
+   "matches": 106752,
+   "train_win_rate": 0.138,
+   "entropy": 2.0411,
+   "minutes": 13.56
+  },
+  {
+   "iteration": 279,
+   "phase": "reinforce",
+   "matches": 107136,
+   "train_win_rate": 0.1432,
+   "entropy": 2.0693,
+   "minutes": 13.67
+  },
+  {
+   "iteration": 280,
+   "phase": "reinforce",
+   "matches": 107520,
+   "train_win_rate": 0.151,
+   "entropy": 2.0378,
+   "minutes": 13.74,
+   "eval_win_rate": 0.4005,
+   "saved": true
+  },
+  {
+   "iteration": 281,
+   "phase": "reinforce",
+   "matches": 107904,
+   "train_win_rate": 0.1328,
+   "entropy": 2.0574,
+   "minutes": 14.12
+  },
+  {
+   "iteration": 282,
+   "phase": "reinforce",
+   "matches": 108288,
+   "train_win_rate": 0.1406,
+   "entropy": 2.0504,
+   "minutes": 14.2
+  },
+  {
+   "iteration": 283,
+   "phase": "reinforce",
+   "matches": 108672,
+   "train_win_rate": 0.1667,
+   "entropy": 2.0662,
+   "minutes": 14.27
+  },
+  {
+   "iteration": 284,
+   "phase": "reinforce",
+   "matches": 109056,
+   "train_win_rate": 0.151,
+   "entropy": 2.066,
+   "minutes": 14.35
+  },
+  {
+   "iteration": 285,
+   "phase": "reinforce",
+   "matches": 109440,
+   "train_win_rate": 0.1719,
+   "entropy": 2.0545,
+   "minutes": 14.4
+  },
+  {
+   "iteration": 286,
+   "phase": "reinforce",
+   "matches": 109824,
+   "train_win_rate": 0.1328,
+   "entropy": 2.0522,
+   "minutes": 14.46
+  },
+  {
+   "iteration": 287,
+   "phase": "reinforce",
+   "matches": 110208,
+   "train_win_rate": 0.112,
+   "entropy": 2.0766,
+   "minutes": 14.52
+  },
+  {
+   "iteration": 288,
+   "phase": "reinforce",
+   "matches": 110592,
+   "train_win_rate": 0.1406,
+   "entropy": 2.0681,
+   "minutes": 14.58
+  },
+  {
+   "iteration": 289,
+   "phase": "reinforce",
+   "matches": 110976,
+   "train_win_rate": 0.1589,
+   "entropy": 2.0669,
+   "minutes": 14.64
+  },
+  {
+   "iteration": 290,
+   "phase": "reinforce",
+   "matches": 111360,
+   "train_win_rate": 0.1458,
+   "entropy": 2.0725,
+   "minutes": 14.7,
+   "eval_win_rate": 0.395
+  },
+  {
+   "iteration": 291,
+   "phase": "reinforce",
+   "matches": 111744,
+   "train_win_rate": 0.1302,
+   "entropy": 2.0855,
+   "minutes": 14.94
+  },
+  {
+   "iteration": 292,
+   "phase": "reinforce",
+   "matches": 112128,
+   "train_win_rate": 0.1458,
+   "entropy": 2.0733,
+   "minutes": 15.0
+  },
+  {
+   "iteration": 293,
+   "phase": "reinforce",
+   "matches": 112512,
+   "train_win_rate": 0.1406,
+   "entropy": 2.084,
+   "minutes": 15.04
+  },
+  {
+   "iteration": 294,
+   "phase": "reinforce",
+   "matches": 112896,
+   "train_win_rate": 0.138,
+   "entropy": 2.0901,
+   "minutes": 15.09
+  },
+  {
+   "iteration": 295,
+   "phase": "reinforce",
+   "matches": 113280,
+   "train_win_rate": 0.1771,
+   "entropy": 2.0874,
+   "minutes": 15.14
+  }
+ ]
+}

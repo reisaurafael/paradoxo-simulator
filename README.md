@@ -24,7 +24,7 @@ of one afternoon at the table.
 
 ## The game is finished and playable
 
-<p align="center"><img src="docs/portfolio/img/mesa.jpg" alt="A Paradox match in the web client: board, map and traveler inventory" width="900"></p>
+<p align="center"><img src="docs/portfolio/img/table.jpg" alt="A Paradox match in the web client: board, map and traveler inventory" width="900"></p>
 
 Paradox is a complete digital board game: rules engine, web client, server, and bots
 that sit at the same table as human players. It plays start to finish with no missing rules,
@@ -141,7 +141,7 @@ The engine resolves rules and the strategies decide. Strategy code never reaches
 engine internals, and the engine never knows which strategy is playing.
 
 ```
-paradoxo/
+paradoxo-simulator/
 ├── engine/                  # Rules engine. The Rules Reference is the sole authority
 │   ├── constants.py         # Every numeric constant, cited by §
 │   ├── state.py             # TravelerState, GameState, Allocation dataclasses
@@ -185,7 +185,7 @@ well under a minute.
 
 Copyright © 2026 Rafael Reis Garcia. All rights reserved. See [LICENSE](LICENSE).
 
-The names **Paradox: The Last Timeline** and **Paradoxo** (its Portuguese name), the brand **Corporação C.R.O.N.O.S.**, the rules, the card names,
+The names **Paradox: The Last Timeline** and **Paradoxo**, the brand **C.R.O.N.O.S.**, the rules, the card names,
 the card text, the artwork and the thematic material are mine and are not licensed for
 reuse, redistribution or commercial use. The simulation framework is proprietary as well.
 A public repository grants no rights over the game.

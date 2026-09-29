@@ -1,6 +1,6 @@
 # Changelog
 
-All changes to the Paradoxo engine, simulation layer, and documentation are recorded here.
+All changes to the Paradox: The Last Timeline engine, simulation layer, and documentation are recorded here.
 
 Format: `[YYYY-MM-DD] TYPE: short description` followed by detail.
 
@@ -10,7 +10,7 @@ Types: `FIX` · `FEAT` · `REFACTOR` · `TEST` · `DOCS` · `RULES`
 
 ## Legacy (2025): MS529 course project and early prototyping
 
-Before this repository existed, Paradoxo was developed as a physical card game and
+Before this repository existed, Paradox was developed as a physical card game and
 simulated in a Julia prototype built during the MS529 Systems Simulation course. The
 prototype captured the broad strokes: the allocation matrix, the Year Zero race, and a
 simplified Paradox function, but cut many corners to fit the course schedule.
@@ -73,8 +73,8 @@ Legacy divergences corrected at migration (from the Julia prototype, archived se
 ## [2026-02-08] FEAT: All 52 cards implemented
 
 Completed full card implementation across all four decks (Weapons, Travel, Support, Market)
-plus the two Special cards (Divine Comedy, Trinity, set aside for now and flagged as
-open point D4).
+plus the two Special cards (Divine Comedy, Trinity), which were set aside pending a
+rules decision.
 
 - Added `engine/combat.py`: unified energy-loss pipeline (`lose_energy`, `deal_energy`,
   `recycle_card`) with modifiers for Gunpowder, Viking Shield, Joan of Arc's Armor, Laser Sword,
@@ -88,11 +88,11 @@ open point D4).
   passives) and Movable-Type Press (copies revealed market passives).
 - 173 tests passing.
 
-Known gaps at this milestone (still open):
-- Termination respawn (BUG-001 above).
-- Wanted status on termination (BUG-002 above).
-- Millennium CP timing (BUG-003 above).
-- Agreements (§4): `Bluetooth of Harald` is a passive no-op; agreements unsimulated.
+Known gaps at this milestone (BUG-001 to BUG-003 were fixed in later entries):
+- Termination respawn (BUG-001).
+- Wanted status on termination (BUG-002).
+- Millennium CP timing (BUG-003).
+- Agreements (§4): `Harald's Bluetooth` is a passive no-op; agreements unsimulated.
 - Recycling pile has two separate representations (deck discard vs. `combat.recycle_card`);
   these need to be unified in a future cleanup.
 
@@ -257,7 +257,7 @@ root, each with a regression test in `tests/test_termination.py`.
 ### FIX BUG-015: Merchant steals set Wanted (§26.4, §3.4)
 - `engine/cards.py:fishing_reel()` and `niepces_heliograph()`: added
   `traveler.is_wanted = True` after a successful steal from the Merchant's revealed stock,
-  as ruled in D2, now resolved.
+  as the rules require (§26.4).
 - Guarded by: `tests/test_bug_fixes_batch2.py` (Fishing Reel deterministic steal, Heliograph steal).
 
 ---
@@ -271,7 +271,7 @@ root, each with a regression test in `tests/test_termination.py`.
 - Added a **Sample results** section with a real 1000-game benchmark (fixed seed) and two
   committed figures (`docs/img/win_conditions.png`, `docs/img/game_length.png`). The text
   reads the aggressive profile's ~46% win share honestly as a measurement of the engine
-  under naive baseline agents, not of optimal play.
+  under naive baseline profiles, not of optimal play.
 
 ### FEAT: Reproducible entry points under `examples/`
 - `examples/run_benchmark.py`: fixed-seed batch + statistical summary via the public

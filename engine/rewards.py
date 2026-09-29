@@ -75,6 +75,8 @@ def _fire_one_reward(
         category = available[0]
     traveler.last_reward_category = category
     die = rng.randint(1, 3)
+    from engine.cards import holder_dice
+    die = holder_dice(traveler, [die], game)[0]   # The Divine Comedy: a 3
     if category == "Chaos":
         _chaos(traveler, game, deck, die, strategy)
     elif category == "Time":

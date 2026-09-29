@@ -1,0 +1,164 @@
+{"time": "2026-09-26T14:09:03", "kind": "start", "text": "run 2026-09-26_1409_full_player started"}
+{"time": "2026-09-26T14:09:03", "kind": "phase", "text": "imitation"}
+{"time": "2026-09-26T14:10:43", "kind": "milestone", "text": "mean edge 1.154 crossed 0.5 at iteration 40 (15,360 matches)", "iteration": 40, "matches": 15360, "level": 0.5, "edge": 1.154}
+{"time": "2026-09-26T14:10:43", "kind": "milestone", "text": "mean edge 1.154 crossed 0.75 at iteration 40 (15,360 matches)", "iteration": 40, "matches": 15360, "level": 0.75, "edge": 1.154}
+{"time": "2026-09-26T14:10:43", "kind": "milestone", "text": "mean edge 1.154 crossed 1.0 at iteration 40 (15,360 matches)", "iteration": 40, "matches": 15360, "level": 1.0, "edge": 1.154}
+{"time": "2026-09-26T14:10:43", "kind": "milestone", "text": "passed Smart (mean edge 0.883) at iteration 40", "iteration": 40, "matches": 15360, "edge": 1.154}
+{"time": "2026-09-26T14:10:43", "kind": "milestone", "text": "passed Conservative (mean edge 0.706) at iteration 40", "iteration": 40, "matches": 15360, "edge": 1.154}
+{"time": "2026-09-26T14:10:43", "kind": "milestone", "text": "passed Collector (mean edge 0.705) at iteration 40", "iteration": 40, "matches": 15360, "edge": 1.154}
+{"time": "2026-09-26T14:10:43", "kind": "best", "text": "new best mean edge 1.154 at iteration 40", "iteration": 40, "edge": 1.154}
+{"time": "2026-09-26T14:11:22", "kind": "phase", "text": "imitation ended at iteration 60, entropy 1.022; reinforcement starts", "iteration": 60}
+{"time": "2026-09-26T14:12:20", "kind": "best", "text": "new best mean edge 1.207 at iteration 80", "iteration": 80, "edge": 1.207}
+{"time": "2026-09-26T14:13:15", "kind": "league", "text": "snapshot 1 added to the league at iteration 110", "iteration": 110}
+{"time": "2026-09-26T14:14:02", "kind": "milestone", "text": "mean edge 1.447 crossed 1.25 at iteration 120 (46,080 matches)", "iteration": 120, "matches": 46080, "level": 1.25, "edge": 1.447}
+{"time": "2026-09-26T14:14:02", "kind": "milestone", "text": "passed Aggressive (mean edge 1.403) at iteration 120", "iteration": 120, "matches": 46080, "edge": 1.447}
+{"time": "2026-09-26T14:14:02", "kind": "best", "text": "new best mean edge 1.447 at iteration 120", "iteration": 120, "edge": 1.447}
+{"time": "2026-09-26T14:16:09", "kind": "league", "text": "snapshot 2 added to the league at iteration 160", "iteration": 160}
+{"time": "2026-09-26T14:16:24", "kind": "milestone", "text": "mean edge 1.742 crossed 1.5 at iteration 160 (61,440 matches)", "iteration": 160, "matches": 61440, "level": 1.5, "edge": 1.742}
+{"time": "2026-09-26T14:16:24", "kind": "best", "text": "new best mean edge 1.742 at iteration 160", "iteration": 160, "edge": 1.742}
+{"time": "2026-09-26T14:18:17", "kind": "milestone", "text": "mean edge 1.852 crossed 1.75 at iteration 200 (76,800 matches)", "iteration": 200, "matches": 76800, "level": 1.75, "edge": 1.852}
+{"time": "2026-09-26T14:18:17", "kind": "best", "text": "new best mean edge 1.852 at iteration 200", "iteration": 200, "edge": 1.852}
+{"time": "2026-09-26T14:18:35", "kind": "league", "text": "snapshot 3 added to the league at iteration 210", "iteration": 210}
+{"time": "2026-09-26T14:19:50", "kind": "best", "text": "new best mean edge 1.897 at iteration 240", "iteration": 240, "edge": 1.897}
+{"time": "2026-09-26T14:20:43", "kind": "league", "text": "snapshot 4 added to the league at iteration 260", "iteration": 260}
+{"time": "2026-09-26T14:21:50", "kind": "best", "text": "new best mean edge 1.948 at iteration 280", "iteration": 280, "edge": 1.948}
+{"time": "2026-09-26T14:23:06", "kind": "league", "text": "snapshot 5 added to the league at iteration 310", "iteration": 310}
+{"time": "2026-09-26T14:24:59", "kind": "league", "text": "snapshot 6 added to the league at iteration 360", "iteration": 360}
+{"time": "2026-09-26T14:25:09", "kind": "best", "text": "new best mean edge 1.957 at iteration 360", "iteration": 360, "edge": 1.957}
+{"time": "2026-09-26T14:27:26", "kind": "best", "text": "new best mean edge 1.972 at iteration 400", "iteration": 400, "edge": 1.972}
+{"time": "2026-09-26T14:27:54", "kind": "league", "text": "snapshot 6 added to the league at iteration 410", "iteration": 410}
+{"time": "2026-09-26T14:29:38", "kind": "milestone", "text": "mean edge 2.056 crossed 2.0 at iteration 440 (168,960 matches)", "iteration": 440, "matches": 168960, "level": 2.0, "edge": 2.056}
+{"time": "2026-09-26T14:29:38", "kind": "best", "text": "new best mean edge 2.056 at iteration 440", "iteration": 440, "edge": 2.056}
+{"time": "2026-09-26T14:30:45", "kind": "league", "text": "snapshot 6 added to the league at iteration 460", "iteration": 460}
+{"time": "2026-09-26T14:32:09", "kind": "best", "text": "new best mean edge 2.150 at iteration 480", "iteration": 480, "edge": 2.15}
+{"time": "2026-09-26T14:33:46", "kind": "league", "text": "snapshot 6 added to the league at iteration 510", "iteration": 510}
+{"time": "2026-09-26T14:34:41", "kind": "best", "text": "new best mean edge 2.204 at iteration 520", "iteration": 520, "edge": 2.204}
+{"time": "2026-09-26T14:51:37", "kind": "resume", "text": "resumed from the checkpoint of iteration 520 (199,680 matches), league rebuilt from 6 checkpoints; the optimiser state starts fresh and so does the value network (not in this checkpoint)", "iteration": 520}
+{"time": "2026-09-26T14:52:24", "kind": "milestone", "text": "mean edge 2.263 crossed 2.25 at iteration 560 (215,040 matches)", "iteration": 560, "matches": 215040, "level": 2.25, "edge": 2.263}
+{"time": "2026-09-26T14:52:24", "kind": "best", "text": "new best mean edge 2.263 at iteration 560", "iteration": 560, "edge": 2.263}
+{"time": "2026-09-26T14:52:41", "kind": "league", "text": "snapshot 6 added to the league at iteration 570", "iteration": 570}
+{"time": "2026-09-26T14:53:50", "kind": "best", "text": "new best mean edge 2.352 at iteration 600", "iteration": 600, "edge": 2.352}
+{"time": "2026-09-26T14:54:31", "kind": "league", "text": "snapshot 6 added to the league at iteration 620", "iteration": 620}
+{"time": "2026-09-26T14:55:16", "kind": "best", "text": "new best mean edge 2.375 at iteration 640", "iteration": 640, "edge": 2.375}
+{"time": "2026-09-26T14:56:09", "kind": "league", "text": "snapshot 6 added to the league at iteration 670", "iteration": 670}
+{"time": "2026-09-26T14:56:36", "kind": "best", "text": "new best mean edge 2.395 at iteration 680", "iteration": 680, "edge": 2.395}
+{"time": "2026-09-26T14:57:41", "kind": "league", "text": "snapshot 6 added to the league at iteration 720", "iteration": 720}
+{"time": "2026-09-26T14:57:48", "kind": "best", "text": "new best mean edge 2.407 at iteration 720", "iteration": 720, "edge": 2.407}
+{"time": "2026-09-26T14:59:19", "kind": "best", "text": "new best mean edge 2.431 at iteration 760", "iteration": 760, "edge": 2.431}
+{"time": "2026-09-26T14:59:36", "kind": "league", "text": "snapshot 6 added to the league at iteration 770", "iteration": 770}
+{"time": "2026-09-26T15:00:37", "kind": "best", "text": "new best mean edge 2.448 at iteration 800", "iteration": 800, "edge": 2.448}
+{"time": "2026-09-26T15:01:07", "kind": "league", "text": "snapshot 6 added to the league at iteration 820", "iteration": 820}
+{"time": "2026-09-26T15:01:51", "kind": "best", "text": "new best mean edge 2.449 at iteration 840", "iteration": 840, "edge": 2.449}
+{"time": "2026-09-26T15:02:42", "kind": "league", "text": "snapshot 6 added to the league at iteration 870", "iteration": 870}
+{"time": "2026-09-26T15:03:09", "kind": "best", "text": "new best mean edge 2.492 at iteration 880", "iteration": 880, "edge": 2.492}
+{"time": "2026-09-26T15:04:20", "kind": "league", "text": "snapshot 6 added to the league at iteration 920", "iteration": 920}
+{"time": "2026-09-26T15:05:54", "kind": "milestone", "text": "mean edge 2.536 crossed 2.5 at iteration 960 (368,640 matches)", "iteration": 960, "matches": 368640, "level": 2.5, "edge": 2.536}
+{"time": "2026-09-26T15:05:54", "kind": "best", "text": "new best mean edge 2.536 at iteration 960", "iteration": 960, "edge": 2.536}
+{"time": "2026-09-26T15:06:14", "kind": "league", "text": "snapshot 6 added to the league at iteration 970", "iteration": 970}
+{"time": "2026-09-26T15:08:02", "kind": "league", "text": "snapshot 6 added to the league at iteration 1020", "iteration": 1020}
+{"time": "2026-09-26T15:08:51", "kind": "best", "text": "new best mean edge 2.562 at iteration 1040", "iteration": 1040, "edge": 2.562}
+{"time": "2026-09-26T15:09:45", "kind": "league", "text": "snapshot 6 added to the league at iteration 1070", "iteration": 1070}
+{"time": "2026-09-26T15:11:07", "kind": "league", "text": "snapshot 6 added to the league at iteration 1120", "iteration": 1120}
+{"time": "2026-09-26T15:11:15", "kind": "best", "text": "new best mean edge 2.570 at iteration 1120", "iteration": 1120, "edge": 2.57}
+{"time": "2026-09-26T15:12:24", "kind": "best", "text": "new best mean edge 2.587 at iteration 1160", "iteration": 1160, "edge": 2.587}
+{"time": "2026-09-26T15:12:40", "kind": "league", "text": "snapshot 6 added to the league at iteration 1170", "iteration": 1170}
+{"time": "2026-09-26T15:13:41", "kind": "best", "text": "new best mean edge 2.599 at iteration 1200", "iteration": 1200, "edge": 2.599}
+{"time": "2026-09-26T15:14:16", "kind": "league", "text": "snapshot 6 added to the league at iteration 1220", "iteration": 1220}
+{"time": "2026-09-26T15:15:00", "kind": "best", "text": "new best mean edge 2.627 at iteration 1240", "iteration": 1240, "edge": 2.627}
+{"time": "2026-09-26T15:15:52", "kind": "league", "text": "snapshot 6 added to the league at iteration 1270", "iteration": 1270}
+{"time": "2026-09-26T15:16:18", "kind": "best", "text": "new best mean edge 2.653 at iteration 1280", "iteration": 1280, "edge": 2.653}
+{"time": "2026-09-26T15:17:30", "kind": "league", "text": "snapshot 6 added to the league at iteration 1320", "iteration": 1320}
+{"time": "2026-09-26T15:19:08", "kind": "league", "text": "snapshot 6 added to the league at iteration 1370", "iteration": 1370}
+{"time": "2026-09-26T15:21:09", "kind": "league", "text": "snapshot 6 added to the league at iteration 1420", "iteration": 1420}
+{"time": "2026-09-26T15:22:58", "kind": "league", "text": "snapshot 6 added to the league at iteration 1470", "iteration": 1470}
+{"time": "2026-09-26T15:24:39", "kind": "league", "text": "snapshot 6 added to the league at iteration 1520", "iteration": 1520}
+{"time": "2026-09-26T15:26:19", "kind": "best", "text": "new best mean edge 2.673 at iteration 1560", "iteration": 1560, "edge": 2.673}
+{"time": "2026-09-26T15:26:38", "kind": "league", "text": "snapshot 6 added to the league at iteration 1570", "iteration": 1570}
+{"time": "2026-09-26T15:27:49", "kind": "best", "text": "new best mean edge 2.694 at iteration 1600", "iteration": 1600, "edge": 2.694}
+{"time": "2026-09-26T15:28:29", "kind": "league", "text": "snapshot 6 added to the league at iteration 1620", "iteration": 1620}
+{"time": "2026-09-26T15:30:06", "kind": "league", "text": "snapshot 6 added to the league at iteration 1670", "iteration": 1670}
+{"time": "2026-09-26T15:31:48", "kind": "league", "text": "snapshot 6 added to the league at iteration 1720", "iteration": 1720}
+{"time": "2026-09-26T15:33:22", "kind": "best", "text": "new best mean edge 2.723 at iteration 1760", "iteration": 1760, "edge": 2.723}
+{"time": "2026-09-26T15:33:41", "kind": "league", "text": "snapshot 6 added to the league at iteration 1770", "iteration": 1770}
+{"time": "2026-09-26T15:35:05", "kind": "league", "text": "snapshot 6 added to the league at iteration 1820", "iteration": 1820}
+{"time": "2026-09-26T15:35:49", "kind": "best", "text": "new best mean edge 2.746 at iteration 1840", "iteration": 1840, "edge": 2.746}
+{"time": "2026-09-26T15:36:40", "kind": "league", "text": "snapshot 6 added to the league at iteration 1870", "iteration": 1870}
+{"time": "2026-09-26T15:37:01", "kind": "best", "text": "new best mean edge 2.770 at iteration 1880", "iteration": 1880, "edge": 2.77}
+{"time": "2026-09-26T15:37:59", "kind": "league", "text": "snapshot 6 added to the league at iteration 1920", "iteration": 1920}
+{"time": "2026-09-26T15:38:06", "kind": "best", "text": "new best mean edge 2.820 at iteration 1920", "iteration": 1920, "edge": 2.82}
+{"time": "2026-09-26T15:39:03", "kind": "best", "text": "new best mean edge 2.915 at iteration 1960", "iteration": 1960, "edge": 2.915}
+{"time": "2026-09-26T15:39:15", "kind": "league", "text": "snapshot 6 added to the league at iteration 1970", "iteration": 1970}
+{"time": "2026-09-26T15:39:59", "kind": "best", "text": "new best mean edge 2.955 at iteration 2000", "iteration": 2000, "edge": 2.955}
+{"time": "2026-09-26T15:40:27", "kind": "league", "text": "snapshot 6 added to the league at iteration 2020", "iteration": 2020}
+{"time": "2026-09-26T15:41:05", "kind": "best", "text": "new best mean edge 2.957 at iteration 2040", "iteration": 2040, "edge": 2.957}
+{"time": "2026-09-26T15:41:47", "kind": "league", "text": "snapshot 6 added to the league at iteration 2070", "iteration": 2070}
+{"time": "2026-09-26T15:43:11", "kind": "league", "text": "snapshot 6 added to the league at iteration 2120", "iteration": 2120}
+{"time": "2026-09-26T15:44:38", "kind": "league", "text": "snapshot 6 added to the league at iteration 2170", "iteration": 2170}
+{"time": "2026-09-26T15:45:56", "kind": "league", "text": "snapshot 6 added to the league at iteration 2220", "iteration": 2220}
+{"time": "2026-09-26T15:47:15", "kind": "league", "text": "snapshot 6 added to the league at iteration 2270", "iteration": 2270}
+{"time": "2026-09-26T15:48:26", "kind": "league", "text": "snapshot 6 added to the league at iteration 2320", "iteration": 2320}
+{"time": "2026-09-26T15:49:27", "kind": "best", "text": "new best mean edge 2.972 at iteration 2360", "iteration": 2360, "edge": 2.972}
+{"time": "2026-09-26T15:49:41", "kind": "league", "text": "snapshot 6 added to the league at iteration 2370", "iteration": 2370}
+{"time": "2026-09-26T15:50:55", "kind": "league", "text": "snapshot 6 added to the league at iteration 2420", "iteration": 2420}
+{"time": "2026-09-26T15:52:02", "kind": "league", "text": "snapshot 6 added to the league at iteration 2470", "iteration": 2470}
+{"time": "2026-09-26T15:53:09", "kind": "league", "text": "snapshot 6 added to the league at iteration 2520", "iteration": 2520}
+{"time": "2026-09-26T15:53:16", "kind": "best", "text": "new best mean edge 2.976 at iteration 2520", "iteration": 2520, "edge": 2.976}
+{"time": "2026-09-26T15:54:31", "kind": "league", "text": "snapshot 6 added to the league at iteration 2570", "iteration": 2570}
+{"time": "2026-09-26T15:56:05", "kind": "league", "text": "snapshot 6 added to the league at iteration 2620", "iteration": 2620}
+{"time": "2026-09-26T15:57:27", "kind": "league", "text": "snapshot 6 added to the league at iteration 2670", "iteration": 2670}
+{"time": "2026-09-26T15:58:50", "kind": "league", "text": "snapshot 6 added to the league at iteration 2720", "iteration": 2720}
+{"time": "2026-09-26T16:00:17", "kind": "best", "text": "new best mean edge 2.989 at iteration 2760", "iteration": 2760, "edge": 2.989}
+{"time": "2026-09-26T16:00:35", "kind": "league", "text": "snapshot 6 added to the league at iteration 2770", "iteration": 2770}
+{"time": "2026-09-26T16:02:08", "kind": "league", "text": "snapshot 6 added to the league at iteration 2820", "iteration": 2820}
+{"time": "2026-09-26T16:03:38", "kind": "league", "text": "snapshot 6 added to the league at iteration 2870", "iteration": 2870}
+{"time": "2026-09-26T16:04:04", "kind": "best", "text": "new best mean edge 3.047 at iteration 2880", "iteration": 2880, "edge": 3.047}
+{"time": "2026-09-26T16:05:15", "kind": "league", "text": "snapshot 6 added to the league at iteration 2920", "iteration": 2920}
+{"time": "2026-09-26T16:07:01", "kind": "league", "text": "snapshot 6 added to the league at iteration 2970", "iteration": 2970}
+{"time": "2026-09-26T16:07:58", "kind": "best", "text": "new best mean edge 3.061 at iteration 3000", "iteration": 3000, "edge": 3.061}
+{"time": "2026-09-26T16:08:31", "kind": "league", "text": "snapshot 6 added to the league at iteration 3020", "iteration": 3020}
+{"time": "2026-09-26T16:10:03", "kind": "league", "text": "snapshot 6 added to the league at iteration 3070", "iteration": 3070}
+{"time": "2026-09-26T16:11:34", "kind": "league", "text": "snapshot 6 added to the league at iteration 3120", "iteration": 3120}
+{"time": "2026-09-26T16:13:15", "kind": "league", "text": "snapshot 6 added to the league at iteration 3170", "iteration": 3170}
+{"time": "2026-09-26T16:14:50", "kind": "league", "text": "snapshot 6 added to the league at iteration 3220", "iteration": 3220}
+{"time": "2026-09-26T16:16:25", "kind": "league", "text": "snapshot 6 added to the league at iteration 3270", "iteration": 3270}
+{"time": "2026-09-26T16:17:53", "kind": "league", "text": "snapshot 6 added to the league at iteration 3320", "iteration": 3320}
+{"time": "2026-09-26T16:19:35", "kind": "league", "text": "snapshot 6 added to the league at iteration 3370", "iteration": 3370}
+{"time": "2026-09-26T16:21:02", "kind": "league", "text": "snapshot 6 added to the league at iteration 3420", "iteration": 3420}
+{"time": "2026-09-26T16:22:29", "kind": "league", "text": "snapshot 6 added to the league at iteration 3470", "iteration": 3470}
+{"time": "2026-09-26T16:23:58", "kind": "league", "text": "snapshot 6 added to the league at iteration 3520", "iteration": 3520}
+{"time": "2026-09-26T16:25:38", "kind": "league", "text": "snapshot 6 added to the league at iteration 3570", "iteration": 3570}
+{"time": "2026-09-26T16:27:21", "kind": "league", "text": "snapshot 6 added to the league at iteration 3620", "iteration": 3620}
+{"time": "2026-09-26T16:28:45", "kind": "league", "text": "snapshot 6 added to the league at iteration 3670", "iteration": 3670}
+{"time": "2026-09-26T16:29:08", "kind": "best", "text": "new best mean edge 3.071 at iteration 3680", "iteration": 3680, "edge": 3.071}
+{"time": "2026-09-26T16:30:19", "kind": "league", "text": "snapshot 6 added to the league at iteration 3720", "iteration": 3720}
+{"time": "2026-09-26T16:32:08", "kind": "league", "text": "snapshot 6 added to the league at iteration 3770", "iteration": 3770}
+{"time": "2026-09-26T16:33:57", "kind": "league", "text": "snapshot 6 added to the league at iteration 3820", "iteration": 3820}
+{"time": "2026-09-26T16:35:46", "kind": "league", "text": "snapshot 6 added to the league at iteration 3870", "iteration": 3870}
+{"time": "2026-09-26T16:37:37", "kind": "league", "text": "snapshot 6 added to the league at iteration 3920", "iteration": 3920}
+{"time": "2026-09-26T16:39:17", "kind": "league", "text": "snapshot 6 added to the league at iteration 3970", "iteration": 3970}
+{"time": "2026-09-26T16:40:47", "kind": "league", "text": "snapshot 6 added to the league at iteration 4020", "iteration": 4020}
+{"time": "2026-09-26T16:41:28", "kind": "best", "text": "new best mean edge 3.082 at iteration 4040", "iteration": 4040, "edge": 3.082}
+{"time": "2026-09-26T16:42:19", "kind": "league", "text": "snapshot 6 added to the league at iteration 4070", "iteration": 4070}
+{"time": "2026-09-26T16:43:57", "kind": "league", "text": "snapshot 6 added to the league at iteration 4120", "iteration": 4120}
+{"time": "2026-09-26T16:45:40", "kind": "league", "text": "snapshot 6 added to the league at iteration 4170", "iteration": 4170}
+{"time": "2026-09-26T16:47:00", "kind": "league", "text": "snapshot 6 added to the league at iteration 4220", "iteration": 4220}
+{"time": "2026-09-26T16:48:19", "kind": "league", "text": "snapshot 6 added to the league at iteration 4270", "iteration": 4270}
+{"time": "2026-09-26T16:50:46", "kind": "resume", "text": "resumed from the checkpoint of iteration 4280 (1,643,520 matches), league rebuilt from 6 checkpoints; the optimiser state starts fresh", "iteration": 4280}
+{"time": "2026-09-26T17:03:19", "kind": "resume", "text": "resumed from the checkpoint of iteration 4320 (1,658,880 matches), league rebuilt from 6 checkpoints; the optimiser state starts fresh", "iteration": 4320}
+{"time": "2026-09-26T17:04:34", "kind": "resume", "text": "resumed from the checkpoint of iteration 4320 (1,658,880 matches), league rebuilt from 6 checkpoints; the optimiser state starts fresh", "iteration": 4320}
+{"time": "2026-09-26T17:05:44", "kind": "best", "text": "new best mean edge 3.113 at iteration 4360", "iteration": 4360, "edge": 3.113}
+{"time": "2026-09-26T17:06:01", "kind": "league", "text": "snapshot 6 added to the league at iteration 4370", "iteration": 4370}
+{"time": "2026-09-26T17:07:30", "kind": "league", "text": "snapshot 6 added to the league at iteration 4420", "iteration": 4420}
+{"time": "2026-09-26T17:08:51", "kind": "league", "text": "snapshot 6 added to the league at iteration 4470", "iteration": 4470}
+{"time": "2026-09-26T17:10:25", "kind": "league", "text": "snapshot 6 added to the league at iteration 4520", "iteration": 4520}
+{"time": "2026-09-26T17:12:00", "kind": "league", "text": "snapshot 6 added to the league at iteration 4570", "iteration": 4570}
+{"time": "2026-09-26T17:13:14", "kind": "league", "text": "snapshot 6 added to the league at iteration 4620", "iteration": 4620}
+{"time": "2026-09-26T17:14:28", "kind": "league", "text": "snapshot 6 added to the league at iteration 4670", "iteration": 4670}
+{"time": "2026-09-26T17:15:41", "kind": "league", "text": "snapshot 6 added to the league at iteration 4720", "iteration": 4720}
+{"time": "2026-09-26T17:17:02", "kind": "league", "text": "snapshot 6 added to the league at iteration 4770", "iteration": 4770}
+{"time": "2026-09-26T17:18:18", "kind": "league", "text": "snapshot 6 added to the league at iteration 4820", "iteration": 4820}
+{"time": "2026-09-26T17:19:36", "kind": "league", "text": "snapshot 6 added to the league at iteration 4870", "iteration": 4870}
+{"time": "2026-09-26T17:20:55", "kind": "league", "text": "snapshot 6 added to the league at iteration 4920", "iteration": 4920}
+{"time": "2026-09-26T17:22:27", "kind": "league", "text": "snapshot 6 added to the league at iteration 4970", "iteration": 4970}
+{"time": "2026-09-26T17:23:54", "kind": "league", "text": "snapshot 6 added to the league at iteration 5020", "iteration": 5020}
+{"time": "2026-09-26T17:24:19", "kind": "finish", "text": "run finished, best mean edge 3.113"}
